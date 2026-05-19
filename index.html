@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MostPomocy.pl - System Wsparcia Społecznego</title>
+    <meta name="description" content="Nowoczesny system interwencji kryzysowej. Potrzebomat, autodiagnoza i baza wiedzy dla osób w trudnej sytuacji życiowej." />
+    <meta name="keywords" content="pomoc społeczna, kryzys, wsparcie, mops, pfron, pomoc prawna, psycholog, 116 111" />
+    
+    <!-- PWA & Mobile Optimization -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Potrzebomat" />
+
+    <script>
+      // Rejestracja Service Workera dla trybu offline
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('PWA: MostPomocy gotowy do pracy offline.', reg))
+            .catch(err => console.error('PWA Error:', err));
+        });
+      }
+    </script>
+    
+    <!-- Open Graph / Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MostPomocy.pl - Znajdź wsparcie, którego potrzebujesz" />
+    <meta property="og:description" content="Twój cyfrowy most do realnej pomocy. Przejdź przez Potrzebomat i otrzymaj wsparcie." />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <!-- Google Analytics 4 (GTAG) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', { 'anonymize_ip': true });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,8 @@
+{
+  "name": "MostPomocy - Twoja Mapa Wsparcia",
+  "description": "Ogólnopolski portal wsparcia społecznego z uniwersalnym 'Potrzebomatem', bazą wiedzy o prawach pacjenta i seniora, oraz zintegrowanym panelem pomocowym (Panel Szybki).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
