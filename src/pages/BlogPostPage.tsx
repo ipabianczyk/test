@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 import { getPostById } from '../services/blogService';
 import { motion } from 'motion/react';
 import { ArrowLeft, Calendar, User, Share2, Tag } from 'lucide-react';
@@ -111,7 +111,7 @@ export default function BlogPostPage() {
 
           {/* Typography Overhaul */}
           <div className="prose prose-slate prose-xl max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-[1.8] prose-p:font-medium prose-strong:text-slate-900 prose-img:rounded-[40px] prose-img:shadow-2xl prose-a:text-amber-600 prose-a:font-black prose-a:no-underline hover:prose-a:underline">
-            <ReactMarkdown>{content}</ReactMarkdown>
+            <MarkdownRenderer content={content} />
           </div>
           
           {/* Dynamic Resources Section */}

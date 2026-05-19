@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import ReactMarkdown from 'react-markdown';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 import { 
   FilePlus, Copy, Download, Eye, Edit3, 
   Type, User, Tag, Image as ImageIcon, 
@@ -437,74 +437,7 @@ ${formData.content}`;
                 
                 <div className="bg-white rounded-[40px] p-8 md:p-12 shadow-xl border border-slate-100 min-h-[600px]">
                   <div className="prose prose-slate prose-lg max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-p:font-medium prose-p:leading-relaxed prose-strong:text-blue-600 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
-                    <ReactMarkdown
-                      components={{
-                        // Handle custom blocks by identifying them in text nodes
-                        div: ({node, className, children, ...props}) => {
-                          return <div className={className} {...props}>{children}</div>
-                        },
-                        p: ({children, ...props}) => {
-                          const childContent = React.Children.toArray(children).map(child => {
-                            if (typeof child === 'string') return child;
-                            return '';
-                          }).join('');
-
-                          if (childContent.includes(':::kafelka')) {
-                            return (
-                              <div className="bg-blue-50 border-2 border-blue-100 rounded-3xl p-8 my-8 flex items-start gap-5 shadow-sm">
-                                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-md border border-blue-100 flex-shrink-0">
-                                  <Grid className="w-7 h-7" />
-                                </div>
-                                <div className="flex-1">
-                                  {React.Children.toArray(children).map(child => {
-                                    if (typeof child === 'string') {
-                                      return child.replace(/:::kafelka/g, '').replace(/:::/g, '').trim();
-                                    }
-                                    return child;
-                                  })}
-                                </div>
-                              </div>
-                            );
-                          }
-                          if (childContent.includes(':::sos')) {
-                             return (
-                              <div className="bg-rose-600 text-white rounded-[32px] p-10 my-10 text-center shadow-2xl shadow-rose-200 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-8 opacity-10">
-                                  <PhoneCall className="w-32 h-32" />
-                                </div>
-                                <PhoneCall className="w-12 h-12 mx-auto mb-6 relative z-10" />
-                                <div className="relative z-10">
-                                  {React.Children.toArray(children).map(child => {
-                                    if (typeof child === 'string') {
-                                      return child.replace(/:::sos/g, '').replace(/:::/g, '').trim();
-                                    }
-                                    return child;
-                                  })}
-                                </div>
-                              </div>
-                            );
-                          }
-                          if (childContent.includes(':::alert')) {
-                            return (
-                             <div className="bg-amber-50 border-l-8 border-amber-400 rounded-2xl p-6 my-8 flex items-center gap-4">
-                               <AlertTriangle className="w-6 h-6 text-amber-500 flex-shrink-0" />
-                               <div className="text-amber-900 font-bold">
-                                 {React.Children.toArray(children).map(child => {
-                                   if (typeof child === 'string') {
-                                     return child.replace(/:::alert-warning/g, '').replace(/:::alert/g, '').replace(/:::/g, '').trim();
-                                   }
-                                   return child;
-                                 })}
-                               </div>
-                             </div>
-                           );
-                         }
-                          return <p {...props}>{children}</p>
-                        }
-                      }}
-                    >
-                      {formData.content}
-                    </ReactMarkdown>
+                    <MarkdownRenderer content={formData.content} />
                   </div>
                 </div>
               </motion.div>
