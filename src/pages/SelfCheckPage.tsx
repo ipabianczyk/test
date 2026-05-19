@@ -48,8 +48,10 @@ export default function SelfCheckPage() {
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [showSummary, setShowSummary] = useState(false);
 
+  const currentQuestion = questions[currentIdx] || questions[0];
+
   const handleAnswer = (value: boolean) => {
-    setAnswers(prev => ({ ...prev, [questions[currentIdx].id]: value }));
+    setAnswers(prev => ({ ...prev, [currentQuestion.id]: value }));
     
     if (currentIdx < questions.length - 1) {
       setCurrentIdx(prev => prev + 1);
@@ -65,8 +67,8 @@ export default function SelfCheckPage() {
   };
 
   // Calculate insights
-  const redFlagsCount = Object.values(answers).filter(Boolean).length;
-  const trueAnswers = questions.filter(q => answers[q.id]);
+  const redFlagsCount = Object.values(answers || {}).filter(Boolean).length;
+  const trueAnswers = questions.filter(q => answers && answers[q.id]);
 
   return (
     <div className="bg-slate-50 min-h-screen pb-32">
@@ -91,7 +93,7 @@ export default function SelfCheckPage() {
         </div>
 
         <AnimatePresence mode="wait">
-          {!showSummary ? (
+          {!showSummary && (
             <motion.div 
               key={`q-${currentIdx}`}
               initial={{ opacity: 0, x: 20 }}
@@ -108,7 +110,7 @@ export default function SelfCheckPage() {
 
               <div className="flex items-center justify-between mb-8">
                 <span className="text-xs font-black uppercase tracking-widest text-slate-400">
-                  {questions[currentIdx].category}
+                  {currentQuestion.category}
                 </span>
                 <span className="text-sm font-bold text-slate-300">
                   {currentIdx + 1} / {questions.length}
@@ -116,7 +118,7 @@ export default function SelfCheckPage() {
               </div>
 
               <h2 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight mb-12">
-                {questions[currentIdx].text}
+                {currentQuestion.text}
               </h2>
 
               <div className="grid grid-cols-2 gap-4">
@@ -140,11 +142,14 @@ export default function SelfCheckPage() {
                 </button>
               </div>
             </motion.div>
-          ) : (
+          )}
+
+          {showSummary && (
             <motion.div
               key="summary"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               className="space-y-8"
             >
               <div className="bg-white p-8 md:p-12 rounded-[40px] shadow-2xl border-4 border-slate-50">
