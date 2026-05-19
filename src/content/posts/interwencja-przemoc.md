@@ -1,12 +1,12 @@
 ---
-title: "Przemoc w rodzinie? Gdzie szukać bezpiecznego schronienia"
-date: "2024-05-19"
-author: "Centrum Wsparcia"
+title: "Przemoc w rodzinie: Neurobiologia przetrwania i bezpieczne opcje wyjścia"
+date: "2026-05-19"
+author: "Igor Pabiańczyk"
 category: "Interwencja"
-tags: ["przemoc", "bezpieczeństwo", "Niebieska Linia"]
-readTime: "6 min"
+tags: ["przemoc", "bezpieczeństwo", "Niebieska Linia", "prawo"]
+readTime: "7 min"
 alert_level: "urgent"
-excerpt: "Jeśli czujesz, że Twoje bezpieczeństwo jest zagrożone, nie zwlekaj. Istnieją miejsca i procedury, które mogą Cię ochronić natychmiast."
+excerpt: "Jeśli tkwisz w pętli strachu – przeczytaj. Z perspektywy psychologii i polskiego systemu prawnego sprawdzamy, jak zatrzymać mechanizmy przemocowe."
 image: "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=1200&auto=format&fit=crop"
 resources:
   - title: "Niebieska Linia"
@@ -17,19 +17,19 @@ resources:
     url: "tel:112"
 ---
 
-## Procedura Niebieskiej Karty
+## Reakcja układu nerwowego w sytuacji zagrożenia
 
-Procedura Niebieskiej Karty to systemowe narzędzie mające na celu zapewnienie bezpieczeństwa osobie dotkniętej przemocą. Może ją zainicjować policja, pracownik socjalny, nauczyciel lub lekarz.
+Eskalacja napięcia w domu drastycznie wpływa na tzw. "ciało migdałowate", obszar naszego mózgu odpowiedzialny za reakcje na silny lęk (fight, flight, freeze – walka, ucieczka, zamarcie). Sprawca przemocy najczęściej stosuje tzw. "cykl przemocy", który w psychologii bazuje na oscylowaniu wokół faz nagromadzenia agresji oraz miesiąca miodowego. To manipulacyjne zjawisko wyniszcza organizm. Jedynym sposobem wyrwania mózgu ze stanu nadwrażliwości jest zastosowanie tzw. **izolacji bezpieczeństwa**. Pomoże Ci w tym ustandaryzowana Procedura Niebieskiej Karty.
 
-### Natychmiastowa ochrona
+### Izolacja formalnoprawna i "Karta"
 
-Zgodnie z polskim prawem, policja ma prawo wydać **natychmiastowy nakaz opuszczenia mieszkania** przez sprawcę przemocy na okres 14 dni (z możliwością przedłużenia przez sąd). Dzieje się to bez konieczności czekania na wyrok sądu karnego.
+Z punktu widzenia współczesnego prawa w Polsce, to sprawca musi odczuć ciężary swojego zachowania. 
+Nowelizacje przepisów gwarantują odpowiednim funkcjonariuszom prawo wydania **bezpośredniego i natychmiastowego nakazu opuszczenia mieszkania przez osobę stosującą przemoc** na 14 dni, i czynią to bez żadnych uprzednich decyzji wymiaru sprawiedliwości.
 
-### Ośrodki Interwencji Kryzysowej (OIK)
+### Twój port - Ośrodek Interwencji (OIK)
 
-OIK-i to miejsca, gdzie możesz uzyskać schronienie (często 24/7), pomoc prawną i psychologiczną bez żadnych opłat. Nie musisz mieć ze sobą nic poza dokumentami, aby prosić o pomoc.
+W OIKach (Ośrodkach Interwencji Kryzysowej) interdyscyplinarny zespół specjalistów potrafi zająć się poszkodowanym na poziomie:
+* Behawioralnym (schronienie i podstawowy odpoczynek z jedzeniem, ukrycie przed agresorem).
+* Poznawczym i psychicznym (zdejmując z barków obwinianie siebie za czyny agresora).
 
-### Co możesz zrobić teraz?
-1. **Zatelefonuj na Niebieską Linię** (800 120 002) - konsultanci pomogą Ci ułożyć plan bezpieczeństwa.
-2. **Poinformuj zaufaną osobę** o swojej sytuacji.
-3. **Zabezpiecz dokumenty** i najpotrzebniejsze rzeczy w miejscu, do którego masz łatwy dostęp.
+Nie zapomnij przygotować sobie małego plecaka (karty bankowe, dowód osobisty, niezbędne farmaceutyki), zadzwonić po cichu na 800 120 002 lub numer alarmowy 112, gdy obrona osobista zawodzi. Czas reakcji policji i ekspertów uratuje Cię przed kolejnymi fazami cyklu zła.

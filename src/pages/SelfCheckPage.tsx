@@ -51,13 +51,20 @@ export default function SelfCheckPage() {
   const currentQuestion = questions[currentIdx] || questions[0];
 
   const handleAnswer = (value: boolean) => {
-    setAnswers(prev => ({ ...prev, [currentQuestion.id]: value }));
-    
-    if (currentIdx < questions.length - 1) {
-      setCurrentIdx(prev => prev + 1);
-    } else {
-      setShowSummary(true);
-    }
+    if (showSummary) return;
+
+    setCurrentIdx(prevIdx => {
+      const idx = Math.min(Math.max(0, prevIdx), questions.length - 1);
+      const q = questions[idx];
+      
+      setAnswers(prevAns => ({ ...prevAns, [q.id]: value }));
+
+      if (idx >= questions.length - 1) {
+        setShowSummary(true);
+        return idx;
+      }
+      return idx + 1;
+    });
   };
 
   const reset = () => {
