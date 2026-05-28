@@ -6,8 +6,15 @@ import {
   BookMarked, ArrowRight, CornerDownRight, Landmark, GraduationCap, CheckCircle2
 } from 'lucide-react';
 import { SITE_CONFIG } from '../data/siteConfig';
+import { useEditable } from '../hooks/useEditable';
 
 export default function HomePage() {
+  const editable = useEditable('/', {
+    title: "Znajdź pomoc",
+    subtitle: "bez oceniania i strachu.",
+    description: "MostPomocy to Twój wirtualny przewodnik po systemie wsparcia społecznego w Polsce. Pomożemy Ci postawić pierwszy krok, otrzymać wsparcie finansowe, prawne i psychiczne bez zbędnych barier."
+  });
+
   const bentoPaths = [
     {
       title: "Potrzebomat SOS",
@@ -60,13 +67,13 @@ export default function HomePage() {
           Bezpłatny Przewodnik Pomocowy
         </div>
         
-        <h2 className="text-3.5xl sm:text-5xl font-black text-neutral-900 tracking-tighter leading-[1.05] italic">
-          Znajdź pomoc <br/>
-          <span className="text-blue-600 not-italic font-bold">bez oceniania i strachu.</span>
+        <h2 className="text-3.5xl sm:text-5xl font-black text-neutral-900 tracking-tighter leading-[1.05] italic whitespace-pre-line">
+          {editable.title} <br/>
+          <span className="text-blue-600 not-italic font-bold">{editable.subtitle}</span>
         </h2>
         
         <p className="text-sm sm:text-base text-neutral-500 font-medium leading-relaxed max-w-xl">
-          MostPomocy to Twój wirtualny przewodnik po systemie wsparcia społecznego w Polsce. Pomożemy Ci postawić pierwszy krok, otrzymać wsparcie finansowe, prawne i psychiczne bez zbędnych barier.
+          {editable.description}
         </p>
       </div>
 

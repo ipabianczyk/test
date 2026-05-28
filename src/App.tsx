@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { A11yProvider } from './components/A11yProvider';
 import { useA11y } from './components/A11yProvider';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import AdminBar from './components/AdminBar';
 import LeftSidebar from './components/LeftSidebar';
 import RightSidebar from './components/RightSidebar';
 import BottomNav from './components/BottomNav';
@@ -22,7 +25,6 @@ import ZenZone from './pages/ZenZone';
 import QuickHelp from './pages/QuickHelp';
 import ArticleCreator from './pages/ArticleCreator';
 import { SITE_CONFIG } from './data/siteConfig';
-import { Menu, X, Phone, ShieldAlert, Accessibility } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 function ScrollToTop() {
@@ -34,121 +36,34 @@ function ScrollToTop() {
 }
 
 function MainLayoutShell({ children }: { children: React.ReactNode }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-
-  // Close mobile sidebar on route change
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
-
   return (
-    <div className="min-h-screen bg-[#f6f6f6] text-neutral-800 transition-colors duration-200">
+    <div className="min-h-screen bg-neutral-50 text-neutral-800 transition-colors duration-200">
       
-      {/* Mobile Top Header (Fixed floating style) */}
-      <header className="lg:hidden sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-neutral-200/50 px-4 py-3 flex justify-between items-center shadow-sm">
-        <div className="flex items-center gap-3">
-          <button 
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="p-2 border border-neutral-200/70 hover:bg-neutral-50 rounded-xl transition-colors"
-            aria-label="Otwórz menu"
-          >
-            <Menu className="w-5 h-5 text-neutral-700" />
-          </button>
-          
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-slate-900 rounded-lg flex items-center justify-center text-white text-md font-black italic">
-              M
-            </div>
-            <span className="font-black text-md tracking-tighter text-neutral-900">
-              MostPomocy
-            </span>
-          </Link>
-        </div>
+      {/* 1. Global Stateful Secret Admin Ribbon */}
+      <AdminBar />
 
-        <div className="flex items-center gap-2">
-          <a 
-            href={`tel:${SITE_CONFIG.contact.emergency_phone}`}
-            className="px-3 py-1.5 bg-rose-600 font-black text-[10px] uppercase tracking-wider text-white rounded-xl flex items-center gap-1.5 shadow-sm animate-pulse"
-          >
-            <Phone className="w-3 h-3" /> SOS 24H
-          </a>
-        </div>
-      </header>
+      {/* 2. Top Navigation Hub */}
+      <Header />
 
-      {/* Responsive Three-Column Container */}
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 py-4 lg:py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* COLUMN 1: LEFT SIDEBAR (Desktop - Sticky) */}
-          <div className="hidden lg:block lg:col-span-3 xl:col-span-3 sticky top-6 h-[calc(100vh-3rem)] max-h-[850px]">
-            <LeftSidebar />
-          </div>
+      {/* 3. Main Wide Centered Content Canvas with plenty of breathing room */}
+      <main 
+        id="main-content" 
+        className="max-w-7xl mx-auto px-4 sm:px-10 py-8 sm:py-12 min-h-[80vh] overflow-hidden"
+      >
+        {children}
+      </main>
 
-          {/* COLUMN 2: MAIN CONTENT AREA (Center - Feed-style card wrapper) */}
-          <main 
-            id="main-content" 
-            className="col-span-1 lg:col-span-6 xl:col-span-6 bg-white rounded-3xl p-4 sm:p-6 lg:p-8 shadow-sm border border-neutral-200/60 min-h-[calc(100vh-6rem)] overflow-hidden"
-          >
-            {children}
-          </main>
+      {/* 4. Brand Footer with Hidden Admin double click options */}
+      <Footer />
 
-          {/* COLUMN 3: RIGHT SIDEBAR (Desktop - Sticky widgets) */}
-          <div className="hidden lg:block lg:col-span-3 xl:col-span-3 sticky top-6 h-[calc(100vh-3rem)] overflow-y-auto no-scrollbar max-h-[900px]">
-            <RightSidebar />
-          </div>
-
-        </div>
-      </div>
-
-      {/* Mobile Slider Menu (Left sidebar drawer) */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 lg:hidden"
-            />
-            {/* Drawer */}
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-              className="fixed top-0 left-0 bottom-0 w-full max-w-[280px] bg-white z-50 p-4 shadow-2xl overflow-y-auto lg:hidden"
-            >
-              <div className="flex justify-between items-center mb-4 pb-4 border-b border-neutral-100">
-                <span className="font-black text-lg text-neutral-900 tracking-tighter">Menu Portalu</span>
-                <button 
-                  type="button"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-1.5 hover:bg-neutral-100 rounded-lg text-neutral-500"
-                  aria-label="Zamknij menu"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="h-[calc(100vh-6rem)]">
-                <LeftSidebar onCloseMobile={() => setMobileMenuOpen(false)} />
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Tiny SOS emergency ribbon for fine mobile utility */}
+      {/* 5. Mobile Only Overlay Emergency Callout */}
       <div className="block lg:hidden border-t-2 border-rose-500 bg-rose-50 p-4 text-center mt-6 mb-20 rounded-t-3xl shadow-inner mx-4">
         <span className="inline-block w-2 h-2 rounded-full bg-rose-500 animate-ping mr-2" />
         <span className="text-xs font-black text-rose-900 uppercase tracking-wider">Potrzebujesz natychmiastowej rozmowy? </span>
         <a href="tel:116123" className="block text-sm font-black text-rose-600 font-mono mt-1 hover:underline">Zadzwoń: 116 123 (Darmowy)</a>
       </div>
 
-      {/* Sticky Mobile Nav bar */}
+      {/* 6. Sticky Bottom Mobile Nav bar */}
       <BottomNav />
     </div>
   );

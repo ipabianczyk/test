@@ -42,10 +42,28 @@
 
   /* Accessibility Overrides */
   .font-size-inc {
-    font-size: 1.125rem;
+    font-size: 1.25rem !important; /* Larger text scaling */
   }
   .font-size-dec {
-    font-size: 0.875rem;
+    font-size: 0.825rem !important;
+  }
+
+  .grayscale-mode {
+    filter: grayscale(100%) !important;
+  }
+
+  .large-spacing, .large-spacing * {
+    line-height: 2.0 !important;
+    letter-spacing: 0.08rem !important;
+    word-spacing: 0.16rem !important;
+  }
+
+  .highlight-links a, .highlight-links button:not(.btn-admin) {
+    outline: 3px solid #f59e0b !important;
+    outline-offset: 3px !important;
+    text-decoration: underline !important;
+    text-underline-offset: 4px !important;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.4) !important;
   }
 
   .high-contrast {
@@ -54,10 +72,23 @@
     --color-ink: #000000;
     --color-primary: #0000ff;
     --color-primary-dark: #00008b;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  .high-contrast body, .high-contrast main, .high-contrast header, .high-contrast footer, .high-contrast section, .high-contrast div:not(.ignore-contrast) {
+    background-color: #000000 !important;
+    color: #ffff00 !important; /* High contrast energetic yellow on black */
+    border-color: #ffff00 !important;
+  }
+
+  .high-contrast a, .high-contrast button {
+    color: #00ffff !important; /* Aqua elements for clickable blocks */
+    border-color: #00ffff !important;
   }
 
   .high-contrast * {
-    border-color: #000 !important;
+    border-color: #ffff00 !important;
   }
 
   .underline-links a {

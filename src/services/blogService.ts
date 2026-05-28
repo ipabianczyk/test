@@ -38,8 +38,18 @@ const parsePost = (md: string) => {
   }
 };
 
+const getCustomPostsLocally = (): BlogPost[] => {
+  try {
+    const customRaw = localStorage.getItem('mostpomocy_custom_posts');
+    if (!customRaw) return [];
+    return JSON.parse(customRaw);
+  } catch (e) {
+    return [];
+  }
+};
+
 export const getAllPosts = (): BlogPost[] => {
-  const posts = Object.entries(postFiles).map(([path, fileContent]) => {
+  const staticPosts = Object.entries(postFiles).map(([path, fileContent]) => {
     // Explicitly handle default export from glob
     const content = (typeof fileContent === 'string' ? fileContent : (fileContent as any)?.default) as string;
     
@@ -70,12 +80,29 @@ export const getAllPosts = (): BlogPost[] => {
     return post;
   }).filter((p): p is BlogPost => p !== null);
 
-  // Sort by date descending
-  return posts.sort((a, b) => {
-    const dateA = new Date(a.date).getTime() || 0;
-    const dateB = new Date(b.date).getTime() || 0;
-    return dateB - dateA;
+  const customPosts = getCustomPostsLocally();
+
+  // Combine lists, preferring custom/edited articles over static ones if IDs match
+  const mergedMap = new Map<string, BlogPost>();
+  staticPosts.forEach(p => mergedMap.set(p.id, p));
+  customPosts.forEach(p => mergedMap.set(p.id, p));
+
+  const sorted = Array.from(mergedMap.values()).sort((a, b) => {
+    const parseDate = (dStr: string) => {
+      if (!dStr) return 0;
+      // Handle pl-PL format "DD.MM.YYYY" or standard Date formats
+      if (dStr.includes('.')) {
+        const parts = dStr.split('.');
+        if (parts.length === 3) {
+          return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime() || 0;
+        }
+      }
+      return new Date(dStr).getTime() || 0;
+    };
+    return parseDate(b.date) - parseDate(a.date);
   });
+
+  return sorted;
 };
 
 export const getPostById = (id: string): BlogPost | undefined => {
