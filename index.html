@@ -1,30 +1,94 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MostPomocy.pl - System Wsparcia Społecznego</title>
-    <meta name="description" content="Nowoczesny system interwencji kryzysowej. Potrzebomat, autodiagnoza i baza wiedzy dla osób w trudnej sytuacji życiowej." />
-    <meta name="keywords" content="pomoc społeczna, kryzys, wsparcie, mops, pfron, pomoc prawna, psycholog, 116 111" />
+<!DOCTYPE html>
+<html lang="pl" data-theme="corporate">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Kontrast i typografia WCAG / Zabezpieczenie SEO -->
+    <title>Most Pomocy - Sieć Wsparcia dla Osób w Kryzysie</title>
     
-    <!-- Open Graph / Meta Tags -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="MostPomocy.pl - Znajdź wsparcie, którego potrzebujesz" />
-    <meta property="og:description" content="Twój cyfrowy most do realnej pomocy. Przejdź przez Potrzebomat i otrzymaj wsparcie." />
-    <meta property="og:image" content="/og-image.jpg" />
-
-    <!-- Google Analytics 4 (GTAG) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Miejsca na kody weryfikacyjne Google Search Console wg wymagań -->
+    <meta name="google-site-verification" content="TWOJ_KOD_WERYFIKACYJNY_GSC_TUTAJ" />
+    
+    <!-- Google Analytics (Global Site Tag) z podłączeniem z panelu -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TWOJKODGA"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX', { 'anonymize_ip': true });
+      gtag('config', 'G-TWOJKODGA');
     </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+    
+    <!-- Tailwind CSS & DaisyUI dla głównej strony (CDN dla Jamstack HTML) -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-base-100 text-neutral antialiased min-h-screen flex flex-col font-sans">
+    
+    <!-- A11y Skip link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 btn btn-primary">Przejdź do głównej treści</a>
 
+    <!-- Navbar Główny o Wysokim Kontraście (WCAG) -->
+    <nav class="navbar bg-base-100 shadow-sm sticky top-0 z-50 border-b border-base-200" aria-label="Główna nawigacja witryny">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden" aria-label="Otwórz menu mobilne">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-base-100 rounded-box w-52 font-semibold border border-base-200">
+                    <li><a href="/" class="focus:ring-4 focus:ring-primary py-3">Strona Główna</a></li>
+                    <li><a href="/#o-nas" class="focus:ring-4 focus:ring-primary py-3">Baza Wiedzy (Blog Hugo)</a></li>
+                    <li><a href="/static/admin/index.html" class="focus:ring-4 focus:ring-primary text-primary font-black py-3">🔒 Panel Admina</a></li>
+                </ul>
+            </div>
+            <a href="/" class="btn btn-ghost text-2xl font-black text-primary hover:bg-transparent" aria-label="Przejdź na stronę główną">
+                <span class="text-neutral">Most</span>Pomocy<span class="text-primary">.pl</span>
+            </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1 font-bold text-neutral">
+                <li><a href="/" class="focus:ring-4 focus:ring-primary px-4 py-2 hover:bg-base-200">Strona Główna</a></li>
+                <li><a href="#baza-wiedzy" class="focus:ring-4 focus:ring-primary px-4 py-2 hover:bg-base-200">Baza Wiedzy (Blog)</a></li>
+                <li><a href="/static/admin/index.html" class="focus:ring-4 focus:ring-primary px-4 py-2 text-primary hover:bg-base-200">Panel Administratora</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <!-- Wymaganie specjalne: Żarówiasty przycisk natychmiastowego wyjścia dla osób w niebezpieczeństwie -->
+            <a href="https://www.google.com" target="_self" class="btn btn-error text-white font-black tracking-wide uppercase px-6 lg:px-8 shadow-md focus:ring-4 focus:ring-red-400 border-2 border-red-700 hover:bg-red-700 transition" aria-label="Szybkie wyjście ze strony, przekierowuje do Google">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                Szybkie Wyjście
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-grow flex flex-col justify-center container mx-auto px-4 py-16 lg:py-24">
+        <section class="max-w-4xl mx-auto text-center space-y-10 bg-base-100 p-8 lg:p-12 rounded-3xl">
+            <h1 class="text-5xl lg:text-7xl font-black text-neutral leading-tight tracking-tight">
+                Uzyskaj wsparcie. <br/> <span class="text-primary">Nie jesteś sam.</span>
+            </h1>
+            <p class="text-xl lg:text-2xl text-neutral-800 font-medium max-w-2xl mx-auto leading-relaxed">
+                Łączymy osoby w trudnych chwilach z bezpiecznymi, sprawdzonymi bazami pomocy, organizacjami, oraz wiedzą.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
+                <a href="#telefon-zaufania" class="btn btn-primary btn-lg text-white shadow-lg w-full sm:w-auto font-black px-10">Znajdź Pomoc Teraz</a>
+                <a href="#baza-wiedzy" class="btn btn-outline border-neutral hover:bg-neutral hover:text-white btn-lg w-full sm:w-auto font-bold px-10">Przejdź do Bloga</a>
+            </div>
+            
+            <div class="mt-8 p-6 bg-warning/20 border-l-4 border-warning rounded text-left flex items-start max-w-2xl mx-auto shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-neutral mr-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <p class="font-bold text-neutral-800">
+                    Pamiętaj, że używając żarówiastego czerwonego przycisku u góry, w każdej chwili możesz bezpiecznie i natychmiastowo opuścić witrynę.
+                </p>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer footer-center p-10 bg-base-200 border-t border-base-300 text-neutral font-medium mt-auto">
+        <aside>
+            <p class="font-bold text-xl mb-2 text-primary">MostPomocy.pl</p>
+            <p>Platforma internetowa łącząca ludzi dbających o zdrowie psychiczne.</p>
+            <p class="mt-4 text-neutral-500">Copyright © 2026 - Wszelkie prawa zastrzeżone | WCAG 2.1 AA Zgodność</p>
+        </aside>
+    </footer>
+</body>
+</html>

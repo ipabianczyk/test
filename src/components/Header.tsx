@@ -13,10 +13,6 @@ export default function Header() {
     highContrast, toggleHighContrast,
     underlineLinks, toggleUnderlineLinks,
     dyslexicFont, toggleDyslexicFont,
-    grayscaleMode, toggleGrayscaleMode,
-    readingRuler, toggleReadingRuler,
-    largeSpacing, toggleLargeSpacing,
-    highlightLinks, toggleHighlightLinks,
     reset 
   } = useA11y();
 
@@ -43,13 +39,6 @@ export default function Header() {
     }
   };
 
-  const triggerSecretAdmin = (e: React.MouseEvent) => {
-    // Check for double click or double-tap to trigger hidden admin
-    if (e.detail === 2) {
-      window.dispatchEvent(new CustomEvent('trigger-admin-login'));
-    }
-  };
-
   return (
     <header className="sticky top-0 z-50">
       {/* Top A11y Bar / Status Bar style */}
@@ -57,13 +46,6 @@ export default function Header() {
         <div className="flex gap-6">
           <button onClick={toggleHighContrast} className="hover:text-amber-500 transition-colors">Kontrast</button>
           <button onClick={toggleDyslexicFont} className="hover:text-amber-500 transition-colors hidden sm:inline">Dysleksja</button>
-          <button 
-            onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-admin-login'))} 
-            className="hover:text-amber-500 transition-colors opacity-60 text-[8px] tracking-widest uppercase ml-4"
-            title="Panel Oficerski (Double-Click)"
-          >
-            [Panel]
-          </button>
         </div>
         <div className="flex gap-6 items-center">
           <Link to="/potrzebomat" className="flex items-center gap-2 text-rose-400 font-black">
@@ -76,29 +58,23 @@ export default function Header() {
 
       <div className="bg-white/80 backdrop-blur-xl border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-10 h-16 md:h-20 flex justify-between items-center text-slate-900">
-          {/* Logo - Instagram Style with double-click hidden admin hook */}
-          <div 
-            onClick={triggerSecretAdmin}
-            style={{ cursor: 'pointer' }}
+          {/* Logo - Instagram Style */}
+          <Link 
+            to="/" 
+            onClick={handleLogoClick}
             className="flex items-center gap-3 group transition-transform active:scale-95"
           >
-            <Link 
-              to="/" 
-              onClick={handleLogoClick}
-              className="flex items-center gap-3"
-            >
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-900 rounded-[12px] flex items-center justify-center text-white text-lg md:text-xl font-black italic tracking-tighter shadow-xl shadow-slate-900/10 group-hover:bg-amber-600 transition-colors">
-                M
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-900 rounded-[12px] flex items-center justify-center text-white text-lg md:text-xl font-black italic tracking-tighter shadow-xl shadow-slate-900/10 group-hover:bg-amber-600 transition-colors">
+              M
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg md:text-xl font-black tracking-tighter leading-none group-hover:text-amber-600 transition-colors">MostPomocy</h1>
+                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-amber-500 transition-colors" />
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-lg md:text-xl font-black tracking-tighter leading-none group-hover:text-amber-600 transition-colors">MostPomocy</h1>
-                  <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-amber-500 transition-colors" />
-                </div>
-                <span className="text-[8px] md:text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black">Wiedza • Wsparcie • Nadzieja</span>
-              </div>
-            </Link>
-          </div>
+              <span className="text-[8px] md:text-[10px] uppercase tracking-[0.2em] text-slate-400 font-black">Wiedza • Wsparcie • Nadzieja</span>
+            </div>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em]">
@@ -206,30 +182,6 @@ export default function Header() {
                     active={dyslexicFont} 
                     onClick={toggleDyslexicFont} 
                     icon="Aa"
-                  />
-                  <A11yToggle 
-                    label="Monochromatyzm (Szarość)" 
-                    active={grayscaleMode} 
-                    onClick={toggleGrayscaleMode} 
-                    icon="◐"
-                  />
-                  <A11yToggle 
-                    label="Pasek czytania (Linijka)" 
-                    active={readingRuler} 
-                    onClick={toggleReadingRuler} 
-                    icon="▬"
-                  />
-                  <A11yToggle 
-                    label="Zwiększone odstępy" 
-                    active={largeSpacing} 
-                    onClick={toggleLargeSpacing} 
-                    icon="↕"
-                  />
-                  <A11yToggle 
-                    label="Wyróżnij wszystkie odsyłacze" 
-                    active={highlightLinks} 
-                    onClick={toggleHighlightLinks} 
-                    icon="🎯"
                   />
                 </div>
 

@@ -50,19 +50,21 @@ export default function SelfCheckPage() {
 
   const currentQuestion = questions[currentIdx] || questions[0];
 
-   const handleAnswer = (value: boolean) => {
-    if (showSummary || currentIdx >= questions.length) return;
+  const handleAnswer = (value: boolean) => {
+    if (showSummary) return;
 
-    const q = questions[currentIdx];
-    if (!q) return;
+    setCurrentIdx(prevIdx => {
+      const idx = Math.min(Math.max(0, prevIdx), questions.length - 1);
+      const q = questions[idx];
+      
+      setAnswers(prevAns => ({ ...prevAns, [q.id]: value }));
 
-    setAnswers(prev => ({ ...prev, [q.id]: value }));
-
-    if (currentIdx >= questions.length - 1) {
-      setShowSummary(true);
-    } else {
-      setCurrentIdx(currentIdx + 1);
-    }
+      if (idx >= questions.length - 1) {
+        setShowSummary(true);
+        return idx;
+      }
+      return idx + 1;
+    });
   };
 
   const reset = () => {

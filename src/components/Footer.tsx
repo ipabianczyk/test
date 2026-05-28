@@ -41,15 +41,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-900 mb-6 font-mono">O autorze</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-900 mb-6">O autorze</h3>
             <p className="text-sm text-slate-400 leading-relaxed font-medium mb-4">
-              <strong 
-                onDoubleClick={() => window.dispatchEvent(new CustomEvent('trigger-admin-login'))}
-                className="cursor-pointer hover:text-amber-600 transition-colors"
-                title="Podwójne kliknięcie aktywuje panel admina"
-              >
-                Autor:
-              </strong> Igor Pabiańczyk – student pracy socjalnej na Uniwersytecie Śląskim.
+              <strong>Autor:</strong> Igor Pabiańczyk – student pracy socjalnej na Uniwersytecie Śląskim.
             </p>
             <Link to="/kontakt" className="text-amber-600 text-xs font-black uppercase tracking-widest hover:gap-4 transition-all flex items-center gap-2">
               Napisz do mnie <ArrowRight className="w-4 h-4" />
