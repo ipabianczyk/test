@@ -2,31 +2,24 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import * as LucideIcons from 'lucide-react';
-import { 
-  ArrowRight, Search, X, Clock, ChevronRight,
-  ShieldAlert, Phone, Heart, Info, Scale, 
-  HandHelping, AlertTriangle, FileText
-} from 'lucide-react';
-import { getAllPosts, BlogPost } from '../services/blogService';
+import { X } from 'lucide-react';
+import { getAllPosts } from '../services/blogService';
 import { SITE_CONFIG } from '../data/siteConfig';
-
-const IconRenderer = ({ iconName, className }: { iconName?: string, className?: string }) => {
-  const Icon = (LucideIcons as any)[iconName || 'FileText'] || FileText;
-  return <Icon className={className} />;
-};
 
 export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const blogPosts = useMemo(() => getAllPosts(), []);
   
-  const { categories } = useMemo(() => {
+  const { categories, tags } = useMemo(() => {
     const cats = new Set<string>();
+    const tgs = new Set<string>();
     blogPosts.forEach(p => {
       cats.add(p.category);
+      p.tags?.forEach(t => tgs.add(t));
     });
     return { 
-      categories: Array.from(cats)
+      categories: Array.from(cats),
+      tags: Array.from(tgs)
     };
   }, [blogPosts]);
 
@@ -45,249 +38,191 @@ export default function BlogPage() {
     });
   }, [blogPosts, searchQuery, selectedCategory]);
 
-  const suggestions = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const query = searchQuery.toLowerCase();
-    return blogPosts
-      .filter(p => p.title.toLowerCase().includes(query))
-      .slice(0, 5)
-      .map(p => ({ title: p.title, id: p.id }));
-  }, [searchQuery, blogPosts]);
-
   return (
-    <div className="bg-slate-50 min-h-screen pb-40">
-      {/* Help Center Hero */}
-      <section className="bg-white border-b border-slate-200 pt-10 md:pt-20 pb-16 px-4 relative overflow-hidden">
-        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-blue-50 to-transparent" />
-        
-        <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <Link to="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors mb-8">
-            <ArrowRight className="w-4 h-4 rotate-180" /> Powrót do portalu
-          </Link>
-          
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 mb-6">
-            Jak możemy Ci pomóc?
-          </h1>
-          <p className="text-lg md:text-xl text-slate-500 mb-10 font-medium">
-            Przeszukaj naszą bazę wiedzy, aby znaleźć porady prawne, psychologiczne i życiowe.
-          </p>
+    <div className="bg-slate-50 min-h-screen text-slate-900 font-sans selection:bg-amber-100 selection:text-amber-900 pb-20">
+        <div className="max-w-7xl mx-auto px-4 py-8 lg:py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                {/* KOLUMNA LEWA: Hugo Stack Sidebar */}
+                <aside className="lg:col-span-3 bg-white p-6 lg:p-8 rounded-[32px] border border-slate-200 shadow-sm space-y-8 lg:sticky top-24 z-10 w-full overflow-hidden">
+                    {/* Szukaj Widget */}
+                    <div className="bg-slate-50 p-2 rounded-2xl border border-slate-200 shadow-inner relative group text-left">
+                        <LucideIcons.Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                        <input 
+                            type="text" 
+                            placeholder="Szukaj artykułów..." 
+                            className="w-full bg-transparent py-2 pl-10 pr-4 rounded-xl font-bold text-slate-900 focus:outline-none transition-all text-sm"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
 
-          <div className="relative max-w-2xl mx-auto group">
-            <div className="absolute -inset-2 bg-blue-500/10 rounded-[32px] blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
-            <div className="relative bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200 flex items-center p-2">
-              <div className="pl-4 pr-2">
-                <Search className="w-6 h-6 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Np. alimenty, przemoc, nocleg..."
-                className="w-full px-2 py-4 bg-transparent font-bold text-lg outline-none placeholder:text-slate-300"
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
-                onFocus={() => setShowSuggestions(true)}
-              />
-              {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="p-3 hover:bg-slate-100 rounded-2xl transition-colors">
-                  <X className="w-5 h-5 text-slate-400" />
-                </button>
-              )}
-            </div>
-
-            <AnimatePresence>
-              {showSuggestions && suggestions.length > 0 && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full left-0 right-0 mt-4 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 text-left"
-                >
-                  <div className="px-6 py-4 bg-slate-50 border-b border-slate-100">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Sugestie</span>
-                  </div>
-                  {suggestions.map((s) => (
-                    <Link 
-                      key={s.id} 
-                      to={`/blog/${s.id}`} 
-                      className="flex items-center gap-4 px-6 py-4 hover:bg-blue-50 transition-colors border-b border-slate-50 last:border-0 w-full"
-                      onClick={() => setShowSuggestions(false)}
-                    >
-                        <FileText className="w-5 h-5 text-blue-400" />
-                        <span className="text-base font-bold text-slate-700">{s.title}</span>
-                    </Link>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </section>
-
-      <main className="max-w-7xl mx-auto px-4 md:px-10 py-12 md:py-16 space-y-12">
-        {/* Categories Toolbar */}
-        <section className="flex flex-col items-center space-y-6">
-          <div className="flex gap-3 overflow-x-auto no-scrollbar w-full justify-start md:justify-center px-4 py-2">
-            {['Wszystkie', ...categories].map(cat => {
-              const isAll = cat === 'Wszystkie';
-              const isActive = isAll ? !selectedCategory : selectedCategory === cat;
-              return (
-                <button 
-                  key={cat} 
-                  onClick={() => setSelectedCategory(isAll ? null : cat)} 
-                  className={`whitespace-nowrap px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
-                    isActive 
-                      ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/20' 
-                      : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-400 hover:text-slate-900'
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        <section>
-          {(searchQuery || selectedCategory) && (
-             <div className="mb-12 flex items-center justify-between">
-                <div>
-                   <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-slate-900 italic">
-                     {searchQuery ? `Dla frazy: "${searchQuery}"` : selectedCategory}
-                   </h2>
-                   <p className="text-slate-400 font-bold mt-2 uppercase tracking-[0.2em] text-[10px]">Znaleziono {filteredPosts.length} rekordów w bazie wiedzy</p>
-                </div>
-                {(searchQuery || selectedCategory) && (
-                   <button 
-                     onClick={() => { setSearchQuery(''); setSelectedCategory(null); }}
-                     className="text-[10px] font-black uppercase tracking-widest text-white bg-slate-900 px-6 py-3 rounded-full hover:bg-blue-600 transition-colors shadow-lg"
-                   >
-                     Resetuj filtry
-                   </button>
-                )}
-             </div>
-          )}
-          
-          <AnimatePresence mode="popLayout">
-            {filteredPosts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-                {filteredPosts.map((post, idx) => {
-                  const isWarning = post.alert_level === 'warning';
-                  const isUrgent = post.alert_level === 'urgent';
-                  
-                  return (
-                    <motion.div
-                      key={post.id}
-                      layout
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="group flex h-full"
-                    >
-                      <Link 
-                        to={`/blog/${post.id}`}
-                        className={`flex flex-col flex-1 bg-white rounded-[48px] overflow-hidden border-4 transition-all duration-500 relative ${
-                          isUrgent ? 'border-rose-500 shadow-2xl shadow-rose-100' :
-                          isWarning ? 'border-amber-400 shadow-xl shadow-amber-50' :
-                          'border-white shadow-xl shadow-slate-200/50 hover:border-blue-500 hover:shadow-blue-100 hover:-translate-y-2'
-                        }`}
-                      >
-                         {/* Kolorowy boczny pasek dla alertów */}
-                         {(isUrgent || isWarning) && (
-                           <div className={`absolute left-0 inset-y-0 w-3 ${isUrgent ? 'bg-rose-500' : 'bg-amber-400'}`} />
-                         )}
-
-                         <div className="p-8 md:p-12 flex flex-col flex-1">
-                            {/* Kategoria i ikona */}
-                            <div className="flex items-center justify-between mb-8">
-                               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors shadow-inner ${
-                                 isUrgent ? 'bg-rose-50 text-rose-600' : 
-                                 isWarning ? 'bg-amber-50 text-amber-600' : 
-                                 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white'
-                               }`}>
-                                  <IconRenderer iconName={post.icon} className="w-7 h-7" />
-                               </div>
-                               <span className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] border ${
-                                 isUrgent ? 'bg-rose-500 text-white border-rose-500' :
-                                 isWarning ? 'bg-amber-100 text-amber-700 border-amber-200' :
-                                 'bg-slate-50 text-slate-400 border-slate-100'
-                               }`}>
-                                 {post.category}
-                               </span>
+                    {/* Profil */}
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
+                        <div className="avatar placeholder">
+                            <div className="bg-blue-600 text-white rounded-full w-24 h-24 shadow-lg ring-4 ring-blue-50 flex items-center justify-center">
+                                <span className="text-3xl font-black">MP</span>
                             </div>
-
-                            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">
-                               <Clock className="w-3.5 h-3.5" /> {post.readTime}
-                               <span>•</span>
-                               <span>{post.date}</span>
-                            </div>
-                            
-                            <h2 className="text-2xl md:text-3xl font-black tracking-tighter leading-none mb-6 group-hover:text-blue-600 transition-colors">
-                              {post.title}
-                            </h2>
-                            
-                            <p className="text-slate-500 font-medium leading-relaxed line-clamp-3 text-sm md:text-base mb-10 overflow-hidden">
-                              {post.excerpt}
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-black tracking-tight text-slate-900">MostPomocy.pl</h2>
+                            <p className="text-xs font-semibold text-blue-600 uppercase tracking-widest mt-1">Sieć Wsparcia</p>
+                            <p className="text-xs text-slate-500 font-medium mt-3 leading-relaxed">
+                                Baza wiedzy eksperckiej, wsparcia psychologicznego i interwencyjnego.
                             </p>
-                            
-                            <div className="mt-auto pt-8 border-t border-slate-50 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.2em] text-blue-600">
-                               <span className="group-hover:translate-x-2 transition-transform">Szczegóły Triage-u</span>
-                               <ArrowRight className="w-5 h-5 group-hover:translate-x-3 transition-transform" />
-                            </div>
-                         </div>
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="py-20 text-center bg-white rounded-[40px] border border-slate-100 shadow-md">
-                 <Search className="w-16 h-16 text-slate-200 mx-auto mb-6" />
-                 <h3 className="text-2xl font-black text-slate-900 tracking-tighter mb-4">Nic tu nie ma.</h3>
-                 <p className="text-slate-500 font-medium max-w-md mx-auto">Nasze poradniki jeszcze powstają na ten temat. Spróbuj powrócić do widoku głównego.</p>
-              </div>
-            )}
-          </AnimatePresence>
-        </section>
+                        </div>
+                    </div>
 
-        {/* Global Crisis Banner */}
-        <section className="bg-slate-900 rounded-[56px] p-12 md:p-20 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 skew-x-12 translate-x-1/2" />
-          <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-             <div className="space-y-8">
-                <div className="w-14 h-14 bg-white text-slate-900 rounded-2xl flex items-center justify-center">
-                   <ShieldAlert className="w-8 h-8 text-rose-600" />
-                </div>
-                <h3 className="text-4xl md:text-6xl font-black tracking-tighter leading-none italic">
-                  Szukasz pomocy <br/>w tej sekundzie?
-                </h3>
-                <p className="text-slate-400 text-lg md:text-xl font-medium leading-relaxed max-w-md">
-                   Nie czekaj. W Bazie Wiedzy są poradniki, ale w kryzysie liczy się głos drugiego człowieka.
-                </p>
-             </div>
-             <div className="flex flex-col gap-4">
-                <a href={`tel:${SITE_CONFIG.contact.emergency_phone}`} className="flex items-center justify-between bg-white text-slate-900 p-8 rounded-[36px] hover:bg-amber-50 transition-all group">
-                   <div className="flex items-center gap-6">
-                     <div className="w-12 h-12 bg-slate-50 flex items-center justify-center rounded-2xl font-black text-2xl group-hover:bg-amber-100 group-hover:text-amber-600 transition-colors">116</div>
-                     <div>
-                        <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Dorośli</p>
-                        <p className="text-2xl font-black tracking-tighter">116 123</p>
-                     </div>
-                   </div>
-                   <Phone className="w-6 h-6 text-amber-500 group-hover:rotate-12 transition-transform" />
-                </a>
-                <a href={`tel:${SITE_CONFIG.contact.child_emergency_phone}`} className="flex items-center justify-between bg-slate-800 text-white p-8 rounded-[36px] hover:bg-slate-700 transition-all group border border-slate-700">
-                   <div className="flex items-center gap-6">
-                     <div className="w-12 h-12 bg-slate-900 flex items-center justify-center rounded-2xl font-black text-2xl group-hover:bg-blue-600 transition-colors">111</div>
-                     <div>
-                        <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Dzieci i Młodzież</p>
-                        <p className="text-2xl font-black tracking-tighter">116 111</p>
-                     </div>
-                   </div>
-                   <Phone className="w-6 h-6 text-slate-500 group-hover:rotate-12 transition-transform" />
-                </a>
-             </div>
-          </div>
-        </section>
-      </main>
+                    <hr className="border-slate-100" />
+                    
+                    <nav aria-label="Nawigacja bloga" className="flex flex-col w-full space-y-1 font-bold text-slate-700">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 px-3">NAWIGACJA</p>
+                        <Link to="/" className="flex items-center gap-4 py-3 px-3 hover:bg-slate-50 hover:text-blue-600 rounded-2xl transition duration-200">
+                            <LucideIcons.Home className="w-5 h-5 text-slate-400" /> Strona Główna
+                        </Link>
+                        <Link to="/mapa" className="flex items-center gap-4 py-3 px-3 hover:bg-slate-50 hover:text-blue-600 rounded-2xl transition duration-200">
+                            <LucideIcons.Map className="w-5 h-5 text-slate-400" /> Mapa Pomocy
+                        </Link>
+                        <Link to="/potrzebomat" className="flex items-center gap-4 py-3 px-3 hover:bg-slate-50 hover:text-blue-600 rounded-2xl transition duration-200">
+                            <LucideIcons.Search className="w-5 h-5 text-slate-400" /> Potrzebomat
+                        </Link>
+                    </nav>
+
+                    <hr className="border-slate-100" />
+                    
+                    <div className="bg-red-50 border border-red-200 p-5 rounded-3xl">
+                        <span className="text-[10px] font-black text-red-600 uppercase tracking-widest block mb-1">BEZPIECZEŃSTWO SOS</span>
+                        <p className="text-xs text-red-800 leading-relaxed font-semibold mb-4 text-left">Musisz natychmiast opuścić stronę?</p>
+                        <a href="https://google.com" className="flex items-center justify-center py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-colors shadow-sm" aria-label="Szybkie wyjście, przekierowuje do Google">Szybkie Wyjście</a>
+                    </div>
+                </aside>
+
+                {/* KOLUMNA ŚRODKOWA: Główny Grid Wpisów */}
+                <main className="lg:col-span-9 space-y-6 w-full max-w-full min-w-0">
+                    
+                    {/* Wyszukiwarka - przeniesiona nad wpisy by była zawsze widoczna na mobilkach jako pierwsza opcja */}
+                    <div className="bg-slate-50 p-2 rounded-2xl border border-slate-200 shadow-inner relative group text-left mb-4">
+                        <LucideIcons.Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                        <input 
+                            type="text" 
+                            placeholder="Szukaj artykułów..." 
+                            className="w-full bg-transparent py-2 pl-10 pr-4 rounded-xl font-bold text-slate-900 focus:outline-none transition-all text-sm"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
+
+                    {/* Kategorie - Poziomy scroll */}
+                    <div className="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-6">
+                        <button 
+                            onClick={() => setSelectedCategory(null)}
+                            className={`whitespace-nowrap px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                                selectedCategory === null 
+                                ? 'bg-slate-900 text-white shadow-md' 
+                                : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-900 hover:border-slate-300'
+                            }`}
+                        >
+                            Wszystkie
+                        </button>
+                        {categories.map((cat) => (
+                            <button 
+                                key={cat}
+                                onClick={() => setSelectedCategory(cat)}
+                                className={`whitespace-nowrap px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                                    selectedCategory === cat 
+                                    ? 'bg-slate-900 text-white shadow-md' 
+                                    : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-900 hover:border-slate-300'
+                                }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Opcjonalny nagłówek listingu */}
+                    {(selectedCategory || searchQuery) && (
+                        <div className="bg-white p-6 md:p-8 rounded-[32px] border border-slate-200 shadow-sm relative overflow-hidden text-left mb-6">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-0 opacity-50"></div>
+                            <div className="relative z-10">
+                                <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] block mb-2">
+                                    {selectedCategory ? `Kategoria` : `Wyniki wyszukiwania`}
+                                </span>
+                                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+                                    {selectedCategory || searchQuery}
+                                </h1>
+                                <button 
+                                    onClick={() => { setSelectedCategory(null); setSearchQuery(''); }}
+                                    className="mt-2 text-[10px] items-center inline-flex gap-2 font-black uppercase tracking-widest text-slate-500 bg-slate-100 px-4 py-2 rounded-xl hover:bg-slate-200 transition-colors"
+                                >
+                                    <LucideIcons.X className="w-4 h-4" /> Resetuj
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    <AnimatePresence mode="popLayout">
+                        {filteredPosts.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+                                {filteredPosts.map((post, idx) => (
+                                    <motion.article
+                                        key={post.id}
+                                        layout
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: idx * 0.05 }}
+                                        className="bg-white border border-slate-200 shadow-sm rounded-[24px] overflow-hidden group flex flex-col"
+                                    >
+                                        {post.image && (
+                                            <Link to={`/blog/${post.id}`} className="block overflow-hidden relative border-b border-slate-100">
+                                                <figure className="h-32 md:h-40 w-full bg-slate-100">
+                                                    <img 
+                                                        src={post.image} 
+                                                        alt={post.title} 
+                                                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out" 
+                                                        referrerPolicy="no-referrer"
+                                                    />
+                                                </figure>
+                                            </Link>
+                                        )}
+                                        <div className="p-5 md:p-6 text-left flex flex-col flex-1">
+                                            <div className="flex flex-wrap items-center gap-2 mb-3">
+                                                <span className="badge badge-primary badge-outline font-bold uppercase tracking-wider text-[9px] px-2 py-0.5">{post.category}</span>
+                                            </div>
+
+                                            <h2 className="text-lg md:text-xl font-black text-slate-900 tracking-tight leading-snug mb-3 group-hover:text-blue-600 transition-colors">
+                                                <Link to={`/blog/${post.id}`}>{post.title}</Link>
+                                            </h2>
+
+                                            <p className="text-slate-600 font-medium text-xs md:text-sm leading-relaxed mb-4 line-clamp-5">
+                                                {post.excerpt}
+                                            </p>
+                                            
+                                            <div className="flex items-center justify-between border-t border-slate-100 pt-4 mt-auto">
+                                                <div className="flex flex-wrap gap-2">
+                                                    <span className="text-[9px] uppercase font-bold tracking-widest text-slate-400 flex items-center gap-1.5">
+                                                        <LucideIcons.Calendar className="w-3.5 h-3.5" />
+                                                        {post.date}
+                                                    </span>
+                                                </div>
+                                                <Link to={`/blog/${post.id}`} className="text-[10px] font-black uppercase tracking-[0.1em] text-blue-600 hover:text-blue-700 flex items-center gap-1.5 transition-colors">
+                                                    Więcej <LucideIcons.ArrowRight className="w-4 h-4" />
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </motion.article>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="py-24 text-center bg-white rounded-[32px] border border-slate-200 shadow-sm">
+                                <LucideIcons.FileQuestion className="w-16 h-16 text-slate-200 mx-auto mb-6" />
+                                <h3 className="text-2xl font-black text-slate-900 tracking-tighter mb-4">Pusto tutaj.</h3>
+                                <p className="text-slate-500 font-medium max-w-sm mx-auto">Nic nie znaleźliśmy. Spróbuj zmienić filtry lub wyszukaną frazę.</p>
+                            </div>
+                        )}
+                    </AnimatePresence>
+                </main>
+            </div>
+        </div>
     </div>
   );
 }

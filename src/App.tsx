@@ -77,6 +77,7 @@ export default function App() {
               <Route path="/znajdz-potrzebe" element={<NeedsFinder />} />
               <Route path="/strefa-spokoju" element={<ZenZone />} />
               <Route path="/kreator-artykulow" element={<ArticleCreator />} />
+              <Route path="/admin" element={<ArticleCreator />} />
             </Routes>
           </main>
 

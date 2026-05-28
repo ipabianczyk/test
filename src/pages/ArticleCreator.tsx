@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import MarkdownRenderer from '../components/MarkdownRenderer';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { 
   FilePlus, Copy, Download, Eye, Edit3, 
   Type, User, Tag, Image as ImageIcon, 
@@ -98,12 +99,18 @@ ${formData.content}`;
     }, 0);
   };
 
+  useHotkeys('ctrl+b, meta+b', (e) => { e.preventDefault(); insertText('**', '**'); }, { enableOnFormTags: true });
+  useHotkeys('ctrl+i, meta+i', (e) => { e.preventDefault(); insertText('_', '_'); }, { enableOnFormTags: true });
+  useHotkeys('ctrl+1, meta+1', (e) => { e.preventDefault(); insertText('# ', ''); }, { enableOnFormTags: true });
+  useHotkeys('ctrl+2, meta+2', (e) => { e.preventDefault(); insertText('## ', ''); }, { enableOnFormTags: true });
+  useHotkeys('ctrl+l, meta+l', (e) => { e.preventDefault(); insertText('- ', ''); }, { enableOnFormTags: true });
+
   const TOOLBAR_ITEMS = [
-    { label: 'B', icon: Bold, action: () => insertText('**', '**'), tooltip: 'Pogrubienie' },
-    { label: 'I', icon: Italic, action: () => insertText('_', '_'), tooltip: 'Kursywa' },
-    { label: 'H1', icon: Heading1, action: () => insertText('# ', ''), tooltip: 'Nagłówek 1' },
-    { label: 'H2', icon: Heading2, action: () => insertText('## ', ''), tooltip: 'Nagłówek 2' },
-    { label: 'List', icon: List, action: () => insertText('- ', ''), tooltip: 'Lista' },
+    { label: 'B', icon: Bold, action: () => insertText('**', '**'), tooltip: 'Pogrubienie (Ctrl+B)' },
+    { label: 'I', icon: Italic, action: () => insertText('_', '_'), tooltip: 'Kursywa (Ctrl+I)' },
+    { label: 'H1', icon: Heading1, action: () => insertText('# ', ''), tooltip: 'Nagłówek 1 (Ctrl+1)' },
+    { label: 'H2', icon: Heading2, action: () => insertText('## ', ''), tooltip: 'Nagłówek 2 (Ctrl+2)' },
+    { label: 'List', icon: List, action: () => insertText('- ', ''), tooltip: 'Lista (Ctrl+L)' },
     { 
       label: 'Kafelka', 
       icon: Grid, 

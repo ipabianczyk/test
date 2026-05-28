@@ -1,35 +1,41 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import { createServer as createViteServer } from 'vite';
 
-const app = express();
-const PORT = 3000;
+async function startServer() {
+    const app = express();
+    const PORT = 3000;
 
-app.use(express.json());
+    app.use(express.json());
 
-// Proste loggery by symulować aktywne środowisko
-app.use((req, res, next) => {
-    console.log(`[MostPomocy API] ${req.method} ${req.url}`);
-    next();
-});
-
-// Zakończenie aplikacji API Statystyk
-app.get('/api/stats', (req, res) => {
-    res.json({
-        visitorsToday: Math.floor(Math.random() * 500) + 1200,
-        uniqueUsers: Math.floor(Math.random() * 300) + 800
+    // Logging middleware
+    app.use((req, res, next) => {
+        console.log(`[MostPomocy API] ${req.method} ${req.url}`);
+        next();
     });
-});
 
-// Symulacja EndPointu Google Apps Script / GitHub Backend
-app.post('/api/save-post', (req, res) => {
-    const { title, tags, category, metaDesc, summary, content } = req.body;
-    
-    const date = new Date().toISOString();
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-    
-    // Generowanie natywnej struktury Front Matter pod motyw Stack
-    const mdContent = `---
+    // 1. Cloudflare Web Analytics Simulated/GraphQL API proxy endpoint
+    app.get('/api/stats', (req, res) => {
+        res.json({
+            visitorsToday: Math.floor(Math.random() * 500) + 12042,
+            uniqueUsers: Math.floor(Math.random() * 300) + 2431
+        });
+    });
+
+    // 2. Hugo .md Post creation endpoint (Google Apps Script / GitHub Backend Proxy simulation)
+    app.post('/api/save-post', (req, res) => {
+        const { title, tags, category, metaDesc, summary, content } = req.body;
+        
+        const date = new Date().toISOString();
+        const slug = title.trim().toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '') // remove special chars
+            .replace(/\s+/g, '-')        // spaces to -
+            .replace(/-+/g, '-')         // remove double -
+            .replace(/(^-|-$)+/g, '');    // trim leading/ending dashes
+        
+        // Generating compliant Front Matter for Hugo Theme "Stack"
+        const mdContent = `---
 title: "${title}"
 date: ${date}
 draft: false
@@ -39,32 +45,55 @@ categories:
   - "${category}"
 tags:
 ${tags.map((t: string) => `  - "${t}"`).join('\n')}
-image: "https://placehold.co/800x400"
+image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800"
 ---
 
 ${content}
 `;
 
-    const dir = path.join(process.cwd(), 'content', 'posts');
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
+        const dir = path.join(process.cwd(), 'src', 'content', 'posts');
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        
+        const filePath = path.join(dir, `${slug || 'unnamed-post'}.md`);
+        fs.writeFileSync(filePath, mdContent);
+        
+        console.log(`✅ Plik Markdown został utworzony poprawnie (Zapis na dysku): ${filePath}`);
+        
+        // Return success matching CRUD operations
+        setTimeout(() => {
+            res.json({ success: true, file: filePath });
+        }, 800);
+    });
+
+    // 3. Static directory for isolated Admin interface
+    app.use('/static', express.static(path.join(process.cwd(), 'static')));
+
+    // 4. Vite Dev Server Middleware or Production Static Fallback
+    if (process.env.NODE_ENV !== "production") {
+        console.log("⚙️ Starting Vite in development mode...");
+        const vite = await createViteServer({
+            server: { middlewareMode: true },
+            appType: 'spa',
+        });
+        
+        // Process requests through Vite development middleware
+        app.use(vite.middlewares);
+    } else {
+        console.log("📦 Starting server in production mode...");
+        const distPath = path.join(process.cwd(), 'dist');
+        app.use(express.static(distPath));
+        app.get('*all', (req, res) => {
+            res.sendFile(path.join(distPath, 'index.html'));
+        });
     }
-    
-    const filePath = path.join(dir, `${slug}.md`);
-    fs.writeFileSync(filePath, mdContent);
-    
-    console.log(`✅ Plik Markdown został utworzony poprawnie (Zapis na dysku): ${filePath}`);
-    
-    // Minimalne opóźnienie by zasymulować odpowiedź Backendu
-    setTimeout(() => {
-        res.json({ success: true, file: filePath });
-    }, 800);
-});
 
-// Routing do zapytań SPA (Czysty HTML z Tailwind)
-app.use('/static', express.static(path.join(process.cwd(), 'static')));
-app.use(express.static(process.cwd()));
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 (MostPomocy CMS with Vite) Backend & Frontend live on http://localhost:${PORT}`);
+    });
+}
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 MostPomocy CMS Server and Site started on http://0.0.0.0:${PORT}`);
+startServer().catch((err) => {
+    console.error("Critical error starting Express + Vite server:", err);
 });
