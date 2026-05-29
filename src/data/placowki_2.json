@@ -1,0 +1,1092 @@
+{
+  "jelenia góra": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "Jelenia Góra",
+    "gmina": "Jelenia Góra",
+    "miejscowosc": "Jelenia Góra",
+    "bytowe": "sekretariat@mops.jelenia-gora.pl",
+    "kryzys": "pcpr@pcpr.jgora.pl",
+    "prawo": "sekretariat@mops.jelenia-gora.pl",
+    "zdrowie": "sekretariat@dpspogodnajesien.pl"
+  },
+  "legnica": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "Legnica",
+    "gmina": "Legnica",
+    "miejscowosc": "Legnica",
+    "bytowe": "mopslegnica@mopslegnicaa.pl",
+    "kryzys": "sekretariat@cpr-powiat-legnicki.eu",
+    "prawo": "mopslegnica@mopslegnica.pl",
+    "zdrowie": "dps@dps.legnica.eu"
+  },
+  "wrocław-stare miasto": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "Wrocław",
+    "gmina": "Wrocław-Stare Miasto",
+    "miejscowosc": "Wrocław-Stare Miasto",
+    "bytowe": "sekretariat@mops.wroclaw.pl",
+    "kryzys": "pcpr@pcpr.wroclaw.pl",
+    "prawo": "sekretariat@mops.wroclaw.pl",
+    "zdrowie": "dps.wroc.franciszkanki@gmail.com"
+  },
+  "kruszyn": {
+    "wojewodztwo": "kujawsko-pomorskie",
+    "powiat": "włocławski",
+    "gmina": "Włocławek",
+    "miejscowosc": "Kruszyn",
+    "bytowe": "cus@cus.wloclawek.pl",
+    "kryzys": "cus@cus.wloclawek.pl",
+    "prawo": "cus@cus.wloclawek.pl",
+    "zdrowie": "dpsrzezewo@powiat.wloclawski.pl"
+  },
+  "bolesławiec": {
+    "wojewodztwo": "łódzkie",
+    "powiat": "wieruszowski",
+    "gmina": "Bolesławiec",
+    "miejscowosc": "Bolesławiec",
+    "bytowe": "gops@boleslawiec.net.pl",
+    "kryzys": "biuro@pcpr-wieruszow.org",
+    "prawo": "biuro@pcpr-wieruszow.org",
+    "zdrowie": "dps-boleslawiec@boleslawiec.eu"
+  },
+  "nowogrodziec": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "bolesławiecki",
+    "gmina": "Nowogrodziec",
+    "miejscowosc": "Nowogrodziec",
+    "bytowe": "mgops@nowogrodziec.pl",
+    "kryzys": "centrum@pcpr.boleslawiec.pl",
+    "prawo": "centrum@pcpr.boleslawiec.pl",
+    "zdrowie": "dps-boleslawiec@boleslawiec.eu"
+  },
+  "osiecznica": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "bolesławiecki",
+    "gmina": "Osiecznica",
+    "miejscowosc": "Osiecznica",
+    "bytowe": "osrodek@gopsosiecznica.pl",
+    "kryzys": "centrum@pcpr.boleslawiec.pl",
+    "prawo": "centrum@pcpr.boleslawiec.pl",
+    "zdrowie": "dps-boleslawiec@boleslawiec.eu"
+  },
+  "warta bolesławiecka": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "bolesławiecki",
+    "gmina": "Warta Bolesławiecka",
+    "miejscowosc": "Warta Bolesławiecka",
+    "bytowe": "gops@gopswartabol.pl",
+    "kryzys": "centrum@pcpr.boleslawiec.pl",
+    "prawo": "centrum@pcpr.boleslawiec.pl",
+    "zdrowie": "dps-boleslawiec@boleslawiec.eu"
+  },
+  "bielawa": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "dzierżoniowski",
+    "gmina": "Bielawa",
+    "miejscowosc": "Bielawa",
+    "bytowe": "ops@opsbielawa.pl",
+    "kryzys": "pcpr@pcprdzierzoniow.pl",
+    "prawo": "pcpr@pcprdzierzoniow.pl",
+    "zdrowie": "dpsbielawa@dpsbielawa.pl"
+  },
+  "dzierżoniów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "dzierżoniowski",
+    "gmina": "Dzierżoniów",
+    "miejscowosc": "Dzierżoniów",
+    "bytowe": "opsdz@opsdzierzoniow.pl",
+    "kryzys": "pcpr@pcprdzierzoniow.pl",
+    "prawo": "opsdz@opsdzierzoniow.pl",
+    "zdrowie": "dpsbielawa@dpsbielawa.pl"
+  },
+  "niemcza": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "dzierżoniowski",
+    "gmina": "Niemcza",
+    "miejscowosc": "Niemcza",
+    "bytowe": "ops@ops.niemcza.pl",
+    "kryzys": "pcpr@pcprdzierzoniow.pl",
+    "prawo": "pcpr@pcprdzierzoniow.pl",
+    "zdrowie": "dpsbielawa@dpsbielawa.pl"
+  },
+  "łagiewniki": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "dzierżoniowski",
+    "gmina": "Łagiewniki",
+    "miejscowosc": "Łagiewniki",
+    "bytowe": "gops@lagiewniki.pl",
+    "kryzys": "pcpr@pcprdzierzoniow.pl",
+    "prawo": "pcpr@pcprdzierzoniow.pl",
+    "zdrowie": "administracja@dpslagiewniki.com.pl"
+  },
+  "góra": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "górowski",
+    "gmina": "Góra",
+    "miejscowosc": "Góra",
+    "bytowe": "biuro@opsgora.com.pl",
+    "kryzys": "sekretariat@pcprgora.pl",
+    "prawo": "sekretariat@pcprgora.pl",
+    "zdrowie": "biuro@opsgora.com.pl"
+  },
+  "niechlów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "górowski",
+    "gmina": "Niechlów",
+    "miejscowosc": "Niechlów",
+    "bytowe": "gops@niechlow.gopsinfo.pl",
+    "kryzys": "sekretariat@pcprgora.pl",
+    "prawo": "sekretariat@pcprgora.pl",
+    "zdrowie": "gops@niechlow.gopsinfo.pl"
+  },
+  "wąsosz": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "górowski",
+    "gmina": "Wąsosz",
+    "miejscowosc": "Wąsosz",
+    "bytowe": "wasosz@opsinfo.pl",
+    "kryzys": "sekretariat@pcprgora.pl",
+    "prawo": "sekretariat@pcprgora.pl",
+    "zdrowie": "wasosz@opsinfo.pl"
+  },
+  "głogów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "głogowski",
+    "gmina": "Głogów",
+    "miejscowosc": "Głogów",
+    "bytowe": "gops@gminaglogow.pl",
+    "kryzys": "pcpr_glogow@op.pl",
+    "prawo": "pcpr_glogow@op.pl",
+    "zdrowie": "sekretariat@dps.glogow.pl"
+  },
+  "jerzmanowa": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "głogowski",
+    "gmina": "Jerzmanowa",
+    "miejscowosc": "Jerzmanowa",
+    "bytowe": "poczta@gopsjerzmanowa.pl",
+    "kryzys": "pcpr_glogow@op.pl",
+    "prawo": "poczta@gopsjerzmanowa.pl",
+    "zdrowie": "sekretariat@dps.glogow.pl"
+  },
+  "kotla": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "głogowski",
+    "gmina": "Kotla",
+    "miejscowosc": "Kotla",
+    "bytowe": "kotla@gopskotla.pl",
+    "kryzys": "pcpr_glogow@op.pl",
+    "prawo": "pcpr_glogow@op.pl",
+    "zdrowie": "sekretariat@dps.glogow.pl"
+  },
+  "wietszyce": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "głogowski",
+    "gmina": "Pęcław",
+    "miejscowosc": "Wietszyce",
+    "bytowe": "gops@peclaw.eu",
+    "kryzys": "pcpr_glogow@op.pl",
+    "prawo": "pcpr_glogow@op.pl",
+    "zdrowie": "sekretariat@dps.glogow.pl"
+  },
+  "bolków": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "jaworski",
+    "gmina": "Bolków",
+    "miejscowosc": "Bolków",
+    "bytowe": "kontakt@gmopsbolkow.pl",
+    "kryzys": "kontakt@pcpr-jawor.pl",
+    "prawo": "kontakt@pcpr-jawor.pl",
+    "zdrowie": "dpsjawor@dpsjawor.pl"
+  },
+  "jawor": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "jaworski",
+    "gmina": "Jawor",
+    "miejscowosc": "Jawor",
+    "bytowe": "sekretariat@mops-jawor.pl",
+    "kryzys": "kontakt@pcpr-jawor.pl",
+    "prawo": "kontakt@pcpr-jawor.pl",
+    "zdrowie": "dpsjawor@dpsjawor.pl"
+  },
+  "męcinka": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "jaworski",
+    "gmina": "Męcinka",
+    "miejscowosc": "Męcinka",
+    "bytowe": "gops@mecinka.pl",
+    "kryzys": "kontakt@pcpr-jawor.pl",
+    "prawo": "kontakt@pcpr-jawor.pl",
+    "zdrowie": "dpsjawor@dpsjawor.pl"
+  },
+  "mściwojów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "jaworski",
+    "gmina": "Mściwojów",
+    "miejscowosc": "Mściwojów",
+    "bytowe": "gops@msciwojow.pl",
+    "kryzys": "kontakt@pcpr-jawor.pl",
+    "prawo": "kontakt@pcpr-jawor.pl",
+    "zdrowie": "dpsjawor@dpsjawor.pl"
+  },
+  "paszowice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "jaworski",
+    "gmina": "Paszowice",
+    "miejscowosc": "Paszowice",
+    "bytowe": "gops@paszowice.pl",
+    "kryzys": "kontakt@pcpr-jawor.pl",
+    "prawo": "kontakt@pcpr-jawor.pl",
+    "zdrowie": "dpsjawor@dpsjawor.pl"
+  },
+  "wądroże wielkie": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "jaworski",
+    "gmina": "Wądroże Wielkie",
+    "miejscowosc": "Wądroże Wielkie",
+    "bytowe": "gops@gopswadrozewielkie.pl",
+    "kryzys": "kontakt@pcpr-jawor.pl",
+    "prawo": "kontakt@pcpr-jawor.pl",
+    "zdrowie": "dpsjawor@dpsjawor.pl"
+  },
+  "kamienna góra": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kamiennogórski",
+    "gmina": "Kamienna Góra",
+    "miejscowosc": "Kamienna Góra",
+    "bytowe": "mopskg@o2.pl",
+    "kryzys": "pcpr@kamienna-gora.pl",
+    "prawo": "pcpr@kamienna-gora.pl",
+    "zdrowie": "szarocin@post.pl"
+  },
+  "lubawka": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kamiennogórski",
+    "gmina": "Lubawka",
+    "miejscowosc": "Lubawka",
+    "bytowe": "sekretariat@mgops.lubawka.eu",
+    "kryzys": "pcpr@kamienna-gora.pl",
+    "prawo": "pcpr@kamienna-gora.pl",
+    "zdrowie": "szarocin@post.pl"
+  },
+  "marciszów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kamiennogórski",
+    "gmina": "Marciszów",
+    "miejscowosc": "Marciszów",
+    "bytowe": "gops@marciszow.pl",
+    "kryzys": "pcpr@kamienna-gora.pl",
+    "prawo": "gops@marciszow.pl",
+    "zdrowie": "szarocin@post.pl"
+  },
+  "janowice wielkie": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "karkonoski",
+    "gmina": "Janowice Wielkie",
+    "miejscowosc": "Janowice Wielkie",
+    "bytowe": "gops@janowicewielkie.eu",
+    "kryzys": "gops@janowicewielkie.eu",
+    "prawo": "gops@janowicewielkie.eu",
+    "zdrowie": "sekretariat@dpsjanowicewielkie.pl"
+  },
+  "podgórzyn": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "karkonoski",
+    "gmina": "Podgórzyn",
+    "miejscowosc": "Podgórzyn",
+    "bytowe": "opspodgorzyn@poczta.onet.pl",
+    "kryzys": "opspodgorzyn@poczta.onet.pl",
+    "prawo": "opspodgorzyn@poczta.onet.pl",
+    "zdrowie": "dps_szklarska@onet.pl"
+  },
+  "stara kamienica": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "karkonoski",
+    "gmina": "Stara Kamienica",
+    "miejscowosc": "Stara Kamienica",
+    "bytowe": "gops@starakamienica.pl",
+    "kryzys": "gops@starakamienica.pl",
+    "prawo": "gops@starakamienica.pl",
+    "zdrowie": "dps_szklarska@onet.pl"
+  },
+  "duszniki-zdrój": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Duszniki-Zdrój",
+    "miejscowosc": "Duszniki-Zdrój",
+    "bytowe": "biuro@ops.duszniki.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "kudowa-zdrój": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Kudowa-Zdrój",
+    "miejscowosc": "Kudowa-Zdrój",
+    "bytowe": "ops@kudowa.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "kłodzko": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Kłodzko",
+    "miejscowosc": "Kłodzko",
+    "bytowe": "sekretariat@ops.gmina.klodzko.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "lewin kłodzki": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Lewin Kłodzki",
+    "miejscowosc": "Lewin Kłodzki",
+    "bytowe": "ops.lewin@list.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "lądek-zdrój": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Lądek-Zdrój",
+    "miejscowosc": "Lądek-Zdrój",
+    "bytowe": "sekretariatops@ladek.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "międzylesie": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Międzylesie",
+    "miejscowosc": "Międzylesie",
+    "bytowe": "opsmlesi@poczta.onet.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "nowa ruda": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Nowa Ruda",
+    "miejscowosc": "Nowa Ruda",
+    "bytowe": "sekretariat@gops.nowaruda.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dpsnowaruda@interia.pl"
+  },
+  "stronie śląskie": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Stronie Śląskie",
+    "miejscowosc": "Stronie Śląskie",
+    "bytowe": "ops@stronie.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "szczytna": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "kłodzki",
+    "gmina": "Szczytna",
+    "miejscowosc": "Szczytna",
+    "bytowe": "opszczytna@poczta.onet.pl",
+    "kryzys": "pcpr@pcpr.klodzko.pl",
+    "prawo": "pcpr@pcpr.klodzko.pl",
+    "zdrowie": "dps-scinawka@post.pl"
+  },
+  "chojnów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "legnicki",
+    "gmina": "Chojnów",
+    "miejscowosc": "Chojnów",
+    "bytowe": "mops@chojnow.eu",
+    "kryzys": "mops@chojnow.eu",
+    "prawo": "mops@chojnow.eu",
+    "zdrowie": "biuro@dpsprzasnik.com"
+  },
+  "krotoszyce": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "legnicki",
+    "gmina": "Krotoszyce",
+    "miejscowosc": "Krotoszyce",
+    "bytowe": "gops@gops.krotoszyce.pl",
+    "kryzys": "gops@gops.krotoszyce.pl",
+    "prawo": "gops@gops.krotoszyce.pl",
+    "zdrowie": "biuro@dpsprzasnik.com"
+  },
+  "kunice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "legnicki",
+    "gmina": "Kunice",
+    "miejscowosc": "Kunice",
+    "bytowe": "gopskunice@gops.kunice.pl",
+    "kryzys": "gopskunice@gops.kunice.pl",
+    "prawo": "gopskunice@gops.kunice.pl",
+    "zdrowie": "biuro@dpsprzasnik.com"
+  },
+  "legnickie pole": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "legnicki",
+    "gmina": "Legnickie Pole",
+    "miejscowosc": "Legnickie Pole",
+    "bytowe": "kontakt@gops-legnickiepole.pl",
+    "kryzys": "kontakt@gops-legnickiepole.pl",
+    "prawo": "kontakt@gops-legnickiepole.pl",
+    "zdrowie": "biuro@dpsprzasnik.com"
+  },
+  "miłkowice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "legnicki",
+    "gmina": "Miłkowice",
+    "miejscowosc": "Miłkowice",
+    "bytowe": "gops@ugmilkowice.net",
+    "kryzys": "gops@ugmilkowice.net",
+    "prawo": "gops@ugmilkowice.net",
+    "zdrowie": "biuro@dpsprzasnik.com"
+  },
+  "ruja": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "legnicki",
+    "gmina": "Ruja",
+    "miejscowosc": "Ruja",
+    "bytowe": "kontakt@gopsruja.pl",
+    "kryzys": "kontakt@gopsruja.pl",
+    "prawo": "kontakt@gopsruja.pl",
+    "zdrowie": "biuro@dpsprzasnik.com"
+  },
+  "leśna": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lubański",
+    "gmina": "Leśna",
+    "miejscowosc": "Leśna",
+    "bytowe": "sekretariat@mgops-lesna.pl",
+    "kryzys": "sekretariat@pcprluban.pl",
+    "prawo": "sekretariat@pcprluban.pl",
+    "zdrowie": "sekretariat@mgops-lesna.pl"
+  },
+  "lubań": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lubański",
+    "gmina": "Lubań",
+    "miejscowosc": "Lubań",
+    "bytowe": "gops@luban.ug.gov.pl",
+    "kryzys": "sekretariat@pcprluban.pl",
+    "prawo": "sekretariat@pcprluban.pl",
+    "zdrowie": "gops@luban.ug.gov.pl"
+  },
+  "olszyna": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lubański",
+    "gmina": "Olszyna",
+    "miejscowosc": "Olszyna",
+    "bytowe": "sekretariat@gopsolszyna.pl",
+    "kryzys": "sekretariat@pcprluban.pl",
+    "prawo": "sekretariat@pcprluban.pl",
+    "zdrowie": "sekretariat@gopsolszyna.pl"
+  },
+  "platerówka": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lubański",
+    "gmina": "Platerówka",
+    "miejscowosc": "Platerówka",
+    "bytowe": "gops@gminaplaterowka.pl",
+    "kryzys": "sekretariat@pcprluban.pl",
+    "prawo": "sekretariat@pcprluban.pl",
+    "zdrowie": "gops@gminaplaterowka.pl"
+  },
+  "siekierczyn": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lubański",
+    "gmina": "Siekierczyn",
+    "miejscowosc": "Siekierczyn",
+    "bytowe": "gops@siekierczyn.pl",
+    "kryzys": "sekretariat@pcprluban.pl",
+    "prawo": "sekretariat@pcprluban.pl",
+    "zdrowie": "gops@siekierczyn.pl"
+  },
+  "lubin": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lubiński",
+    "gmina": "Lubin",
+    "miejscowosc": "Lubin",
+    "bytowe": "gops@ug.lubin.pl",
+    "kryzys": "pcpr@powiat-lubin.pl",
+    "prawo": "pcpr@powiat-lubin.pl",
+    "zdrowie": "gops@ug.lubin.pl"
+  },
+  "rudna": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lubiński",
+    "gmina": "Rudna",
+    "miejscowosc": "Rudna",
+    "bytowe": "gops@gops.rudna.pl",
+    "kryzys": "pcpr@powiat-lubin.pl",
+    "prawo": "pcpr@powiat-lubin.pl",
+    "zdrowie": "gops@gops.rudna.pl"
+  },
+  "lubomierz": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lwówecki",
+    "gmina": "Lubomierz",
+    "miejscowosc": "Lubomierz",
+    "bytowe": "poczta@mgopslubomierz.pl",
+    "kryzys": "pcpr@powiatlwowecki.pl",
+    "prawo": "pcpr@powiatlwowecki.pl",
+    "zdrowie": "sekretariat@dpsnielestno.powiatlwowecki.pl"
+  },
+  "lwówek śląski": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lwówecki",
+    "gmina": "Lwówek Śląski",
+    "miejscowosc": "Lwówek Śląski",
+    "bytowe": "mgops@lwowekslaski.pl",
+    "kryzys": "pcpr@powiatlwowecki.pl",
+    "prawo": "pcpr@powiatlwowecki.pl",
+    "zdrowie": "sekretariat@dpsnielestno.powiatlwowecki.pl"
+  },
+  "mirsk": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lwówecki",
+    "gmina": "Mirsk",
+    "miejscowosc": "Mirsk",
+    "bytowe": "mgops@mirsk.pl",
+    "kryzys": "pcpr@powiatlwowecki.pl",
+    "prawo": "pcpr@powiatlwowecki.pl",
+    "zdrowie": "kontakt@dpsmirsk.pl"
+  },
+  "wleń": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "lwówecki",
+    "gmina": "Wleń",
+    "miejscowosc": "Wleń",
+    "bytowe": "sekretariat@mgopswlen.pl",
+    "kryzys": "pcpr@powiatlwowecki.pl",
+    "prawo": "pcpr@powiatlwowecki.pl",
+    "zdrowie": "sekretariat@dpsnielestno.powiatlwowecki.pl"
+  },
+  "cieszków": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "milicki",
+    "gmina": "Cieszków",
+    "miejscowosc": "Cieszków",
+    "bytowe": "sekretariat@gops.cieszkow.pl",
+    "kryzys": "info@pcprmilicz.pl",
+    "prawo": "info@pcprmilicz.pl",
+    "zdrowie": "sekretariat@dpsmilicz.pl"
+  },
+  "krośnice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "milicki",
+    "gmina": "Krośnice",
+    "miejscowosc": "Krośnice",
+    "bytowe": "dyrektor@gops.krosnice.pl",
+    "kryzys": "info@pcprmilicz.pl",
+    "prawo": "info@pcprmilicz.pl",
+    "zdrowie": "dpskrosnice@wp.pl"
+  },
+  "milicz": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "milicki",
+    "gmina": "Milicz",
+    "miejscowosc": "Milicz",
+    "bytowe": "ops@opsmilicz.com.pl",
+    "kryzys": "info@pcprmilicz.pl",
+    "prawo": "ops@opsmilicz.com.pl",
+    "zdrowie": "sekretariat@dpsmilicz.pl"
+  },
+  "bierutów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "oleśnicki",
+    "gmina": "Bierutów",
+    "miejscowosc": "Bierutów",
+    "bytowe": "sekretariat@bierutow.naszops.pl",
+    "kryzys": "sekretariat@pcpr.olesnica.pl",
+    "prawo": "sekretariat@pcpr.olesnica.pl",
+    "zdrowie": "sekretariat@pdps-ostrowina.pl"
+  },
+  "dziadowa kłoda": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "oleśnicki",
+    "gmina": "Dziadowa Kłoda",
+    "miejscowosc": "Dziadowa Kłoda",
+    "bytowe": "gops@dziadowakloda.pl",
+    "kryzys": "sekretariat@pcpr.olesnica.pl",
+    "prawo": "sekretariat@pcpr.olesnica.pl",
+    "zdrowie": "sekretariat@pdps-ostrowina.pl"
+  },
+  "oleśnica": {
+    "wojewodztwo": "świętokrzyskie",
+    "powiat": "staszowski",
+    "gmina": "Oleśnica",
+    "miejscowosc": "Oleśnica",
+    "bytowe": "kontakt@gopsolesnica.pl",
+    "kryzys": "pcpr@staszowski.eu",
+    "prawo": "pcpr@staszowski.eu",
+    "zdrowie": "kadry-rudki@wp.pl"
+  },
+  "twardogóra": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "oleśnicki",
+    "gmina": "Twardogóra",
+    "miejscowosc": "Twardogóra",
+    "bytowe": "sekretariat@mgops.twardogora.pl",
+    "kryzys": "sekretariat@pcpr.olesnica.pl",
+    "prawo": "sekretariat@pcpr.olesnica.pl",
+    "zdrowie": "sekretariat@pdps-ostrowina.pl"
+  },
+  "oława": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "oławski",
+    "gmina": "Oława",
+    "miejscowosc": "Oława",
+    "bytowe": "sekretariat@gops.olawa.pl",
+    "kryzys": "sekretariat@pcpr-olawa.pl",
+    "prawo": "sekretariat@pcpr-olawa.pl",
+    "zdrowie": "sekretariat@gops.olawa.pl"
+  },
+  "chocianów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "polkowicki",
+    "gmina": "Chocianów",
+    "miejscowosc": "Chocianów",
+    "bytowe": "sekretariat@opschocianow.pl",
+    "kryzys": "sekretariat@opschocianow.pl",
+    "prawo": "sekretariat@opschocianow.pl",
+    "zdrowie": "sekretariat@opschocianow.pl"
+  },
+  "gaworzyce": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "polkowicki",
+    "gmina": "Gaworzyce",
+    "miejscowosc": "Gaworzyce",
+    "bytowe": "poczta@gopsgaworzyce.pl",
+    "kryzys": "poczta@gopsgaworzyce.pl",
+    "prawo": "poczta@gopsgaworzyce.pl",
+    "zdrowie": "poczta@gopsgaworzyce.pl"
+  },
+  "grębocice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "polkowicki",
+    "gmina": "Grębocice",
+    "miejscowosc": "Grębocice",
+    "bytowe": "ops@gopsgrebocice.pl",
+    "kryzys": "ops@gopsgrebocice.pl",
+    "prawo": "ops@gopsgrebocice.pl",
+    "zdrowie": "ops@gopsgrebocice.pl"
+  },
+  "polkowice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "polkowicki",
+    "gmina": "Polkowice",
+    "miejscowosc": "Polkowice",
+    "bytowe": "sekretariat@ops.polkowice.pl",
+    "kryzys": "sekretariat@ops.polkowice.pl",
+    "prawo": "sekretariat@ops.polkowice.pl",
+    "zdrowie": "sekretariat@ops.polkowice.pl"
+  },
+  "przemków": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "polkowicki",
+    "gmina": "Przemków",
+    "miejscowosc": "Przemków",
+    "bytowe": "poczta@opsprzemkow.pl",
+    "kryzys": "poczta@opsprzemkow.pl",
+    "prawo": "poczta@opsprzemkow.pl",
+    "zdrowie": "poczta@opsprzemkow.pl"
+  },
+  "radwanice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "polkowicki",
+    "gmina": "Radwanice",
+    "miejscowosc": "Radwanice",
+    "bytowe": "sekretariat@cus.radwanice.pl",
+    "kryzys": "sekretariat@cus.radwanice.pl",
+    "prawo": "sekretariat@cus.radwanice.pl",
+    "zdrowie": "sekretariat@cus.radwanice.pl"
+  },
+  "kondratowice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "strzeliński",
+    "gmina": "Kondratowice",
+    "miejscowosc": "Kondratowice",
+    "bytowe": "kierownikgops@kondratowice.pl",
+    "kryzys": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "prawo": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "zdrowie": "kierownikgops@kondratowice.pl"
+  },
+  "przeworno": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "strzeliński",
+    "gmina": "Przeworno",
+    "miejscowosc": "Przeworno",
+    "bytowe": "gops@przeworno.pl",
+    "kryzys": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "prawo": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "zdrowie": "gops@przeworno.pl"
+  },
+  "strzelin": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "strzeliński",
+    "gmina": "Strzelin",
+    "miejscowosc": "Strzelin",
+    "bytowe": "biuro@gops-strzelin.pl",
+    "kryzys": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "prawo": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "zdrowie": "biuro@gops-strzelin.pl"
+  },
+  "wiązów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "strzeliński",
+    "gmina": "Wiązów",
+    "miejscowosc": "Wiązów",
+    "bytowe": "gopswiazow@poczta.onet.pl",
+    "kryzys": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "prawo": "sekretariat@pcpr.powiatstrzelinski.pl",
+    "zdrowie": "gopswiazow@poczta.onet.pl"
+  },
+  "oborniki śląskie": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "trzebnicki",
+    "gmina": "Oborniki Śląskie",
+    "miejscowosc": "Oborniki Śląskie",
+    "bytowe": "kontakt@mgopsos.pl",
+    "kryzys": "pcprtrzebnica@wp.pl",
+    "prawo": "pcprtrzebnica@wp.pl",
+    "zdrowie": "kontakt@mgopsos.pl"
+  },
+  "trzebnica": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "trzebnicki",
+    "gmina": "Trzebnica",
+    "miejscowosc": "Trzebnica",
+    "bytowe": "ops@ops.trzebnica.pl",
+    "kryzys": "pcprtrzebnica@wp.pl",
+    "prawo": "pcprtrzebnica@wp.pl",
+    "zdrowie": "ops@ops.trzebnica.pl"
+  },
+  "wisznia mała": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "trzebnicki",
+    "gmina": "Wisznia Mała",
+    "miejscowosc": "Wisznia Mała",
+    "bytowe": "gops@wiszniamala.pl",
+    "kryzys": "pcprtrzebnica@wp.pl",
+    "prawo": "pcprtrzebnica@wp.pl",
+    "zdrowie": "gops@wiszniamala.pl"
+  },
+  "zawonia": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "trzebnicki",
+    "gmina": "Zawonia",
+    "miejscowosc": "Zawonia",
+    "bytowe": "gops@zawonia.naszops.pl",
+    "kryzys": "pcprtrzebnica@wp.pl",
+    "prawo": "pcprtrzebnica@wp.pl",
+    "zdrowie": "gops@zawonia.naszops.pl"
+  },
+  "boguszów-gorce": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wałbrzyski",
+    "gmina": "Boguszów-Gorce",
+    "miejscowosc": "Boguszów-Gorce",
+    "bytowe": "ops@opsboguszow.pl",
+    "kryzys": "ops@opsboguszow.pl",
+    "prawo": "ops@opsboguszow.pl",
+    "zdrowie": "ops@opsboguszow.pl"
+  },
+  "mieroszów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wałbrzyski",
+    "gmina": "Mieroszów",
+    "miejscowosc": "Mieroszów",
+    "bytowe": "sekretariat@opsmieroszow.pl",
+    "kryzys": "sekretariat@opsmieroszow.pl",
+    "prawo": "sekretariat@opsmieroszow.pl",
+    "zdrowie": "sekretariat@opsmieroszow.pl"
+  },
+  "stare bogaczowice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wałbrzyski",
+    "gmina": "Stare Bogaczowice",
+    "miejscowosc": "Stare Bogaczowice",
+    "bytowe": "kontakt@gops-starebogaczowice.com.pl",
+    "kryzys": "kontakt@gops-starebogaczowice.com.pl",
+    "prawo": "kontakt@gops-starebogaczowice.com.pl",
+    "zdrowie": "kontakt@gops-starebogaczowice.com.pl"
+  },
+  "walim": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wałbrzyski",
+    "gmina": "Walim",
+    "miejscowosc": "Walim",
+    "bytowe": "osrodek@opswalim.pl",
+    "kryzys": "osrodek@opswalim.pl",
+    "prawo": "osrodek@opswalim.pl",
+    "zdrowie": "osrodek@opswalim.pl"
+  },
+  "brzeg dolny": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wołowski",
+    "gmina": "Brzeg Dolny",
+    "miejscowosc": "Brzeg Dolny",
+    "bytowe": "gops@brzegdolny.pl",
+    "kryzys": "gops@brzegdolny.pl",
+    "prawo": "gops@brzegdolny.pl",
+    "zdrowie": "gops@brzegdolny.pl"
+  },
+  "wołów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wołowski",
+    "gmina": "Wołów",
+    "miejscowosc": "Wołów",
+    "bytowe": "sekretariat@mopswolow.pl",
+    "kryzys": "sekretariat@mopswolow.pl",
+    "prawo": "sekretariat@mopswolow.pl",
+    "zdrowie": "sekretariat@mopswolow.pl"
+  },
+  "czernica": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Czernica",
+    "miejscowosc": "Czernica",
+    "bytowe": "gops.czernica@iap.pl",
+    "kryzys": "gops.czernica@iap.pl",
+    "prawo": "gops.czernica@iap.pl",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "jordanów śląski": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Jordanów Śląski",
+    "miejscowosc": "Jordanów Śląski",
+    "bytowe": "gops@jordanow.naszops.pl",
+    "kryzys": "gops@jordanow.naszops.pl",
+    "prawo": "gops@jordanow.naszops.pl",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "kobierzyce": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Kobierzyce",
+    "miejscowosc": "Kobierzyce",
+    "bytowe": "info@gops.kobierzyce.pl",
+    "kryzys": "info@gops.kobierzyce.pl",
+    "prawo": "info@gops.kobierzyce.pl",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "kąty wrocławskie": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Kąty Wrocławskie",
+    "miejscowosc": "Kąty Wrocławskie",
+    "bytowe": "sekretariat@gopskaty.pl",
+    "kryzys": "sekretariat@gopskaty.pl",
+    "prawo": "sekretariat@gopskaty.pl",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "mietków": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Mietków",
+    "miejscowosc": "Mietków",
+    "bytowe": "gops@gopsmietkow.com",
+    "kryzys": "gops@gopsmietkow.com",
+    "prawo": "gops@gopsmietkow.com",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "święta katarzyna": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Siechnice",
+    "miejscowosc": "Święta Katarzyna",
+    "bytowe": "gops@gops-siechnice.org.pl",
+    "kryzys": "gops@gops-siechnice.org.pl",
+    "prawo": "gops@gops-siechnice.org.pl",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "sobótka": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Sobótka",
+    "miejscowosc": "Sobótka",
+    "bytowe": "opssobotka@poczta.onet.pl",
+    "kryzys": "opssobotka@poczta.onet.pl",
+    "prawo": "opssobotka@poczta.onet.pl",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "żórawina": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "wrocławski",
+    "gmina": "Żórawina",
+    "miejscowosc": "Żórawina",
+    "bytowe": "zorawina@gopszorawina.pl",
+    "kryzys": "zorawina@gopszorawina.pl",
+    "prawo": "zorawina@gopszorawina.pl",
+    "zdrowie": "domalkowice@wroclaw.caritas.pl"
+  },
+  "bogatynia": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "zgorzelecki",
+    "gmina": "Bogatynia",
+    "miejscowosc": "Bogatynia",
+    "bytowe": "sekretariat@ops-bogatynia.pl",
+    "kryzys": "pcpr@pcpr.zgorzelec.pl",
+    "prawo": "pcpr@pcpr.zgorzelec.pl",
+    "zdrowie": "sekretariat@ostojadps.pl"
+  },
+  "zawidów": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "zgorzelecki",
+    "gmina": "Zawidów",
+    "miejscowosc": "Zawidów",
+    "bytowe": "biuro@mops.zawidow.eu",
+    "kryzys": "pcpr@pcpr.zgorzelec.pl",
+    "prawo": "pcpr@pcpr.zgorzelec.pl",
+    "zdrowie": "sekretariat@ostojadps.pl"
+  },
+  "zgorzelec": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "zgorzelecki",
+    "gmina": "Zgorzelec",
+    "miejscowosc": "Zgorzelec",
+    "bytowe": "gopszgorzelec@wp.pl",
+    "kryzys": "pcpr@pcpr.zgorzelec.pl",
+    "prawo": "pcpr@pcpr.zgorzelec.pl",
+    "zdrowie": "sekretariat@ostojadps.pl"
+  },
+  "bardo": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "ząbkowicki",
+    "gmina": "Bardo",
+    "miejscowosc": "Bardo",
+    "bytowe": "ops@bardo.pl",
+    "kryzys": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "prawo": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "zdrowie": "dsierka@dps-zabkowice.pl"
+  },
+  "ciepłowody": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "ząbkowicki",
+    "gmina": "Ciepłowody",
+    "miejscowosc": "Ciepłowody",
+    "bytowe": "ops@opscieplowody.pl",
+    "kryzys": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "prawo": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "zdrowie": "dsierka@dps-zabkowice.pl"
+  },
+  "kamieniec ząbkowicki": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "ząbkowicki",
+    "gmina": "Kamieniec Ząbkowicki",
+    "miejscowosc": "Kamieniec Ząbkowicki",
+    "bytowe": "ops@ops.kamienieczabkowicki.eu",
+    "kryzys": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "prawo": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "zdrowie": "dsierka@dps-zabkowice.pl"
+  },
+  "stoszowice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "ząbkowicki",
+    "gmina": "Stoszowice",
+    "miejscowosc": "Stoszowice",
+    "bytowe": "ops@stoszowice.pl",
+    "kryzys": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "prawo": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "zdrowie": "dsierka@dps-zabkowice.pl"
+  },
+  "ziębice": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "ząbkowicki",
+    "gmina": "Ziębice",
+    "miejscowosc": "Ziębice",
+    "bytowe": "mgops@mgopsziebice.pl",
+    "kryzys": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "prawo": "sekretariat@pcpr-zabkowiceslaskie.pl",
+    "zdrowie": "sekretariat@dpsziebice.pl"
+  },
+  "pielgrzymka": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "złotoryjski",
+    "gmina": "Pielgrzymka",
+    "miejscowosc": "Pielgrzymka",
+    "bytowe": "gops@pielgrzymka.biz",
+    "kryzys": "pcpr@pcpr-zlotoryja.pl",
+    "prawo": "pcpr@pcpr-zlotoryja.pl",
+    "zdrowie": "gops@pielgrzymka.biz"
+  },
+  "zagrodno": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "złotoryjski",
+    "gmina": "Zagrodno",
+    "miejscowosc": "Zagrodno",
+    "bytowe": "poczta@gops.zagrodno.eu",
+    "kryzys": "pcpr@pcpr-zlotoryja.pl",
+    "prawo": "pcpr@pcpr-zlotoryja.pl",
+    "zdrowie": "poczta@gops.zagrodno.eu"
+  },
+  "złotoryja": {
+    "wojewodztwo": "dolnośląskie",
+    "powiat": "złotoryjski",
+    "gmina": "Złotów",
+    "miejscowosc": "Złotoryja",
+    "bytowe": "gops@gops.zlotoryja.com.pl",
+    "kryzys": "pcpr@pcpr-zlotoryja.pl",
+    "prawo": "pcpr@pcpr-zlotoryja.pl",
+    "zdrowie": "gops@gops.zlotoryja.com.pl"
+  },
+  "grodzisk mazowiecki": {
+    "wojewodztwo": "mazowieckie",
+    "powiat": "grodziski",
+    "gmina": "Grodzisk Mazowiecki",
+    "miejscowosc": "Grodzisk Mazowiecki",
+    "bytowe": "ops@grodzisk.pl",
+    "kryzys": "kancelaria@pcprgw.pl",
+    "prawo": "kancelaria@pcprgw.pl",
+    "zdrowie": "milanowek@ksnaw.pl"
+  },
+  "siedlce": {
+    "wojewodztwo": "mazowieckie",
+    "powiat": "Siedlce",
+    "gmina": "Siedlce",
+    "miejscowosc": "Siedlce",
+    "bytowe": "gops@gminasiedle.pl",
+    "kryzys": "pcpr@pcprsiedlce.pl",
+    "prawo": "pcpr@pcprsiedlce.pl",
+    "zdrowie": "sekretariat@domnadstawami.pl"
+  },
+  "sosnowiec": {
+    "wojewodztwo": "śląskie",
+    "powiat": "Sosnowiec",
+    "gmina": "Sosnowiec",
+    "miejscowosc": "Sosnowiec",
+    "bytowe": "kancelaria@mopssosnowiec.pl",
+    "kryzys": "kancelaria@mopssosnowiec.pl",
+    "prawo": "kancelaria@mopssosnowiec.pl",
+    "zdrowie": "sekretariat@dpszakatek.pl"
+  },
+  "katowice": {
+    "wojewodztwo": "śląskie",
+    "powiat": "Katowice",
+    "gmina": "Katowice",
+    "miejscowosc": "Katowice",
+    "bytowe": "kancelaria@mops.katowice.pl",
+    "kryzys": "kancelaria@mops.katowice.pl",
+    "prawo": "kancelaria@mops.katowice.pl",
+    "zdrowie": "biuro@senior-residence.pl"
+  },
+  "dąbrowa górnicza": {
+    "wojewodztwo": "śląskie",
+    "powiat": "Dąbrowa Górnicza",
+    "gmina": "Dąbrowa Górnicza",
+    "miejscowosc": "Dąbrowa Górnicza",
+    "bytowe": "sekretariat@mops.com.pl",
+    "kryzys": "sekretariat@mops.com.pl",
+    "prawo": "sekretariat@mops.com.pl",
+    "zdrowie": "dpsdg@dps.dg.pl"
+  }
+}

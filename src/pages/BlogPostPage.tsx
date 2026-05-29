@@ -47,53 +47,47 @@ export default function BlogPostPage() {
   }, [title, excerpt, tags]);
 
   return (
-    <article className="bg-[#FCFCFC] min-h-screen">
-      {/* Dynamic Header */}
-      <header className="relative min-h-[400px] md:min-h-[500px] flex items-end overflow-hidden bg-slate-900 border-b-8 border-amber-500">
-        <div className="absolute inset-0 z-0">
-           <img 
-             src={image} 
-             alt="" 
-             className="w-full h-full object-cover blur-[0.5px] opacity-30 scale-105"
-             referrerPolicy="no-referrer"
-           />
-           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
-        </div>
-
-        <div className="max-w-5xl mx-auto px-4 md:px-10 relative z-10 w-full pb-12 md:pb-20">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-amber-500 hover:text-white transition-all mb-8 md:mb-12 group">
+    <article className="bg-[#FAF8F3] min-h-screen text-[#1a211e]">
+      {/* Editorial Journal Header (No Imagery) */}
+      <header className="relative py-20 bg-[#FBF9F4] border-b border-slate-200">
+        <div className="max-w-5xl mx-auto px-4 md:px-10 w-full">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#6B7280] hover:text-[#0f1412] transition-colors mb-12 group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
-            Powrót do wiedzy
+            Powrót do czytelni
           </Link>
           
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-6 md:space-y-8"
           >
-            <div className="flex flex-wrap gap-2 md:gap-3">
-              <span className="px-3 py-1 bg-amber-500 text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-full">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6B7280]">
                 {category}
               </span>
               {post.alert_level === 'warning' && (
-                <span className="px-3 py-1 bg-rose-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-rose-900/40">
-                   Ważne
+                <span className="ml-3 px-2 py-0.5 border border-rose-500 text-rose-600 text-[9px] font-black uppercase tracking-widest rounded">
+                   Ważny komunikat
                 </span>
               )}
             </div>
             
-            <h1 className="text-3xl md:text-7xl font-black tracking-tighter leading-[0.95] text-white max-w-4xl italic">
+            <h1 className="text-3xl md:text-6xl font-serif font-black tracking-tight leading-none text-[#1F2937] max-w-4xl">
               {title}
             </h1>
             
-            <div className="flex flex-wrap items-center gap-6 md:gap-10 text-[9px] font-black uppercase tracking-widest text-white/50 pt-4 md:pt-6">
-              <div className="flex items-center gap-2 md:gap-3">
-                <Calendar className="w-3.5 h-3.5 text-amber-500" />
+            <p className="text-[#374151] font-sans text-md md:text-lg leading-relaxed max-w-3xl italic">
+              {excerpt}
+            </p>
+            
+            <div className="flex flex-wrap items-center gap-6 md:gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-[#6B7280] pt-6 border-t border-slate-100">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-3.5 h-3.5" />
                 {date}
               </div>
-              <div className="flex items-center gap-2 md:gap-3">
-                <User className="w-3.5 h-3.5 text-amber-500" />
-                {author}
+              <div className="flex items-center gap-2">
+                <User className="w-3.5 h-3.5" />
+                Napisane przez: {author}
               </div>
             </div>
           </motion.div>
@@ -101,8 +95,8 @@ export default function BlogPostPage() {
       </header>
 
       {/* Main Container */}
-      <main className="max-w-5xl mx-auto px-4 md:px-10 -mt-8 md:-mt-12 relative z-20 pb-32">
-        <div className="bg-white p-6 md:p-16 rounded-[40px] md:rounded-[64px] shadow-2xl border-b border-slate-100">
+      <main className="max-w-5xl mx-auto px-4 md:px-10 py-16 relative z-20 pb-32">
+        <div className="bg-white p-8 md:p-16 rounded-[48px] border border-slate-200">
           
           {/* Article Meta */}
           <div className="mb-10 md:mb-16 pb-8 md:pb-12 border-b border-slate-50 italic text-slate-400 text-base md:text-lg font-medium leading-relaxed">

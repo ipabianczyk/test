@@ -31,6 +31,8 @@ import NeedsFinder from './pages/NeedsFinder';
 import ZenZone from './pages/ZenZone';
 import QuickHelp from './pages/QuickHelp';
 import ArticleCreator from './pages/ArticleCreator';
+import TeczkaSprawy from './pages/TeczkaSprawy';
+import CookieBanner from './components/CookieBanner';
 import { SITE_CONFIG } from './data/siteConfig';
 
 function ScrollToTop() {
@@ -50,13 +52,31 @@ export default function App() {
     if (metaDesc) {
       metaDesc.setAttribute("content", SITE_CONFIG.description);
     }
+
+    // Globalny ESC key listener dla natychmiastowego przekierowania (Szybkie Wyjście)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        console.warn('[Safety Protocol] Escape pressed. Overwriting history and redirecting to google.com...');
+        // hard-redirect to google.com replacing back state
+        window.location.replace('https://google.com');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
+
+  const triggerEmergencyRedirect = () => {
+    window.location.replace('https://google.com');
+  };
 
   return (
     <A11yProvider>
       <HashRouter>
         <ScrollToTop />
-        <div className="min-h-screen flex flex-col selection:bg-primary/10 selection:text-primary pb-20 lg:pb-0">
+        <div className="min-h-screen flex flex-col selection:bg-amber-100 selection:text-amber-900 pb-20 lg:pb-0 bg-[#FBF9F4]">
           <Header />
           
           <main id="main-content" className="flex-grow">
@@ -77,12 +97,27 @@ export default function App() {
               <Route path="/znajdz-potrzebe" element={<NeedsFinder />} />
               <Route path="/strefa-spokoju" element={<ZenZone />} />
               <Route path="/kreator-artykulow" element={<ArticleCreator />} />
+              <Route path="/admin" element={<ArticleCreator />} />
+              <Route path="/teczka-sprawy" element={<TeczkaSprawy />} />
             </Routes>
           </main>
 
           <Footer />
           <ChatWidget />
           <BottomNav />
+          <CookieBanner />
+
+          {/* Stały, ukryty/dyskretny przycisk "Szybkie Wyjście (ESC)" */}
+          <div className="fixed bottom-6 right-6 z-[9999] pointer-events-none sm:block">
+            <button
+              onClick={triggerEmergencyRedirect}
+              className="pointer-events-auto bg-slate-900 hover:bg-[#0f1412] text-white px-5 py-3 rounded-full font-sans text-[10px] font-black uppercase tracking-widest border border-slate-700 shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+              title="Szybkie Wyjście ze strony (Skrót: ESC) - natychmiastowe przekierowanie na Google"
+            >
+              <span className="w-2 h-2 bg-rose-500 rounded-full animate-ping" />
+              Szybkie wyjście (ESC)
+            </button>
+          </div>
         </div>
       </HashRouter>
     </A11yProvider>

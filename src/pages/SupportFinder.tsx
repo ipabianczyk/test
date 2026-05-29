@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import { 
   Send, Mail, MapPin, AlertTriangle, Phone, 
   ShieldAlert, ArrowRight, Heart, Info, RefreshCw,
-  CheckCircle2
+  CheckCircle2, Users
 } from 'lucide-react';
 import { SITE_CONFIG } from '../data/siteConfig';
 import { CRISIS_KEYWORDS } from '../constants/crisisKeywords';
+import ParentingWizard from '../components/ParentingWizard';
 
 /**
  * POTRZEBOMAT - Główny moduł interwencji
@@ -15,8 +16,8 @@ import { CRISIS_KEYWORDS } from '../constants/crisisKeywords';
  */
 
 export default function SupportFinder() {
-  // Tryby: 'selection', 'form', 'preview', 'crisis'
-  const [mode, setMode] = useState<'selection' | 'form' | 'preview' | 'crisis'>('selection');
+  // Tryby: 'selection', 'form', 'preview', 'crisis', 'parenting'
+  const [mode, setMode] = useState<'selection' | 'form' | 'preview' | 'crisis' | 'parenting'>('selection');
   
   // Stan formularza
   const [description, setDescription] = useState('');
@@ -131,7 +132,7 @@ export default function SupportFinder() {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-4 md:gap-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {/* OPCJA 1: POTRZEBOMAT / E-MAIL */}
                 <button 
                   onClick={() => setMode('form')}
@@ -146,6 +147,23 @@ export default function SupportFinder() {
                   </p>
                   <div className="mt-6 md:mt-8 flex items-center gap-2 font-black text-[10px] md:text-xs uppercase tracking-widest text-blue-600 group-hover:translate-x-2 transition-transform">
                     Otwórz Kreator <ArrowRight className="w-4 h-4" />
+                  </div>
+                </button>
+
+                {/* OPCJA NOWA: SAMODZIELNE RODZICIELSTWO / BRAK ALIMENTÓW */}
+                <button 
+                  onClick={() => setMode('parenting')}
+                  className="group bg-white p-6 md:p-10 rounded-[32px] md:rounded-[48px] border-4 border-white hover:border-amber-500 shadow-xl hover:shadow-2xl transition-all text-left flex flex-col h-full"
+                >
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-amber-50 text-[#8C6239] rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-10 group-hover:bg-[#8C6239] group-hover:text-white transition-all group-hover:rotate-6">
+                    <Users className="w-6 h-6 md:w-8 md:h-8" />
+                  </div>
+                  <h3 className="text-xl md:text-3xl font-black text-slate-900 mb-2 md:mb-4 tracking-tight">Samotny Rodzic / Brak Alimentów</h3>
+                  <p className="text-slate-500 font-medium text-sm md:text-base leading-relaxed flex-grow">
+                    Dedykowany, krok po kroku asystent badający kryterium i generujący gotowy wniosek (Katowice, Sosnowiec, Dąbrowa Górnicza).
+                  </p>
+                  <div className="mt-6 md:mt-8 flex items-center gap-2 font-black text-[10px] md:text-xs uppercase tracking-widest text-amber-700 group-hover:translate-x-2 transition-transform">
+                    Zbadaj Ścieżkę <ArrowRight className="w-4 h-4" />
                   </div>
                 </button>
 
@@ -313,6 +331,18 @@ export default function SupportFinder() {
                   </Link>
                 </div>
               </div>
+            </motion.div>
+          )}
+
+          {mode === 'parenting' && (
+            <motion.div
+              key="potrzebomat-parenting"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-12 animate-fade-in"
+            >
+              <ParentingWizard onBack={() => setMode('selection')} />
             </motion.div>
           )}
 

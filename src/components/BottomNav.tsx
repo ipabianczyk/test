@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Map, Heart, MessageSquare, BookOpen, MessageCircle } from 'lucide-react';
+import { Home, Map, Heart, FileText, BookOpen, MessageCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function BottomNav() {
@@ -10,7 +10,7 @@ export default function BottomNav() {
     { name: 'Start', href: '/', icon: Home },
     { name: 'Mapa', href: '/mapa', icon: Map },
     { name: 'Pomoc', href: '/potrzebomat', icon: Heart },
-    { name: 'Czat', href: '/czat', icon: MessageSquare },
+    { name: 'Teczka', href: '/teczka-sprawy', icon: FileText },
     { name: 'Baza', href: '/blog', icon: BookOpen },
     { name: 'Kontakt', href: '/kontakt', icon: MessageCircle },
   ];
