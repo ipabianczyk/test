@@ -55,6 +55,8 @@ const INITIAL_FACILITIES: Facility[] = [
 ];
 
 export default function MapPage() {
+  const MAX_DEFAULT_FACILITIES = 1000;
+  const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState<'Wszystkie' | 'Sosnowiec' | 'Katowice' | 'Dąbrowa Górnicza' | 'Inne'>('Wszystkie');
 
@@ -81,6 +83,9 @@ export default function MapPage() {
       return cityMatches && queryMatches;
     });
   }, [facilitiesList, selectedCity, searchQuery]);
+
+  const shouldSuppressDefaultFacilities = facilitiesList.length > MAX_DEFAULT_FACILITIES && selectedCity === 'Wszystkie' && searchQuery.trim() === '';
+  const visibleFacilities = shouldSuppressDefaultFacilities ? [] : filteredFacilities;
 
   return (
     <div className="bg-[#FAF8F3] min-h-screen text-[#1a211e]">
@@ -160,8 +165,13 @@ export default function MapPage() {
               </span>
               <input
                 type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchQuery(searchInput);
+                  }
+                }}
                 placeholder="Szukaj ośrodka według nazwy..."
                 className="w-full bg-[#FBF9F4] pl-12 pr-4 py-3 rounded-2xl border border-slate-200 text-sm font-sans font-medium text-[#1a211e] focus:outline-none focus:border-black transition-all"
               />
@@ -189,9 +199,9 @@ export default function MapPage() {
           </div>
 
           {/* Dynamic List outputting Editorial Layout Cards */}
-          {filteredFacilities.length > 0 ? (
+          {visibleFacilities.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {filteredFacilities.map((fac) => (
+              {visibleFacilities.map((fac) => (
                 <div
                   key={fac.id}
                   className="bg-white border border-slate-200 hover:border-slate-350 transition-all rounded-[32px] p-8 md:p-10 flex flex-col justify-between group"
@@ -262,9 +272,13 @@ export default function MapPage() {
           ) : (
             <div className="py-24 text-center bg-white rounded-[32px] border border-slate-200">
               <div className="text-3xl mb-4">🔍</div>
-              <h3 className="text-xl font-serif font-bold text-[#0f1412] mb-2">Brak wyników</h3>
+              <h3 className="text-xl font-serif font-bold text-[#0f1412] mb-2">
+                {shouldSuppressDefaultFacilities ? 'Wybierz filtr lub wyszukaj' : 'Brak wyników'}
+              </h3>
               <p className="text-sm text-[#6B7280]">
-                Brak placówek odpowiadających wybranym miastom. Zmień filtry powyżej.
+                {shouldSuppressDefaultFacilities
+                  ? 'Dla dużej bazy placówek nie pokazujemy wszystkich rekordów domyślnie. Wpisz frazę i naciśnij Enter albo wybierz miasto.'
+                  : 'Brak placówek odpowiadających wybranym miastom. Zmień filtry powyżej.'}
               </p>
             </div>
           )}
