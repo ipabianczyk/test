@@ -98,28 +98,10 @@ export default function Header() {
                 )}
               </Link>
             ))}
-            
-            {/* Jaskrawy przycisk dla osób w kryzysie */}
-            <a 
-              href="https://www.google.com" 
-              className="bg-red-600 hover:bg-red-700 text-white font-black text-[10px] uppercase tracking-[0.15em] px-4 py-2.5 rounded-xl border-2 border-red-800 transition focus:ring-4 focus:ring-red-400 shadow-lg"
-              aria-label="Szybkie wyjście ze strony, przekierowuje do google.com"
-            >
-              SZYBKIE WYJŚCIE
-            </a>
           </nav>
 
           {/* Mobile Right Controls */}
           <div className="flex items-center gap-2">
-            {/* Jaskrawy przycisk na telefonach bezpośrednio w pasku */}
-            <a 
-              href="https://www.google.com" 
-              className="lg:hidden bg-red-600 hover:bg-red-700 text-white font-black text-[10px] uppercase tracking-wider px-3 py-2 rounded-xl border-2 border-red-800 transition focus:ring-4 focus:ring-red-400 shadow-sm"
-              aria-label="Szybkie wyjście ze strony, przekierowuje do google.com"
-            >
-              WYJŚCIE
-            </a>
-
             <button
               onClick={() => setShowA11y(!showA11y)}
               className="p-2.5 bg-slate-50 text-slate-500 rounded-2xl hover:bg-amber-50 hover:text-amber-600 transition-all border border-slate-100"
@@ -242,15 +224,6 @@ export default function Header() {
                   <ChevronRight className={`w-4 h-4 ${location.pathname === link.href ? 'text-white' : 'text-slate-300'}`} />
                 </Link>
               ))}
-              
-              {/* SZYBKIE WYJŚCIE button for mobile accessibility within overlay menu */}
-              <a
-                href="https://www.google.com"
-                className="flex items-center justify-between px-6 py-5 rounded-[24px] text-sm font-black uppercase tracking-widest bg-red-600 text-white shadow-xl shadow-red-600/20 border-2 border-red-800"
-              >
-                <span>SZYBKIE WYJŚCIE</span>
-                <span className="text-xs font-bold bg-black/20 px-2.5 py-1 rounded-full text-white/90">SOS</span>
-              </a>
             </div>
           </motion.div>
         )}

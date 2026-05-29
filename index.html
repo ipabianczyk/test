@@ -1,35 +1,30 @@
-<!DOCTYPE html>
-<html lang="pl">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Most Pomocy - Sieć Wsparcia dla Osób w Kryzysie</title>
+    <title>MostPomocy.pl - System Wsparcia Społecznego</title>
+    <meta name="description" content="Nowoczesny system interwencji kryzysowej. Potrzebomat, autodiagnoza i baza wiedzy dla osób w trudnej sytuacji życiowej." />
+    <meta name="keywords" content="pomoc społeczna, kryzys, wsparcie, mops, pfron, pomoc prawna, psycholog, 116 111" />
     
-    <!-- Miejsca na kody weryfikacyjne Google Search Console wg wymagań -->
-    <meta name="google-site-verification" content="TWOJ_KOD_WERYFIKACYJNY_GSC_TUTAJ" />
-    
-    <!-- Google Analytics (Global Site Tag) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TWOJKODGA"></script>
+    <!-- Open Graph / Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MostPomocy.pl - Znajdź wsparcie, którego potrzebujesz" />
+    <meta property="og:description" content="Twój cyfrowy most do realnej pomocy. Przejdź przez Potrzebomat i otrzymaj wsparcie." />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <!-- Google Analytics 4 (GTAG) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-TWOJKODGA');
+      gtag('config', 'G-XXXXXXXXXX', { 'anonymize_ip': true });
     </script>
-
-    <!-- Google Fonts for Accessibility and Visual Design -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-slate-50 text-slate-900 font-sans antialiased">
-    <!-- Skip link for WCAG keyboard navigation -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold z-50">
-      Przejdź do głównej treści
-    </a>
-
-    <!-- Mounting Point for Vite + React -->
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+

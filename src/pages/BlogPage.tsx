@@ -1,228 +1,190 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
-import * as LucideIcons from 'lucide-react';
-import { X } from 'lucide-react';
+import { Calendar, Tag, Search, BookOpen, Clock, ArrowLeft, ArrowRight } from 'lucide-react';
 import { getAllPosts } from '../services/blogService';
-import { SITE_CONFIG } from '../data/siteConfig';
 
 export default function BlogPage() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('Wszystkie');
+
+  // Pobieramy prawdziwe posty z bazy danych serwisu
   const blogPosts = useMemo(() => getAllPosts(), []);
-  
-  const { categories, tags } = useMemo(() => {
-    const cats = new Set<string>();
-    const tgs = new Set<string>();
-    blogPosts.forEach(p => {
-      cats.add(p.category);
-      p.tags?.forEach(t => tgs.add(t));
-    });
-    return { 
-      categories: Array.from(cats),
-      tags: Array.from(tgs)
-    };
-  }, [blogPosts]);
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
+  // Filtrowanie wpisów na żywo
   const filteredPosts = useMemo(() => {
     return blogPosts.filter(post => {
-      const query = searchQuery.toLowerCase();
       const matchesSearch = 
-        post.title.toLowerCase().includes(query) || 
-        post.excerpt.toLowerCase().includes(query) ||
-        post.tags.some(t => t.toLowerCase().includes(query));
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
 
-      const matchesCategory = !selectedCategory || post.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'Wszystkie' || post.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [blogPosts, searchQuery, selectedCategory]);
+  }, [blogPosts, searchTerm, selectedCategory]);
+
+  // Wyciągamy unikalne kategorie do filtrów
+  const categories = useMemo(() => {
+    return ['Wszystkie', ...Array.from(new Set(blogPosts.map(p => p.category)))];
+  }, [blogPosts]);
 
   return (
-    <div className="bg-slate-50 min-h-screen text-slate-900 font-sans selection:bg-amber-100 selection:text-amber-900 pb-20">
-        <div className="max-w-7xl mx-auto px-4 py-8 lg:py-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                {/* KOLUMNA LEWA: Hugo Stack Sidebar */}
-                <aside className="lg:col-span-3 bg-white p-6 lg:p-8 rounded-[32px] border border-slate-200 shadow-sm space-y-8 lg:sticky top-24 z-10 w-full overflow-hidden">
-                    {/* Szukaj Widget */}
-                    <div className="bg-slate-50 p-2 rounded-2xl border border-slate-200 shadow-inner relative group text-left">
-                        <LucideIcons.Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
-                        <input 
-                            type="text" 
-                            placeholder="Szukaj artykułów..." 
-                            className="w-full bg-transparent py-2 pl-10 pr-4 rounded-xl font-bold text-slate-900 focus:outline-none transition-all text-sm"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-
-                    {/* Profil */}
-                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
-                        <div className="avatar placeholder">
-                            <div className="bg-blue-600 text-white rounded-full w-24 h-24 shadow-lg ring-4 ring-blue-50 flex items-center justify-center">
-                                <span className="text-3xl font-black">MP</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-black tracking-tight text-slate-900">MostPomocy.pl</h2>
-                            <p className="text-xs font-semibold text-blue-600 uppercase tracking-widest mt-1">Sieć Wsparcia</p>
-                            <p className="text-xs text-slate-500 font-medium mt-3 leading-relaxed">
-                                Baza wiedzy eksperckiej, wsparcia psychologicznego i interwencyjnego.
-                            </p>
-                        </div>
-                    </div>
-
-                    <hr className="border-slate-100" />
-                    
-                    <nav aria-label="Nawigacja bloga" className="flex flex-col w-full space-y-1 font-bold text-slate-700">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 px-3">NAWIGACJA</p>
-                        <Link to="/" className="flex items-center gap-4 py-3 px-3 hover:bg-slate-50 hover:text-blue-600 rounded-2xl transition duration-200">
-                            <LucideIcons.Home className="w-5 h-5 text-slate-400" /> Strona Główna
-                        </Link>
-                        <Link to="/mapa" className="flex items-center gap-4 py-3 px-3 hover:bg-slate-50 hover:text-blue-600 rounded-2xl transition duration-200">
-                            <LucideIcons.Map className="w-5 h-5 text-slate-400" /> Mapa Pomocy
-                        </Link>
-                        <Link to="/potrzebomat" className="flex items-center gap-4 py-3 px-3 hover:bg-slate-50 hover:text-blue-600 rounded-2xl transition duration-200">
-                            <LucideIcons.Search className="w-5 h-5 text-slate-400" /> Potrzebomat
-                        </Link>
-                    </nav>
-
-                    <hr className="border-slate-100" />
-                    
-                    <div className="bg-red-50 border border-red-200 p-5 rounded-3xl">
-                        <span className="text-[10px] font-black text-red-600 uppercase tracking-widest block mb-1">BEZPIECZEŃSTWO SOS</span>
-                        <p className="text-xs text-red-800 leading-relaxed font-semibold mb-4 text-left">Musisz natychmiast opuścić stronę?</p>
-                        <a href="https://google.com" className="flex items-center justify-center py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-colors shadow-sm" aria-label="Szybkie wyjście, przekierowuje do Google">Szybkie Wyjście</a>
-                    </div>
-                </aside>
-
-                {/* KOLUMNA ŚRODKOWA: Główny Grid Wpisów */}
-                <main className="lg:col-span-9 space-y-6 w-full max-w-full min-w-0">
-                    
-                    {/* Wyszukiwarka - przeniesiona nad wpisy by była zawsze widoczna na mobilkach jako pierwsza opcja */}
-                    <div className="bg-slate-50 p-2 rounded-2xl border border-slate-200 shadow-inner relative group text-left mb-4">
-                        <LucideIcons.Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
-                        <input 
-                            type="text" 
-                            placeholder="Szukaj artykułów..." 
-                            className="w-full bg-transparent py-2 pl-10 pr-4 rounded-xl font-bold text-slate-900 focus:outline-none transition-all text-sm"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    </div>
-
-                    {/* Kategorie - Poziomy scroll */}
-                    <div className="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-6">
-                        <button 
-                            onClick={() => setSelectedCategory(null)}
-                            className={`whitespace-nowrap px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
-                                selectedCategory === null 
-                                ? 'bg-slate-900 text-white shadow-md' 
-                                : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-900 hover:border-slate-300'
-                            }`}
-                        >
-                            Wszystkie
-                        </button>
-                        {categories.map((cat) => (
-                            <button 
-                                key={cat}
-                                onClick={() => setSelectedCategory(cat)}
-                                className={`whitespace-nowrap px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
-                                    selectedCategory === cat 
-                                    ? 'bg-slate-900 text-white shadow-md' 
-                                    : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-900 hover:border-slate-300'
-                                }`}
-                            >
-                                {cat}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Opcjonalny nagłówek listingu */}
-                    {(selectedCategory || searchQuery) && (
-                        <div className="bg-white p-6 md:p-8 rounded-[32px] border border-slate-200 shadow-sm relative overflow-hidden text-left mb-6">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-0 opacity-50"></div>
-                            <div className="relative z-10">
-                                <span className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] block mb-2">
-                                    {selectedCategory ? `Kategoria` : `Wyniki wyszukiwania`}
-                                </span>
-                                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
-                                    {selectedCategory || searchQuery}
-                                </h1>
-                                <button 
-                                    onClick={() => { setSelectedCategory(null); setSearchQuery(''); }}
-                                    className="mt-2 text-[10px] items-center inline-flex gap-2 font-black uppercase tracking-widest text-slate-500 bg-slate-100 px-4 py-2 rounded-xl hover:bg-slate-200 transition-colors"
-                                >
-                                    <LucideIcons.X className="w-4 h-4" /> Resetuj
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                    <AnimatePresence mode="popLayout">
-                        {filteredPosts.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-                                {filteredPosts.map((post, idx) => (
-                                    <motion.article
-                                        key={post.id}
-                                        layout
-                                        initial={{ opacity: 0, y: 15 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: idx * 0.05 }}
-                                        className="bg-white border border-slate-200 shadow-sm rounded-[24px] overflow-hidden group flex flex-col"
-                                    >
-                                        {post.image && (
-                                            <Link to={`/blog/${post.id}`} className="block overflow-hidden relative border-b border-slate-100">
-                                                <figure className="h-32 md:h-40 w-full bg-slate-100">
-                                                    <img 
-                                                        src={post.image} 
-                                                        alt={post.title} 
-                                                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out" 
-                                                        referrerPolicy="no-referrer"
-                                                    />
-                                                </figure>
-                                            </Link>
-                                        )}
-                                        <div className="p-5 md:p-6 text-left flex flex-col flex-1">
-                                            <div className="flex flex-wrap items-center gap-2 mb-3">
-                                                <span className="badge badge-primary badge-outline font-bold uppercase tracking-wider text-[9px] px-2 py-0.5">{post.category}</span>
-                                            </div>
-
-                                            <h2 className="text-lg md:text-xl font-black text-slate-900 tracking-tight leading-snug mb-3 group-hover:text-blue-600 transition-colors">
-                                                <Link to={`/blog/${post.id}`}>{post.title}</Link>
-                                            </h2>
-
-                                            <p className="text-slate-600 font-medium text-xs md:text-sm leading-relaxed mb-4 line-clamp-5">
-                                                {post.excerpt}
-                                            </p>
-                                            
-                                            <div className="flex items-center justify-between border-t border-slate-100 pt-4 mt-auto">
-                                                <div className="flex flex-wrap gap-2">
-                                                    <span className="text-[9px] uppercase font-bold tracking-widest text-slate-400 flex items-center gap-1.5">
-                                                        <LucideIcons.Calendar className="w-3.5 h-3.5" />
-                                                        {post.date}
-                                                    </span>
-                                                </div>
-                                                <Link to={`/blog/${post.id}`} className="text-[10px] font-black uppercase tracking-[0.1em] text-blue-600 hover:text-blue-700 flex items-center gap-1.5 transition-colors">
-                                                    Więcej <LucideIcons.ArrowRight className="w-4 h-4" />
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </motion.article>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="py-24 text-center bg-white rounded-[32px] border border-slate-200 shadow-sm">
-                                <LucideIcons.FileQuestion className="w-16 h-16 text-slate-200 mx-auto mb-6" />
-                                <h3 className="text-2xl font-black text-slate-900 tracking-tighter mb-4">Pusto tutaj.</h3>
-                                <p className="text-slate-500 font-medium max-w-sm mx-auto">Nic nie znaleźliśmy. Spróbuj zmienić filtry lub wyszukaną frazę.</p>
-                            </div>
-                        )}
-                    </AnimatePresence>
-                </main>
-            </div>
+    <div className="min-h-screen bg-[#FBF9F4] py-8 md:py-16 px-4 md:px-8 selection:bg-[#C97A63]/10 selection:text-[#C97A63]">
+      <div className="max-w-5xl mx-auto space-y-10 pb-24">
+        
+        {/* Przycisk powrotu do portalu */}
+        <div className="flex items-center justify-between">
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#4A5D4E] hover:text-[#C97A63] transition-colors duration-300"
+          >
+            <ArrowLeft size={14} />
+            <span>Powrót do portalu</span>
+          </Link>
+          <div className="text-[10px] font-mono text-[#4A5D4E]/60 uppercase tracking-wider">
+            Baza Wiedzy v2.0
+          </div>
         </div>
+
+        {/* Nagłówek sekcji w stylu Editorial */}
+        <div className="space-y-4 border-b border-[#4A5D4E]/10 pb-8">
+          <div className="flex items-center gap-2 text-[#C97A63] font-semibold text-xs uppercase tracking-widest">
+            <BookOpen size={16} />
+            <span>Zaufana Baza Wiedzy i Poradniki</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-[#2F3E33] tracking-tight leading-tight">
+            Czytelny przewodnik po systemie wsparcia
+          </h1>
+          <p className="text-[#2C3531]/80 max-w-2xl text-sm md:text-base leading-relaxed font-sans">
+            Tłumaczymy skomplikowane przepisy prawne, procedury urzędowe oraz kroki interwencyjne na prosty, ludzki i pozbawiony stygmatyzacji język. Wszystkie artykuły są stale aktualizowane.
+          </p>
+        </div>
+
+        {/* Pasek wyszukiwania i filtrów kategorycznych */}
+        <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center bg-white p-4 rounded-2xl border border-[#4A5D4E]/10 shadow-sm">
+          <div className="relative w-full md:max-w-xs">
+            <input
+              type="text"
+              placeholder="Szukaj artykułu..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-[#FBF9F4] border border-[#4A5D4E]/20 text-[#2C3531] rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-[#C97A63] focus:ring-1 focus:ring-[#C97A63] placeholder:text-[#2C3531]/40"
+            />
+            <Search className="absolute left-3 top-3.5 text-[#4A5D4E]/50" size={16} />
+          </div>
+
+          <div className="flex flex-wrap gap-2 w-full md:w-auto">
+            {categories.map((cat, idx) => (
+              <button
+                key={idx}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer ${
+                  selectedCategory === cat 
+                    ? 'bg-[#4A5D4E] text-[#FBF9F4] shadow-sm' 
+                    : 'bg-[#FBF9F4] text-[#2C3531] border border-[#4A5D4E]/10 hover:border-[#C97A63]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Statystyka wyszukiwania */}
+        {(searchTerm || selectedCategory !== 'Wszystkie') && (
+          <div className="flex justify-between items-center text-xs text-[#4A5D4E]/80 px-2">
+            <span>
+              Znaleziono: <strong className="text-[#2F3E33]">{filteredPosts.length}</strong> {filteredPosts.length === 1 ? 'artykuł' : filteredPosts.length % 10 >= 2 && filteredPosts.length % 10 <= 4 && (filteredPosts.length % 100 < 10 || filteredPosts.length % 100 >= 20) ? 'artykuły' : 'artykułów'}
+            </span>
+            <button 
+              onClick={() => { setSearchTerm(''); setSelectedCategory('Wszystkie'); }}
+              className="text-[#C97A63] hover:underline font-semibold"
+            >
+              Wyczyść filtry
+            </button>
+          </div>
+        )}
+
+        {/* Siatka wpisów (Grid) idealnie odwzorowująca karty motywu Stack */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {filteredPosts.length > 0 ? (
+            filteredPosts.map((post, i) => (
+              <article 
+                key={post.id} 
+                className="bg-white border border-[#4A5D4E]/10 rounded-3xl p-6 md:p-8 flex flex-col justify-between space-y-6 hover:border-[#C97A63] hover:shadow-md transition-all duration-300 group"
+              >
+                <div className="space-y-4">
+                  {/* Meta Tagi u góry karty */}
+                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold">
+                    <span className="bg-[#4A5D4E] text-[#FBF9F4] px-2.5 py-1 rounded-md">
+                      {post.category}
+                    </span>
+                    {post.tags && post.tags.length > 0 ? (
+                      post.tags.map((tag, tIdx) => (
+                        <span key={tIdx} className="bg-[#F7EDE9] text-[#C97A63] px-2.5 py-1 rounded-md inline-flex items-center gap-1">
+                          <Tag size={10} />
+                          {tag}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="bg-[#F7EDE9] text-[#C97A63] px-2.5 py-1 rounded-md inline-flex items-center gap-1">
+                        <Tag size={10} />
+                        Poradnik
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Tytuł i opis - ogromny kontrast, zero zlewających się kolorów */}
+                  <Link to={`/blog/${post.id}`} className="block group-hover:text-[#C97A63] transition-colors duration-300">
+                    <h2 className="text-xl md:text-2xl font-serif font-bold text-[#1E2522] leading-snug tracking-tight">
+                      {post.title}
+                    </h2>
+                  </Link>
+                  <p className="text-[#2C3531]/90 text-sm leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                </div>
+
+                {/* Dolna belka z informacją o dacie i czasie czytania */}
+                <div className="flex items-center justify-between gap-2 text-xs text-[#2C3531]/60 pt-4 border-t border-[#FBF9F4]">
+                  <div className="flex items-center gap-1">
+                    <Calendar size={13} />
+                    <span>{post.date}</span>
+                  </div>
+                  {post.readTime && (
+                    <div className="flex items-center gap-1">
+                      <Clock size={13} />
+                      <span>{post.readTime}</span>
+                    </div>
+                  )}
+                  <Link 
+                    to={`/blog/${post.id}`} 
+                    className="inline-flex items-center gap-1 text-[#C97A63] font-semibold text-xs border-b border-transparent group-hover:border-[#C97A63] pb-0.5 transition-colors"
+                  >
+                    <span>Czytaj</span>
+                    <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </article>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-16 bg-white rounded-3xl border border-[#4A5D4E]/10 px-4">
+              <BookOpen className="w-12 h-12 text-[#4A5D4E]/30 mx-auto mb-4" />
+              <h3 className="text-lg font-serif font-bold text-[#2F3E33]">Brak artykułów</h3>
+              <p className="text-[#2C3531]/60 text-sm mt-1 max-w-sm mx-auto">
+                Nie znaleziono w bazie wiedzy żadnych materiałów odpowiadających wpisanej frazie lub wybranej kategorii.
+              </p>
+              <button 
+                onClick={() => { setSearchTerm(''); setSelectedCategory('Wszystkie'); }}
+                className="mt-4 px-4 py-2 text-xs font-semibold bg-[#4A5D4E] text-[#FBF9F4] rounded-xl hover:bg-[#2F3E33] transition-colors duration-300"
+              >
+                Pokaż wszystkie artykuły
+              </button>
+            </div>
+          )}
+        </div>
+
+      </div>
     </div>
   );
 }
