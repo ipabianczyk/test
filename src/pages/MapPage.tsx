@@ -55,7 +55,6 @@ const INITIAL_FACILITIES: Facility[] = [
 ];
 
 export default function MapPage() {
-  const [activeTab, setActiveTab] = useState<'map' | 'index' | 'categories'>('map');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState<'Wszystkie' | 'Sosnowiec' | 'Katowice' | 'Dąbrowa Górnicza' | 'Inne'>('Wszystkie');
 
@@ -102,224 +101,218 @@ export default function MapPage() {
           Interaktywny, zweryfikowany skorowidz placówek pomocowych w miastach Sosnowiec, Katowice i Dąbrowa Górnicza, zintegrowany z krajowymi kategoriami wsparcia.
         </p>
 
-        {/* Modular Tabs */}
-        <div className="flex flex-wrap border-b border-slate-200 mt-12 gap-6">
+        {/* Smooth Anchor Jumper Navigation */}
+        <div className="flex flex-wrap border-b border-slate-200 mt-12 pb-4 gap-4 sm:gap-6 justify-start">
           <button
-            onClick={() => setActiveTab('map')}
-            className={`pb-4 text-xs font-black uppercase tracking-widest relative transition-colors ${
-              activeTab === 'map' ? 'text-black font-extrabold' : 'text-slate-400 hover:text-black'
-            }`}
+            onClick={() => document.getElementById('interactive-map-tool')?.scrollIntoView({ behavior: 'smooth' })}
+            className="pb-2 text-xs font-black uppercase tracking-widest text-slate-800 hover:text-black flex items-center gap-2 border-b-2 border-black transition-all"
           >
-            🗺️ Interaktywna Mapa Polski
-            {activeTab === 'map' && (
-              <motion.div layoutId="map-tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" />
-            )}
+            🗺️ Lektor & Mapa Interaktywna
           </button>
           <button
-            onClick={() => setActiveTab('index')}
-            className={`pb-4 text-xs font-black uppercase tracking-widest relative transition-colors ${
-              activeTab === 'index' ? 'text-black' : 'text-slate-400 hover:text-black'
-            }`}
+            onClick={() => document.getElementById('regional-facility-index')?.scrollIntoView({ behavior: 'smooth' })}
+            className="pb-2 text-xs font-black uppercase tracking-widest text-[#6B7280] hover:text-black hover:border-b-2 hover:border-slate-500 flex items-center gap-1.5 transition-all"
           >
-            Regionalna Baza Placówek ({facilitiesList.length})
-            {activeTab === 'index' && (
-              <motion.div layoutId="map-tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" />
-            )}
+            📋 Baza Śląskich Placówek (MOPS)
           </button>
           <button
-            onClick={() => setActiveTab('categories')}
-            className={`pb-4 text-xs font-black uppercase tracking-widest relative transition-colors ${
-              activeTab === 'categories' ? 'text-black' : 'text-[#6B7280] hover:text-black'
-            }`}
+            onClick={() => document.getElementById('legal-needs-guides')?.scrollIntoView({ behavior: 'smooth' })}
+            className="pb-2 text-xs font-black uppercase tracking-widest text-[#6B7280] hover:text-black hover:border-b-2 hover:border-slate-500 flex items-center gap-1.5 transition-all"
           >
-            Kategorie Pomocy i Prawa ({mapCategories.length})
-            {activeTab === 'categories' && (
-              <motion.div layoutId="map-tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" />
-            )}
+            📚 Poradniki & Prawa Polskie
           </button>
         </div>
       </header>
 
-      {/* Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-10 pb-28">
-        <AnimatePresence mode="wait">
-          {activeTab === 'map' ? (
-            <motion.div
-              key="map-tab"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              className="focus:outline-none"
-            >
-              <MapaLeafletView />
-            </motion.div>
-          ) : activeTab === 'index' ? (
-            <motion.div
-              key="index-tab"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              className="space-y-10 focus:outline-none"
-            >
-              {/* Dynamic Filter Controls */}
-              <div className="bg-white border border-slate-200 rounded-[28px] p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center justify-between">
-                {/* Search */}
-                <div className="relative w-full md:w-80">
-                  <span className="absolute inset-y-0 left-4 flex items-center text-slate-400">
-                    <Search className="w-5 h-5" />
-                  </span>
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Wyszukaj placówkę..."
-                    className="w-full bg-[#FBF9F4] pl-12 pr-4 py-3 rounded-2xl border border-slate-200 text-sm font-sans font-medium text-[#1a211e] focus:outline-none focus:border-black transition-all"
-                  />
-                </div>
+      {/* Main Container */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-10 pb-28 space-y-24">
+        
+        {/* SECTION 1: MAPA I SZYBKI TEST POTRZEB - IMMEDIATELY ENGAGED */}
+        <section id="interactive-map-tool" className="scroll-mt-6 space-y-4 text-left">
+          <div className="border-l-4 border-amber-500 pl-4 py-1">
+            <h2 className="text-2xl font-serif font-black tracking-tight text-[#0f1412] uppercase">
+              1. Mapa Interaktywna & Test Potrzeb
+            </h2>
+            <p className="text-xs text-slate-550">
+              Ustal potrzeby za pomocą szybkiego testu na dole lub znajdź wolny e-mail interwencyjny placówki w Polsce.
+            </p>
+          </div>
+          <MapaLeafletView />
+        </section>
 
-                {/* City filters */}
-                <div className="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end">
-                  {(['Wszystkie', 'Sosnowiec', 'Katowice', 'Dąbowa Górnicza', 'Inne'] as const).map((city) => {
-                    const cleanCity = city === 'Dąbowa Górnicza' ? 'Dąbrowa Górnicza' : city;
-                    const isActive = selectedCity === cleanCity;
-                    return (
-                      <button
-                        key={city}
-                        onClick={() => setSelectedCity(cleanCity)}
-                        className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider border-2 transition-all ${
-                          isActive
-                            ? 'bg-black text-white border-black'
-                            : 'bg-white border-slate-200 text-[#1a211e] hover:border-slate-350'
-                        }`}
+        {/* SECTION 2: ŚLĄSKI REJESTR POMOCY (SOSNOWIEC, KATOWICE, DĄBROWA GÓRNICZA) */}
+        <section id="regional-facility-index" className="scroll-mt-6 space-y-8 text-left">
+          <div className="border-l-4 border-slate-900 pl-4 py-1">
+            <h2 className="text-2xl font-serif font-black tracking-tight text-[#0f1412] uppercase">
+              2. Baza Śląskich Placówek Pomocowych
+            </h2>
+            <p className="text-xs text-slate-550">
+              Zweryfikowane, tradycyjne ośrodki i fundacje działające w rejonie Sosnowca, Katowic i Dąbrowy Górniczej.
+            </p>
+          </div>
+
+          {/* Dynamic Filter Controls */}
+          <div className="bg-white border border-slate-200 rounded-[28px] p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center justify-between">
+            {/* Search */}
+            <div className="relative w-full md:w-80">
+              <span className="absolute inset-y-0 left-4 flex items-center text-slate-400">
+                <Search className="w-5 h-5" />
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Szukaj ośrodka według nazwy..."
+                className="w-full bg-[#FBF9F4] pl-12 pr-4 py-3 rounded-2xl border border-slate-200 text-sm font-sans font-medium text-[#1a211e] focus:outline-none focus:border-black transition-all"
+              />
+            </div>
+
+            {/* City filters */}
+            <div className="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end">
+              {(['Wszystkie', 'Sosnowiec', 'Katowice', 'Dąbrowa Górnicza', 'Inne'] as const).map((city) => {
+                const isActive = selectedCity === city;
+                return (
+                  <button
+                    key={city}
+                    onClick={() => setSelectedCity(city)}
+                    className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider border-2 transition-all ${
+                      isActive
+                        ? 'bg-black text-white border-black'
+                        : 'bg-white border-slate-200 text-[#1a211e] hover:border-slate-350'
+                    }`}
+                  >
+                    {city}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Dynamic List outputting Editorial Layout Cards */}
+          {filteredFacilities.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {filteredFacilities.map((fac) => (
+                <div
+                  key={fac.id}
+                  className="bg-white border border-slate-200 hover:border-slate-350 transition-all rounded-[32px] p-8 md:p-10 flex flex-col justify-between group"
+                >
+                  <div className="space-y-6 text-left">
+                    {/* Meta */}
+                    <div className="flex justify-between items-start gap-4">
+                      <span className="px-3 py-1 bg-[#FBF9F4] text-[#0f1412] text-[9px] font-black uppercase tracking-widest rounded-lg border border-slate-200">
+                        {fac.city}
+                      </span>
+                      <a 
+                        href={`https://www.google.com/search?q=${encodeURIComponent(fac.name + ' ' + fac.city + ' mops kontakt telefon')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] uppercase font-black tracking-widest text-blue-600 hover:text-black flex items-center gap-1 hover:underline whitespace-nowrap"
                       >
-                        {cleanCity}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+                        🔍 Pokaż aktualne godziny i telefon w Google
+                      </a>
+                    </div>
 
-              {/* Dynamic List outputting Editorial Layout Cards */}
-              {filteredFacilities.length > 0 ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {filteredFacilities.map((fac) => (
-                    <div
-                      key={fac.id}
-                      className="bg-white border border-slate-200 hover:border-slate-350 transition-all rounded-[32px] p-8 md:p-10 flex flex-col justify-between group"
-                    >
-                      <div className="space-y-6 text-left">
-                        {/* Meta */}
-                        <div className="flex justify-between items-start gap-4">
-                          <span className="px-3 py-1 bg-[#FBF9F4] text-[#0f1412] text-[9px] font-black uppercase tracking-widest rounded-lg border border-slate-200">
-                            {fac.city}
-                          </span>
-                          <a 
-                            href={`https://www.google.com/search?q=${encodeURIComponent(fac.name + ' ' + fac.city + ' mops kontakt telefon')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[10px] uppercase font-black tracking-widest text-blue-600 hover:text-black flex items-center gap-1 hover:underline whitespace-nowrap"
-                          >
-                            🔍 Sprawdź dane w Google
+                    {/* Title & Description */}
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-serif font-black text-[#0f1412] leading-tight mb-4 group-hover:text-black transition-colors">
+                        {fac.name}
+                      </h3>
+                      <p className="text-[#374151] font-sans font-medium text-xs md:text-sm leading-relaxed">
+                        {fac.desc}
+                      </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-slate-100 pt-6 space-y-3">
+                      <div className="flex items-center gap-3 text-sm text-[#1a211e]">
+                        <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
+                        <span className="font-medium text-xs md:text-sm">{fac.address}</span>
+                      </div>
+                      {fac.phone && (
+                        <div className="flex items-center gap-3 text-sm text-[#1a211e]">
+                          <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                          <a href={`tel:${fac.phone.replace(/\s+/g, '')}`} className="font-extrabold text-xs md:text-sm text-black underline">
+                            {fac.phone}
                           </a>
                         </div>
-
-                        {/* Title & Description */}
-                        <div>
-                          <h3 className="text-xl md:text-2xl font-serif font-black text-[#0f1412] leading-tight mb-4 group-hover:text-black transition-colors">
-                            {fac.name}
-                          </h3>
-                          <p className="text-[#374151] font-sans font-medium text-xs md:text-sm leading-relaxed">
-                            {fac.desc}
-                          </p>
+                      )}
+                      {fac.email && (
+                        <div className="flex items-center gap-3 text-sm text-[#1a211e]">
+                          <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                          <a href={`mailto:${fac.email}`} className="font-medium text-xs md:text-sm text-slate-600 hover:text-black transition-colors">
+                            {fac.email}
+                          </a>
                         </div>
-
-                        {/* Divider */}
-                        <div className="border-t border-slate-100 pt-6 space-y-3">
-                          <div className="flex items-center gap-3 text-sm text-[#1a211e]">
-                            <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
-                            <span className="font-medium text-xs md:text-sm">{fac.address}</span>
-                          </div>
-                          {fac.phone && (
-                            <div className="flex items-center gap-3 text-sm text-[#1a211e]">
-                              <Phone className="w-4 h-4 text-slate-400 shrink-0" />
-                              <a href={`tel:${fac.phone.replace(/\s+/g, '')}`} className="font-extrabold text-xs md:text-sm text-black underline">
-                                {fac.phone}
-                              </a>
-                            </div>
-                          )}
-                          {fac.email && (
-                            <div className="flex items-center gap-3 text-sm text-[#1a211e]">
-                              <Mail className="w-4 h-4 text-slate-400 shrink-0" />
-                              <a href={`mailto:${fac.email}`} className="font-medium text-xs md:text-sm text-slate-600 hover:text-black transition-colors">
-                                {fac.email}
-                              </a>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Action / Guidance */}
-                      <div className="mt-8 pt-6 border-t border-slate-50 flex justify-between items-center">
-                        <Link 
-                          to="/teczka-sprawy" 
-                          className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-black flex items-center gap-2 transition-all transition-colors"
-                        >
-                          Generuj Teczkę Sprawy <ArrowRight className="w-4 h-4 text-slate-300" />
-                        </Link>
-                      </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="py-24 text-center bg-white rounded-[32px] border border-slate-200">
-                  <div className="text-3xl mb-4">🔍</div>
-                  <h3 className="text-xl font-serif font-bold text-[#0f1412] mb-2">Brak wyników</h3>
-                  <p className="text-sm text-[#6B7280]">
-                    Brak placówek odpowiadających zadanym filtrom. Spróbuj zmienić parametry wyszukiwania.
-                  </p>
-                </div>
-              )}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="categories-tab"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 focus:outline-none"
-            >
-              {mapCategories.map((cat, i) => (
-                <motion.article
-                  key={cat.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  className="bg-white border border-slate-200 rounded-[28px] p-6 md:p-8 flex flex-col justify-between group hover:border-[#DFCBB1] hover:bg-[#FFFDF9] transition-all min-h-[300px] text-left"
-                >
-                  <div>
-                    <div className="text-4xl mb-6 relative z-10">{cat.emoji}</div>
-                    <h2 className="text-xl font-serif font-black text-[#0f1412] leading-tight mb-4 group-hover:text-black">
-                      {cat.title}
-                    </h2>
-                    <p className="text-[#374151] font-sans font-medium text-xs md:text-sm leading-relaxed line-clamp-3">
-                      {cat.shortDesc}
-                    </p>
                   </div>
 
-                  <div className="border-t border-slate-100 pt-6 mt-6 flex justify-between items-center">
-                    <Link
-                      to={`/mapa/${cat.id}`}
-                      className="text-[10px] font-black uppercase tracking-widest text-[#0f1412] hover:translate-x-1 transition-transform flex items-center gap-2"
+                  {/* Action / Guidance */}
+                  <div className="mt-8 pt-6 border-t border-slate-50 flex justify-between items-center">
+                    <Link 
+                      to="/teczka-sprawy" 
+                      className="text-[10px] font-black uppercase tracking-widest text-[#DFCBB1] hover:text-black flex items-center gap-2 transition-all transition-colors"
                     >
-                      Baza praw i linków <ArrowRight className="w-4 h-4 text-slate-400" />
+                      Generuj Teczkę Kosztorysu Sprawy <ArrowRight className="w-4 h-4 text-slate-300" />
                     </Link>
                   </div>
-                </motion.article>
+                </div>
               ))}
-            </motion.div>
+            </div>
+          ) : (
+            <div className="py-24 text-center bg-white rounded-[32px] border border-slate-200">
+              <div className="text-3xl mb-4">🔍</div>
+              <h3 className="text-xl font-serif font-bold text-[#0f1412] mb-2">Brak wyników</h3>
+              <p className="text-sm text-[#6B7280]">
+                Brak placówek odpowiadających wybranym miastom. Zmień filtry powyżej.
+              </p>
+            </div>
           )}
-        </AnimatePresence>
+        </section>
+
+        {/* SECTION 3: KATEGORIE POMOCY I PRAWA */}
+        <section id="legal-needs-guides" className="scroll-mt-6 space-y-8 text-left">
+          <div className="border-l-4 border-amber-600 pl-4 py-1">
+            <h2 className="text-2xl font-serif font-black tracking-tight text-[#0f1412] uppercase">
+              3. Poradniki Prawne według Twojej Potrzeby
+            </h2>
+            <p className="text-xs text-slate-550">
+              Przewodniki krok po kroku, gotowe artykuły oraz asysta prawna dla osób samotnie wychowujących dzieci, w kryzysie lub borykających się z długami.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {mapCategories.map((cat, i) => (
+              <motion.article
+                key={cat.id}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="bg-white border border-slate-200 rounded-[28px] p-6 md:p-8 flex flex-col justify-between group hover:border-[#DFCBB1] hover:bg-[#FFFDF9] transition-all min-h-[300px] text-left shadow-xs"
+              >
+                <div>
+                  <div className="text-4xl mb-6 relative z-10">{cat.emoji}</div>
+                  <h2 className="text-xl font-serif font-black text-[#0f1412] leading-tight mb-4 group-hover:text-black">
+                    {cat.title}
+                  </h2>
+                  <p className="text-[#374151] font-sans font-medium text-xs md:text-sm leading-relaxed line-clamp-3">
+                    {cat.shortDesc}
+                  </p>
+                </div>
+
+                <div className="border-t border-slate-100 pt-6 mt-6 flex justify-between items-center">
+                  <Link
+                    to={`/mapa/${cat.id}`}
+                    className="text-[10px] font-black uppercase tracking-widest text-[#0f1412] hover:translate-x-1 transition-transform flex items-center gap-2"
+                  >
+                    Baza praw i linków <ArrowRight className="w-4 h-4 text-slate-400" />
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </section>
 
         {/* High Contrast Emergency Hotline Block */}
         <section className="mt-20 bg-slate-950 text-white rounded-[40px] p-8 md:p-16 relative overflow-hidden border border-slate-800 text-left">
