@@ -144,6 +144,11 @@ export default function BlogPostPage() {
       }
     };
 
+    if (utteranceRef.current) {
+      utteranceRef.current.onend = null;
+      utteranceRef.current.onerror = null;
+    }
+
     utteranceRef.current = utterance;
     synthRef.current.cancel(); // cancel current speech play
     synthRef.current.speak(utterance);
@@ -176,6 +181,10 @@ export default function BlogPostPage() {
   };
 
   const handleStopSpeaking = () => {
+    if (utteranceRef.current) {
+      utteranceRef.current.onend = null;
+      utteranceRef.current.onerror = null;
+    }
     if (synthRef.current) {
       synthRef.current.cancel();
     }
@@ -228,8 +237,46 @@ export default function BlogPostPage() {
       amber: 'bg-[#111] border-yellow-500/40 text-[#FACC15]',
     }[readingModeTheme];
 
+    const buttonStyles = {
+      cream: 'bg-[#2C2317] text-[#FCFAF2] hover:bg-[#3d3222]',
+      dark: 'bg-[#E5E7EB] text-[#0B0F19] hover:bg-white',
+      amber: 'bg-[#FACC15] text-black hover:bg-yellow-400 border border-yellow-500',
+    }[readingModeTheme];
+
+    const activeControlBtnStyles = {
+      cream: 'bg-[#2C2317] text-[#FCFAF2]',
+      dark: 'bg-[#E5E7EB] text-[#0B0F19]',
+      amber: 'bg-[#FACC15] text-black border border-yellow-400',
+    }[readingModeTheme];
+
+    const inactiveControlBtnStyles = {
+      cream: 'text-[#2C2317] hover:bg-[#2C2317]/10 bg-current/5 border border-current/10',
+      dark: 'text-[#E5E7EB] hover:bg-[#E5E7EB]/10 bg-current/5 border border-current/10',
+      amber: 'text-[#FACC15] hover:bg-[#FACC15]/20 bg-[#111] border border-yellow-500/30',
+    }[readingModeTheme];
+
     return (
-      <div className={`min-h-screen transition-colors duration-300 pb-32 text-left ${themeStyles}`}>
+      <div className={`min-h-screen transition-colors duration-300 pb-32 text-left reading-mode-active ${themeStyles}`}>
+        {/* Force color inherit rules for standard nested components to override general tailwind rules */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          .reading-mode-active p, 
+          .reading-mode-active h1, 
+          .reading-mode-active h1 span,
+          .reading-mode-active h2, 
+          .reading-mode-active h3, 
+          .reading-mode-active h4, 
+          .reading-mode-active h5, 
+          .reading-mode-active h6, 
+          .reading-mode-active strong, 
+          .reading-mode-active li, 
+          .reading-mode-active ul, 
+          .reading-mode-active ol,
+          .reading-mode-active span,
+          .reading-mode-active a {
+            color: currentColor !important;
+          }
+        `}} />
+
         {/* Top bar with tools */}
         <div className="border-b border-current/10 py-3.5 px-4 sticky top-0 bg-inherit z-50 shadow-sm">
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
@@ -238,7 +285,7 @@ export default function BlogPostPage() {
                 handleStopSpeaking();
                 setReadingModeActive(false);
               }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-slate-900 text-white rounded-lg text-[10px] font-black uppercase tracking-wider hover:bg-slate-800 transition-all shadow-md"
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all shadow-md ${buttonStyles}`}
             >
               <X className="w-3.5 h-3.5" />
               Wyjdź z trybu czytania
@@ -247,15 +294,15 @@ export default function BlogPostPage() {
             <div className="flex flex-wrap justify-center items-center gap-2.5">
               {/* Font Scale switcher */}
               <div className="flex items-center gap-1 bg-current/5 border border-current/10 p-1 rounded-lg">
-                <span className="text-[9px] uppercase font-bold px-1 opacity-70">Wielkość czcionki:</span>
+                <span className="text-[9px] uppercase font-bold px-1.5 opacity-70">Czcionka:</span>
                 {(['base', 'lg', 'xl', '2xl'] as const).map(sz => (
                   <button
                     key={sz}
                     onClick={() => setReadingModeFontSize(sz)}
                     className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider transition-all ${
                       readingModeFontSize === sz
-                        ? 'bg-slate-800 text-white'
-                        : 'hover:bg-current/10 text-current'
+                        ? activeControlBtnStyles
+                        : inactiveControlBtnStyles
                     }`}
                   >
                     {sz === 'base' ? 'Duża A-' : sz === 'lg' ? 'Standard A' : sz === 'xl' ? 'Większa A+' : 'Maksymalna A++'}
@@ -271,8 +318,8 @@ export default function BlogPostPage() {
                     onClick={() => setReadingModeTheme(thm)}
                     className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider transition-all ${
                       readingModeTheme === thm
-                        ? 'bg-amber-400 text-slate-900 border border-amber-600'
-                        : 'hover:bg-current/10 text-current'
+                        ? activeControlBtnStyles
+                        : inactiveControlBtnStyles
                     }`}
                   >
                     {thm === 'cream' ? 'Papierowy beż' : thm === 'dark' ? 'Tryb ciemny noc' : 'Wysoki żółty kontrast'}
@@ -288,8 +335,8 @@ export default function BlogPostPage() {
           <div className={`p-4 sm:p-5 border duration-300 rounded-2xl ${settingsPanelStyles}`}>
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div className="flex items-start sm:items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center shrink-0">
-                  <Headphones className="w-4 h-4 text-emerald-400 animate-pulse" />
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${buttonStyles}`}>
+                  <Headphones className="w-4 h-4 animate-pulse" />
                 </div>
                 <div>
                   <h4 className="font-serif font-black text-xs leading-tight">Uproszczony odtwarzacz dźwięku</h4>
@@ -300,7 +347,7 @@ export default function BlogPostPage() {
               </div>
 
               {isReading && (
-                <div className="px-2.5 py-1 rounded bg-emerald-600 text-white text-[9px] font-bold uppercase tracking-widest flex items-center gap-1 shadow animate-pulse">
+                <div className="px-2.5 py-1 rounded bg-[#FACC15] text-black text-[9px] font-bold uppercase tracking-widest flex items-center gap-1 shadow animate-pulse">
                   <Volume2 className="w-3.5 h-3.5 animate-bounce" />
                   <span>Tekst jest czytany</span>
                 </div>
@@ -309,11 +356,11 @@ export default function BlogPostPage() {
 
             {speechSupported ? (
               <div className="flex flex-wrap items-center gap-3 pt-3 mt-3 border-t border-current/10">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 font-sans">
                   <button
                     onClick={handlePrevParagraph}
                     disabled={currentParagraphIndex === null || currentParagraphIndex === 0}
-                    className="p-1.5 bg-current/5 hover:bg-current/10 rounded disabled:opacity-30 transition-all border border-current/5"
+                    className={`p-1.5 rounded disabled:opacity-35 transition-all ${inactiveControlBtnStyles}`}
                     title="Poprzedni akapit"
                   >
                     <ChevronLeft className="w-4 h-4" />
@@ -321,7 +368,7 @@ export default function BlogPostPage() {
 
                   <button
                     onClick={handleTogglePlay}
-                    className="px-4 py-1.5 bg-slate-950 text-white text-[10px] font-extrabold uppercase tracking-widest rounded-lg flex items-center gap-2 transition-all hover:bg-slate-800"
+                    className={`px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-widest rounded-lg flex items-center gap-2 transition-all ${buttonStyles}`}
                   >
                     {isReading && !isPaused ? (
                       <>
@@ -329,7 +376,7 @@ export default function BlogPostPage() {
                       </>
                     ) : (
                       <>
-                        <Play className="w-3 h-3 fill-current text-amber-300" /> Odtwórz
+                        <Play className="w-3 h-3 fill-current" /> Odtwórz
                       </>
                     )}
                   </button>
@@ -337,7 +384,7 @@ export default function BlogPostPage() {
                   <button
                     onClick={handleNextParagraph}
                     disabled={currentParagraphIndex === null || currentParagraphIndex >= paragraphs.length - 1}
-                    className="p-1.5 bg-current/5 hover:bg-current/10 rounded disabled:opacity-30 transition-all border border-current/5"
+                    className={`p-1.5 rounded disabled:opacity-35 transition-all ${inactiveControlBtnStyles}`}
                     title="Następny akapit"
                   >
                     <ChevronRight className="w-4 h-4" />
@@ -346,7 +393,7 @@ export default function BlogPostPage() {
                   {isReading && (
                     <button
                       onClick={handleStopSpeaking}
-                      className="px-2.5 py-1.5 bg-rose-500/10 text-rose-600 hover:bg-rose-550/25 text-[9.5px] font-black uppercase tracking-wider rounded-lg border border-rose-500/20 flex items-center gap-1 transition-all"
+                      className="px-2.5 py-1.5 bg-rose-600/10 text-rose-500 hover:bg-rose-600/20 text-[9.5px] font-black uppercase tracking-wider rounded-lg border border-rose-500/30 flex items-center gap-1 transition-all"
                     >
                       <Square className="w-2.5 h-2.5 fill-current" /> Zatrzymaj
                     </button>
@@ -363,8 +410,8 @@ export default function BlogPostPage() {
                         onClick={() => handleRateChange(rate)}
                         className={`px-1.5 py-0.5 text-[8.5px] uppercase font-black rounded ${
                           speechRate === rate 
-                            ? 'bg-slate-950 text-white' 
-                            : 'hover:bg-current/10 text-current'
+                            ? activeControlBtnStyles 
+                            : inactiveControlBtnStyles
                         }`}
                       >
                         {rate}x
@@ -407,8 +454,8 @@ export default function BlogPostPage() {
                     isActive ? activeBg : inactiveStyle
                   }`}
                 >
-                  <div className={`prose max-w-none text-inherit ${fontStyles}`}>
-                    <MarkdownRenderer content={para} />
+                  <div className={`prose max-w-none text-current ${fontStyles}`}>
+                    <MarkdownRenderer content={para} isReadingMode={true} />
                   </div>
                   {isActive && (
                     <div className="mt-2 text-[9px] font-black uppercase tracking-wider text-current/80 flex items-center gap-1 bg-[#1a202c]/5 py-1 px-2.5 rounded w-max">
@@ -427,7 +474,7 @@ export default function BlogPostPage() {
                 handleStopSpeaking();
                 setReadingModeActive(false);
               }}
-              className="px-6 py-2.5 bg-slate-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 transition-all shadow-md inline-block"
+              className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md inline-block ${buttonStyles}`}
             >
               Wyjdź z trybu czytania
             </button>
@@ -596,9 +643,33 @@ export default function BlogPostPage() {
             </div>
           </div>
 
-          {/* Typography Overhaul */}
-          <div className="prose prose-slate prose-base sm:prose-lg md:prose-xl max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-[1.7] prose-p:font-medium prose-strong:text-slate-900 prose-img:rounded-[24px] md:prose-img:rounded-[40px] prose-img:shadow-xl prose-a:text-amber-600 prose-a:font-black prose-a:no-underline hover:prose-a:underline">
-            <MarkdownRenderer content={content} />
+          {/* Typography Overhaul with Paragraph-level Reading and Highlight */}
+          <div className="prose prose-slate prose-base sm:prose-lg md:prose-xl max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-[1.7] prose-p:font-medium prose-strong:text-slate-900 prose-img:rounded-[24px] md:prose-img:rounded-[40px] prose-img:shadow-xl prose-a:text-amber-600 prose-a:font-black prose-a:no-underline hover:prose-a:underline space-y-2">
+            {paragraphs.map((para, idx) => {
+              const isActive = idx === currentParagraphIndex;
+              
+              // Soft, premium editorial highlight with left border accent in standard mode
+              const activeStyle = isActive
+                ? 'bg-amber-100/40 border-l-4 border-amber-600 text-slate-950 p-6 rounded-r-2xl shadow-sm ring-1 ring-amber-200/50 my-4'
+                : 'border-l-4 border-transparent p-4 rounded-xl cursor-pointer hover:bg-slate-50/80 hover:border-slate-300/60 transition-all duration-200';
+
+              return (
+                <div
+                  key={idx}
+                  id={`reader-p-${idx}`}
+                  onClick={() => speakParagraph(idx)}
+                  className={`transition-all duration-300 relative ${activeStyle}`}
+                >
+                  <MarkdownRenderer content={para} isReadingMode={false} />
+                  {isActive && (
+                    <div className="mt-3 text-[9px] font-black uppercase tracking-wider text-amber-800 flex items-center gap-1.5 bg-amber-100/60 py-1 px-2.5 rounded w-max select-none">
+                      <Volume2 className="w-3.5 h-3.5 text-amber-600 animate-bounce shrink-0" />
+                      Lektor odtwarza ten akapit
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
           
           {/* Dynamic Resources Section */}
