@@ -165,8 +165,10 @@ function CenterMapHandler({ center, zoom }: { center: [number, number], zoom: nu
 }
 
 export default function MapaLeafletView() {
+  const LARGE_DATASET_THRESHOLD = 1000;
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedVoivodeship, setSelectedVoivodeship] = useState<string>('all');
+  const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [mapCenter, setMapCenter] = useState<[number, number]>([52.0693, 19.4803]); // Center of Poland
   const [mapZoom, setMapZoom] = useState(6);
@@ -239,8 +241,22 @@ export default function MapaLeafletView() {
     return Array.from(set).sort();
   }, [transformedServices]);
 
-  // Handle live query output
+  const shouldHideUnfilteredServices = useMemo(() => {
+    return (
+      transformedServices.length > LARGE_DATASET_THRESHOLD &&
+      searchQuery.trim() === '' &&
+      selectedType === 'all' &&
+      selectedVoivodeship === 'all' &&
+      userLocation === null
+    );
+  }, [transformedServices.length, searchQuery, selectedType, selectedVoivodeship, userLocation]);
+
+  // Handle filtered output
   const filteredServices = useMemo(() => {
+    if (shouldHideUnfilteredServices) {
+      return [];
+    }
+
     const query = searchQuery.toLowerCase().trim();
     
     return transformedServices.filter((service) => {
@@ -256,7 +272,7 @@ export default function MapaLeafletView() {
 
       return matchesType && matchesVoivodeship && matchesQuery;
     });
-  }, [transformedServices, selectedType, selectedVoivodeship, searchQuery]);
+  }, [transformedServices, selectedType, selectedVoivodeship, searchQuery, shouldHideUnfilteredServices]);
 
   // Is the search state "active" (meaning user either searched, selected a category, or localized)?
   const isFilterActive = useMemo(() => {
@@ -293,6 +309,7 @@ export default function MapaLeafletView() {
 
         if (nearestService) {
           const matchedCity = (nearestService as UnifiedService).cityLabel;
+          setSearchInput(matchedCity);
           setSearchQuery(matchedCity);
           setMapCenter([(nearestService as UnifiedService).lat, (nearestService as UnifiedService).lng]);
           setMapZoom(12);
@@ -540,14 +557,20 @@ export default function MapaLeafletView() {
                   </span>
                   <input
                     type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        setSearchQuery(searchInput);
+                      }
+                    }}
                     placeholder="Wpisz np. Sosnowiec, Katowice, Zabrze..."
                     className="w-full bg-[#FAF8F4] pl-9 pr-12 py-3 rounded-xl border border-slate-200 text-xs font-semibold text-black focus:outline-none focus:border-black transition-all"
                   />
-                  {searchQuery && (
+                  {searchInput && (
                     <button 
                       onClick={() => {
+                        setSearchInput('');
                         setSearchQuery('');
                         setLocalizedCityMsg(null);
                       }}
@@ -557,6 +580,7 @@ export default function MapaLeafletView() {
                     </button>
                   )}
                 </div>
+                <p className="text-[10px] text-slate-400 font-semibold">Wyszukiwanie uruchomi się po naciśnięciu Enter.</p>
               </div>
 
               {/* Voivodeship selection as simple dropdown */}
@@ -601,7 +625,10 @@ export default function MapaLeafletView() {
                     {['Sosnowiec', 'Katowice', 'Dąbrowa Górnicza', 'Gliwice', 'Bytom'].map((popCity) => (
                       <button
                         key={popCity}
-                        onClick={() => setSearchQuery(popCity)}
+                        onClick={() => {
+                          setSearchInput(popCity);
+                          setSearchQuery(popCity);
+                        }}
                         className="px-2.5 py-1 bg-[#FAF8F4] hover:bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-800"
                       >
                         {popCity}
@@ -622,6 +649,7 @@ export default function MapaLeafletView() {
                     <button 
                       onClick={() => {
                         setSearchQuery('');
+                        setSearchInput('');
                         setSelectedType('all');
                         setSelectedVoivodeship('all');
                         setUserLocation(null);
