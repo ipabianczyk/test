@@ -213,9 +213,14 @@ export default function MapPage() {
                           <span className="px-3 py-1 bg-[#FBF9F4] text-[#0f1412] text-[9px] font-black uppercase tracking-widest rounded-lg border border-slate-200">
                             {fac.city}
                           </span>
-                          <span className="text-[10px] uppercase font-black tracking-widest text-[#6B7280] flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5" /> {fac.hours}
-                          </span>
+                          <a 
+                            href={`https://www.google.com/search?q=${encodeURIComponent(fac.name + ' ' + fac.city + ' mops kontakt telefon')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] uppercase font-black tracking-widest text-blue-600 hover:text-black flex items-center gap-1 hover:underline whitespace-nowrap"
+                          >
+                            🔍 Sprawdź dane w Google
+                          </a>
                         </div>
 
                         {/* Title & Description */}
