@@ -167,6 +167,7 @@ function CenterMapHandler({ center, zoom }: { center: [number, number], zoom: nu
 export default function MapaLeafletView() {
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedVoivodeship, setSelectedVoivodeship] = useState<string>('all');
+  const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [mapCenter, setMapCenter] = useState<[number, number]>([52.0693, 19.4803]); // Center of Poland
   const [mapZoom, setMapZoom] = useState(6);
@@ -293,6 +294,7 @@ export default function MapaLeafletView() {
 
         if (nearestService) {
           const matchedCity = (nearestService as UnifiedService).cityLabel;
+          setSearchInput(matchedCity);
           setSearchQuery(matchedCity);
           setMapCenter([(nearestService as UnifiedService).lat, (nearestService as UnifiedService).lng]);
           setMapZoom(12);
@@ -337,6 +339,9 @@ export default function MapaLeafletView() {
       setSurveyStep(3); // Result tab
     }
   };
+
+  const shouldSuppressUnfilteredResults = transformedServices.length > 1000 && !isFilterActive;
+  const visibleServices = shouldSuppressUnfilteredResults ? [] : filteredServices;
 
   return (
     <div className="bg-[#FAF8F5] text-[#1a211e] font-sans antialiased space-y-8">
@@ -540,14 +545,21 @@ export default function MapaLeafletView() {
                   </span>
                   <input
                     type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        setSearchQuery(searchInput);
+                        setLocalizedCityMsg(null);
+                      }
+                    }}
                     placeholder="Wpisz np. Sosnowiec, Katowice, Zabrze..."
                     className="w-full bg-[#FAF8F4] pl-9 pr-12 py-3 rounded-xl border border-slate-200 text-xs font-semibold text-black focus:outline-none focus:border-black transition-all"
                   />
-                  {searchQuery && (
+                  {searchInput && (
                     <button 
                       onClick={() => {
+                        setSearchInput('');
                         setSearchQuery('');
                         setLocalizedCityMsg(null);
                       }}
@@ -589,8 +601,8 @@ export default function MapaLeafletView() {
                 <div className="space-y-1.5">
                   <h3 className="font-serif font-black text-[#0f1412] text-sm">Witaj w strefie bezpiecznego wyszukania</h3>
                   <p className="text-[11px] text-slate-500 max-w-xs mx-auto leading-relaxed">
-                    Aby unikać natłoku informacji, ukryliśmy całą ogólnopolską listę. 
-                    **Wybierz kategorię u góry lub kliknij przycisk GPS / wpisz miasto**, aby natychmiast zobaczyć najbliższe punkty ratunkowe.
+                    Aby unikać natłoku informacji, ukryliśmy całą ogólnopolską listę.
+                    Wybierz kategorię u góry lub kliknij przycisk GPS / wpisz miasto i naciśnij Enter, aby zobaczyć najbliższe punkty ratunkowe.
                   </p>
                 </div>
                 
@@ -601,7 +613,10 @@ export default function MapaLeafletView() {
                     {['Sosnowiec', 'Katowice', 'Dąbrowa Górnicza', 'Gliwice', 'Bytom'].map((popCity) => (
                       <button
                         key={popCity}
-                        onClick={() => setSearchQuery(popCity)}
+                        onClick={() => {
+                          setSearchInput(popCity);
+                          setSearchQuery(popCity);
+                        }}
                         className="px-2.5 py-1 bg-[#FAF8F4] hover:bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-800"
                       >
                         {popCity}
@@ -615,12 +630,13 @@ export default function MapaLeafletView() {
               <div className="flex flex-col h-full space-y-3">
                 <div className="flex justify-between items-center pb-2 border-b border-slate-100 shrink-0">
                   <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-                    Sugerowane placówki ({filteredServices.length})
+                    Sugerowane placówki ({visibleServices.length})
                   </span>
                   
                   {isFilterActive && (
                     <button 
                       onClick={() => {
+                        setSearchInput('');
                         setSearchQuery('');
                         setSelectedType('all');
                         setSelectedVoivodeship('all');
@@ -636,7 +652,7 @@ export default function MapaLeafletView() {
                 </div>
 
                 <div className="overflow-y-auto no-scrollbar max-h-[300px] lg:max-h-[360px] space-y-2.5 flex-1 pr-1">
-                  {filteredServices.length === 0 ? (
+                  {visibleServices.length === 0 ? (
                     <div className="text-center py-10 space-y-2">
                       <span className="text-2xl filter drop-shadow-xs">📡</span>
                       <h4 className="font-serif font-black text-xs">Brak bezpośrednich rekordów</h4>
@@ -646,7 +662,7 @@ export default function MapaLeafletView() {
                       </p>
                     </div>
                   ) : (
-                    filteredServices.slice(0, 50).map((service) => {
+                    visibleServices.slice(0, 50).map((service) => {
                       const isSelected = selectedService?.id === service.id;
                       const config = MARKER_COLORS[service.type];
                       return (
@@ -723,7 +739,7 @@ export default function MapaLeafletView() {
               />
 
               {/* Render Leaflet markers */}
-              {filteredServices.map((service) => {
+              {visibleServices.map((service) => {
                 const isSelected = selectedService?.id === service.id;
                 return (
                   <Marker
