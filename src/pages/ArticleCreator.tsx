@@ -9,7 +9,7 @@ import {
   BookOpen, Scale, Heart, Info, Table, RefreshCw,
   Search, ArrowRight, Bold, Italic, List, Check,
   Heading1, Heading2, MessageSquare, MapPin, Globe,
-  PhoneCall, Grid, ExternalLink, Lock
+  PhoneCall, Grid, ExternalLink, Lock, Mail, BarChart2, Users
 } from 'lucide-react';
 
 const CATEGORIES = ['PORADNIK', 'PRAWO', 'ZDROWIE', 'HISTORIA', 'INTERWENCJA'];
@@ -104,7 +104,7 @@ export default function ArticleCreator() {
   }, []);
 
   // Zakładka główna panelu administracyjnego
-  const [panelTab, setPanelTab] = useState<'articles' | 'facilities'>('articles');
+  const [panelTab, setPanelTab] = useState<'articles' | 'facilities' | 'newsletter'>('articles');
 
   // Stan dla bazy placówek (CRUD)
   const [facilities, setFacilities] = useState<Facility[]>(() => {
@@ -344,6 +344,12 @@ typ: "Wsparcie Śląsk"
               className={`flex garments-btn items-center gap-2 px-5 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-colors ${panelTab === 'facilities' ? 'bg-slate-900 text-white' : 'text-[#6B7280] hover:text-[#0f1412]'}`}
             >
               <Table className="w-4 h-4" /> Baza Placówek Śląsk (CRUD)
+            </button>
+            <button
+              onClick={() => setPanelTab('newsletter')}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-colors ${panelTab === 'newsletter' ? 'bg-slate-900 text-white' : 'text-[#6B7280] hover:text-[#0f1412]'}`}
+            >
+              <Mail className="w-4 h-4" /> Newsletter & Statystyki
             </button>
           </div>
         </header>
@@ -949,6 +955,94 @@ typ: "Wsparcie Śląsk"
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+        )}
+
+        {/* ZAKŁADKA 3: NEWSLETTER I STATYSTYKI */}
+        {panelTab === 'newsletter' && (
+          <div className="space-y-12">
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Statystyki Kafelki */}
+              <div className="bg-white rounded-[32px] border border-slate-200 p-8 shadow-sm col-span-1 lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="space-y-2">
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
+                    <BarChart2 className="w-4 h-4 text-emerald-500" /> Edge Pageviews (30d)
+                  </div>
+                  <div className="text-4xl font-serif font-black text-[#0f1412]">24,591</div>
+                  <div className="text-xs font-bold text-emerald-600 bg-emerald-50 w-fit px-2 py-1 rounded-md">+12.4% m/m</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
+                    <Users className="w-4 h-4 text-amber-500" /> Aktywni Subskrybenci
+                  </div>
+                  <div className="text-4xl font-serif font-black text-[#0f1412]">1,204</div>
+                  <div className="text-xs font-bold text-emerald-600 bg-emerald-50 w-fit px-2 py-1 rounded-md">+4.1% m/m</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-rose-500" /> Open Rate (Listmonk)
+                  </div>
+                  <div className="text-4xl font-serif font-black text-[#0f1412]">48.2%</div>
+                  <div className="text-xs font-bold text-slate-500 bg-slate-100 w-fit px-2 py-1 rounded-md">Średnia Kampanii</div>
+                </div>
+              </div>
+
+              {/* Informacje o integracji G.A.S */}
+              <div className="bg-white rounded-[32px] border border-slate-200 p-8 shadow-sm col-span-1 lg:col-span-2">
+                <h3 className="text-lg font-serif font-black text-[#0f1412] mb-6 flex items-center gap-2">
+                  <RefreshCw className="w-5 h-5 text-amber-500" /> Status Integracji Listmonk & GAS
+                </h3>
+                <div className="space-y-6">
+                  <div className="bg-[#FAF9F4] p-5 rounded-2xl border border-[#EFECE6]">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-xs font-black uppercase tracking-widest text-[#0f1412]">API Webhook</h4>
+                      <span className="flex items-center gap-1 text-[10px] uppercase font-black tracking-widest text-emerald-600 bg-emerald-100 px-2.5 py-1 rounded-full">
+                        <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" /> Aktywny
+                      </span>
+                    </div>
+                    <p className="text-sm font-medium text-slate-600 max-w-xl">
+                      Powiadomienia o nowych czytelnikach są poprzełączane w Google Apps Script. System rejestruje wszystkie osoby przez formularz na stronie <b>/newsletter</b>.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-xs font-black uppercase tracking-widest text-slate-500 mb-3">Ostatnie zsynchronizowane kontakty</h4>
+                    <ul className="space-y-2">
+                      {[
+                        { e: 'jan.k***@gmail.com', date: 'Wczoraj, 14:02', st: 'SUCCESS' },
+                        { e: 'm.nowa***@wp.pl', date: 'Wczoraj, 11:45', st: 'SUCCESS' },
+                        { e: 'anna.b***@onet.pl', date: '28 Maj, 09:12', st: 'SUCCESS' }
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center justify-between py-3 px-4 bg-slate-50 rounded-xl border border-slate-100">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
+                              <User className="w-4 h-4 text-slate-500" />
+                            </div>
+                            <div className="text-sm font-bold text-[#1a211e]">{item.e}</div>
+                          </div>
+                          <div className="flex items-center gap-4 text-xs font-medium text-slate-500">
+                            {item.date} 
+                            <span className="text-[9px] px-2 py-0.5 rounded uppercase font-black tracking-wider bg-emerald-100 text-emerald-700">{item.st}</span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pobieranie CSV */}
+              <div className="bg-slate-900 rounded-[32px] p-8 shadow-sm col-span-1 text-white border-2 border-slate-800">
+                <h3 className="text-lg font-serif font-black mb-4">Eksport Bazy</h3>
+                <p className="text-xs text-slate-400 font-medium leading-relaxed mb-8">
+                  Pobierz awaryjną kopię wyselekcjonowanej bazy subskrybentów wsparcia. Pamiętaj o dyrektywie RODO przy operowaniu na nagim pliku Danych Osobowych.
+                </p>
+                <button className="w-full py-4 bg-white hover:bg-slate-100 text-slate-900 rounded-2xl text-xs font-black uppercase tracking-widest transition-colors flex justify-center items-center gap-2">
+                  <Download className="w-4 h-4" /> Eksport (CSV)
+                </button>
+              </div>
+
+            </div>
           </div>
         )}
       </div>

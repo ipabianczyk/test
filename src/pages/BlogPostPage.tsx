@@ -1,14 +1,86 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import MarkdownRenderer from '../components/MarkdownRenderer';
-import { getPostById } from '../services/blogService';
+import { getPostById, getAllPosts } from '../services/blogService';
 import { motion } from 'motion/react';
-import { ArrowLeft, Calendar, User, Share2, Tag, Volume2, Play, Pause, Square, Headphones, HelpCircle, ChevronLeft, ChevronRight, BookOpen, X, Sparkles } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Share2, Tag, Volume2, Play, Pause, Square, Headphones, HelpCircle, ChevronLeft, ChevronRight, BookOpen, X, Sparkles, Mail, Link2 } from 'lucide-react';
+
+const getCategoryStyles = (category: string) => {
+  const norm = (category || '').toUpperCase();
+  switch(norm) {
+    case 'PRAWO':
+      return {
+        cardBg: 'bg-[#FDFBF7] hover:bg-[#FCF9F2]',
+        border: 'border-[#F1E4CE] hover:border-[#DFCBB1]',
+        badgeBg: 'bg-[#FAF3E4] text-[#8C6239]',
+        accentBar: 'border-l-[#8C6239]'
+      };
+    case 'ZDROWIE':
+      return {
+        cardBg: 'bg-[#F7FAF8] hover:bg-[#F2F7F4]',
+        border: 'border-[#DFEAE4] hover:border-[#CCDED4]',
+        badgeBg: 'bg-[#EBF3EF] text-[#2C6B4E]',
+        accentBar: 'border-l-[#2C6B4E]'
+      };
+    case 'HISTORIA':
+      return {
+        cardBg: 'bg-[#FAF7FC] hover:bg-[#F5EFF9]',
+        border: 'border-[#EBE2F5] hover:border-[#CDAFEE]',
+        badgeBg: 'bg-[#F2EBF7] text-[#6A3D9A]',
+        accentBar: 'border-l-[#6A3D9A]'
+      };
+    case 'INTERWENCJA':
+      return {
+        cardBg: 'bg-[#FFF8F8] hover:bg-[#FFF2F2]',
+        border: 'border-[#FCDADA] hover:border-[#FAC8C8]',
+        badgeBg: 'bg-[#FCE8E8] text-[#B83232]',
+        accentBar: 'border-l-[#B83232]'
+      };
+    case 'PORADNIK':
+    default:
+      return {
+        cardBg: 'bg-[#F7FAFC] hover:bg-[#F2F6FA]',
+        border: 'border-[#DFE7EE] hover:border-[#BBCDE1]',
+        badgeBg: 'bg-[#EBF1F6] text-[#2F6087]',
+        accentBar: 'border-l-[#2F6087]'
+      };
+  }
+};
 
 export default function BlogPostPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const post = id ? getPostById(id) : undefined;
+
+  const [copied, setCopied] = React.useState(false);
+  const [currentUrl, setCurrentUrl] = React.useState('');
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.origin + '/blog/' + (id || ''));
+    }
+  }, [id]);
+
+  const copyLink = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(currentUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const allPosts = React.useMemo(() => getAllPosts(), []);
+  const currentIndex = allPosts.findIndex(p => p.id === (post?.id || ''));
+  const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+
+  const relatedPosts = React.useMemo(() => {
+    if (!post) return [];
+    const list = allPosts.filter(p => p.id !== post.id);
+    const sameCat = list.filter(p => p.category === post.category);
+    const chosen = sameCat.length >= 2 ? sameCat : list;
+    return chosen.slice(0, 2);
+  }, [allPosts, post]);
 
   // Speech synthesis is chunk-based for rock-solid stability on mobile and beautiful highlighting
   const [isReading, setIsReading] = React.useState(false);
@@ -49,29 +121,6 @@ export default function BlogPostPage() {
   }
 
   const { title, date, author, category, tags, image, content, excerpt, resources = [] } = post;
-
-  // SEO Update
-  React.useEffect(() => {
-    document.title = `${title} | MostPomocy.pl`;
-    
-    // Update meta description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', excerpt);
-
-    // Update meta keywords
-    let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta');
-      metaKeywords.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywords);
-    }
-    metaKeywords.setAttribute('content', tags.join(', '));
-  }, [title, excerpt, tags]);
 
   // Clean Markdown helper to make it sound pleasant under TTS
   const cleanMarkdownForVoice = (rawMarkdown: string): string => {
@@ -486,18 +535,18 @@ export default function BlogPostPage() {
 
   return (
     <article className="bg-[#FAF8F3] min-h-screen text-[#1a211e]">
-      {/* Editorial Journal Header (No Imagery) */}
-      <header className="relative py-10 md:py-16 bg-[#FBF9F4] border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 md:px-10 w-full">
-          <Link to="/blog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#6B7280] hover:text-[#0f1412] transition-colors mb-8 md:mb-12 group">
+      {/* Editorial Journal Header - Now much more compact & elegant */}
+      <header className="relative py-6 md:py-8 bg-[#FBF9F4] border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#6B7280] hover:text-[#0f1412] transition-colors mb-4 md:mb-5 group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
             Powrót do czytelni
           </Link>
           
           <motion.div 
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-4 md:space-y-8"
+            className="space-y-3"
           >
             <div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#6B7280]">
@@ -510,21 +559,21 @@ export default function BlogPostPage() {
               )}
             </div>
             
-            <h1 className="text-2xl sm:text-4xl md:text-6xl font-serif font-black tracking-tight leading-snug md:leading-none text-[#1F2937] max-w-4xl">
+            <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-black tracking-tight leading-snug text-[#0f1412] max-w-4xl">
               {title}
             </h1>
             
-            <p className="text-[#374151] font-sans text-sm md:text-lg leading-relaxed max-w-3xl italic">
+            <p className="text-[#1a211e] font-sans text-xs sm:text-sm md:text-base leading-relaxed max-w-3xl italic">
               {excerpt}
             </p>
             
-            <div className="flex flex-wrap items-center gap-4 md:gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-[#6B7280] pt-4 md:pt-6 border-t border-slate-100">
+            <div className="flex flex-wrap items-center gap-4 md:gap-8 text-[10px] font-black uppercase tracking-[0.25em] text-[#6B7280] pt-3 border-t border-slate-200/80">
               <div className="flex items-center gap-2">
-                <Calendar className="w-3.5 h-3.5" />
+                <Calendar className="w-3.5 h-3.5 text-emerald-800" />
                 {date}
               </div>
               <div className="flex items-center gap-2">
-                <User className="w-3.5 h-3.5" />
+                <User className="w-3.5 h-3.5 text-emerald-800" />
                 Napisane przez: {author}
               </div>
             </div>
@@ -532,202 +581,415 @@ export default function BlogPostPage() {
         </div>
       </header>
 
-      {/* Main Container */}
-      <main className="max-w-5xl mx-auto px-1 sm:px-4 md:px-10 py-6 md:py-16 relative z-20 pb-32">
-        <div className="bg-white px-3 py-6 sm:px-8 md:px-16 rounded-[20px] sm:rounded-[48px] border border-slate-200">
+      {/* Main Container - Optimized Responsive Grid Layout */}
+      <main className="max-w-6xl mx-auto px-4 py-6 md:py-10 relative z-20 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* FREE HTML5 Speech Player Section */}
-          <div className="mb-8 p-4 sm:p-5 bg-slate-50 border border-slate-250 rounded-2xl text-left space-y-3">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center shrink-0">
-                  <Headphones className="w-4 h-4 text-amber-400" />
-                </div>
-                <div>
-                  <h4 className="font-serif font-black text-xs text-slate-900 leading-tight">
-                    Odtwarzacz Audio (Lektor)
-                  </h4>
-                  <p className="text-[10px] text-slate-500 font-sans mt-0.5">
-                    Twój system przeczyta ten tekst czystym głosem na głos.
-                  </p>
-                </div>
-              </div>
-
-              {/* Status display or simple indicator */}
-              {isReading && (
-                <div className="flex items-center gap-1.5 px-2 py-1 bg-slate-800 text-amber-300 text-[9px] font-black uppercase tracking-widest rounded animate-pulse">
-                  <Volume2 className="w-3 h-3 animate-bounce" />
-                  <span>Słuchasz...</span>
-                </div>
-              )}
-            </div>
-
-            {/* CTA to open Comfort Reader mode */}
-            <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 py-2 border-t border-dashed border-slate-200/80">
-              <span className="text-[11px] text-slate-600 font-medium">
-                📱 Tekst jest zbyt mały lub nieczytelny na telefonie?
-              </span>
-              <button
-                onClick={() => setReadingModeActive(true)}
-                className="px-4 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-200 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-sm"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-amber-600" />
-                Włącz Ułatwiony Tryb Czytania
-              </button>
-            </div>
-
-            {speechSupported ? (
-              <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-slate-200">
-                {/* Control Action Buttons */}
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleTogglePlay}
-                    className="px-4 py-1.5 bg-black hover:bg-slate-800 text-white text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center gap-1.5"
-                  >
-                    {isReading && !isPaused ? (
-                      <>
-                        <Pause className="w-3 h-3 fill-current" /> Pauza
-                      </>
-                    ) : (
-                      <>
-                        <Play className="w-3 h-3 fill-current text-emerald-400" /> Odtwórz
-                      </>
-                    )}
-                  </button>
-
-                  {isReading && (
-                    <button
-                      onClick={handleStopSpeaking}
-                      className="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center gap-1 border border-rose-200"
-                    >
-                      <Square className="w-2.5 h-2.5 fill-current" /> Stop
-                    </button>
-                  )}
-                </div>
-
-                {/* Speed Slider Control */}
-                <div className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1 rounded-lg text-xs font-semibold text-slate-600">
-                  <span className="whitespace-nowrap text-[9.5px] font-bold">Tempo lektora:</span>
-                  <div className="flex gap-1">
-                    {[0.8, 1.0, 1.25, 1.5].map((rate) => (
-                      <button
-                        key={rate}
-                        onClick={() => handleRateChange(rate)}
-                        className={`px-1.5 py-0.5 text-[9px] uppercase font-black tracking-widest rounded ${
-                          speechRate === rate 
-                            ? 'bg-slate-900 text-white' 
-                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                        }`}
-                      >
-                        {rate}x
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p className="text-[10px] text-rose-600 font-sans italic">
-                Brak obsługi lektora głosowego w Twojej przeglądarce.
-              </p>
-            )}
-          </div>
-
-          {/* Article Meta */}
-          <div className="mb-8 md:mb-12 pb-6 md:pb-8 border-b border-slate-50 italic text-slate-400 text-sm md:text-base font-medium leading-relaxed flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <div>
-              Artykuł weryfikowany przez zespół <strong>MostPomocy</strong>.
-            </div>
-            <div className="text-[10.5px] text-slate-500 flex items-center gap-1 font-sans">
-              <HelpCircle className="w-3.5 h-3.5 text-slate-400" />
-              Lektor nie zużywa Twojego transferu danych.
-            </div>
-          </div>
-
-          {/* Typography Overhaul with Paragraph-level Reading and Highlight */}
-          <div className="prose prose-slate prose-base sm:prose-lg md:prose-xl max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-[1.7] prose-p:font-medium prose-strong:text-slate-900 prose-img:rounded-[24px] md:prose-img:rounded-[40px] prose-img:shadow-xl prose-a:text-amber-600 prose-a:font-black prose-a:no-underline hover:prose-a:underline space-y-2">
-            {paragraphs.map((para, idx) => {
-              const isActive = idx === currentParagraphIndex;
+          {/* Main Article Content - 8 Column Layout on Desktop */}
+          <div className="lg:col-span-8 space-y-6">
+            <div className="bg-white px-4 py-6 sm:px-8 sm:py-8 rounded-[28px] border border-slate-200/90 shadow-sm">
               
-              // Soft, premium editorial highlight with left border accent in standard mode
-              const activeStyle = isActive
-                ? 'bg-amber-100/40 border-l-4 border-amber-600 text-slate-950 p-6 rounded-r-2xl shadow-sm ring-1 ring-amber-200/50 my-4'
-                : 'border-l-4 border-transparent p-4 rounded-xl cursor-pointer hover:bg-slate-50/80 hover:border-slate-300/60 transition-all duration-200';
-
-              return (
-                <div
-                  key={idx}
-                  id={`reader-p-${idx}`}
-                  onClick={() => speakParagraph(idx)}
-                  className={`transition-all duration-300 relative ${activeStyle}`}
-                >
-                  <MarkdownRenderer content={para} isReadingMode={false} />
-                  {isActive && (
-                    <div className="mt-3 text-[9px] font-black uppercase tracking-wider text-amber-800 flex items-center gap-1.5 bg-amber-100/60 py-1 px-2.5 rounded w-max select-none">
-                      <Volume2 className="w-3.5 h-3.5 text-amber-600 animate-bounce shrink-0" />
-                      Lektor odtwarza ten akapit
+              {/* COMPACT AUDIO PLAYER - Streamlined Horizontal Interface */}
+              <div className="mb-6 p-4 bg-[#FDFBF7] border border-[#F1E4CE]/70 rounded-2xl text-left">
+                <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#0f1412] text-white flex items-center justify-center shrink-0">
+                      <Headphones className="w-4 h-4 text-amber-400" />
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          
-          {/* Dynamic Resources Section */}
-          {resources.length > 0 && (
-            <div className="mt-12 md:mt-24 pt-10 md:pt-16 border-t-4 border-slate-50">
-              <div className="flex items-center gap-3 mb-8 md:mb-12">
-                <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center shadow-md shadow-amber-200/50">
-                  <Tag className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">Przydatne kafelki</h3>
-                  <p className="text-slate-400 font-bold text-[9px] uppercase tracking-widest mt-0.5">Narzędzia powiązane z tematem</p>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                {resources.map((res: any, idx: number) => (
-                  <a 
-                    key={idx}
-                    href={res.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex flex-col p-6 sm:p-8 bg-white border-2 border-slate-100 rounded-[24px] md:rounded-[40px] hover:border-amber-500 hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex-1 space-y-3">
-                      <div className="w-9 h-9 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 group-hover:bg-amber-100 group-hover:text-amber-600 transition-colors">
-                        <Share2 className="w-4 h-4" />
-                      </div>
-                      <h4 className="text-lg sm:text-2.5xl font-black text-slate-900 group-hover:text-amber-600 transition-colors leading-tight">
-                        {res.title}
+                    <div>
+                      <h4 className="font-serif font-black text-xs text-[#0f1412] leading-tight">
+                        Odtwarzacz Audio (Lektor)
                       </h4>
-                      <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
-                        {res.desc}
+                      <p className="text-[9px] text-[#1a211e]/75 font-sans mt-0.5">
+                        System przeczyta tekst. Klikaj na dowolne akapity poniżej, by odtworzyć dźwięk.
                       </p>
                     </div>
-                    <div className="mt-6 pt-6 border-t border-slate-50 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-amber-600 transition-colors">
-                      <span>Otwórz narzędzie</span>
-                      <ArrowLeft className="w-3.5 h-3.5 rotate-180 transform group-hover:translate-x-1.5 transition-transform" />
+                  </div>
+
+                  {isReading && (
+                    <div className="flex items-center gap-1.2 px-2.5 py-0.5 bg-[#0f1412] text-amber-300 text-[8.5px] font-black uppercase tracking-widest rounded animate-pulse w-max">
+                      <Volume2 className="w-3.5 h-3.5 animate-bounce text-amber-400 mr-1 shrink-0" />
+                      <span>Czytam...</span>
                     </div>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 mt-3 border-t border-slate-200/70">
+                  {speechSupported ? (
+                    <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={handleTogglePlay}
+                          className="px-3.5 py-1.5 bg-[#0f1412] hover:bg-emerald-800 text-white text-[9px] font-extrabold uppercase tracking-widest rounded-lg transition-all flex items-center gap-1.5 shadow-sm"
+                        >
+                          {isReading && !isPaused ? (
+                            <>
+                              <Pause className="w-2.5 h-2.5 fill-current" /> Pauza
+                            </>
+                          ) : (
+                            <>
+                              <Play className="w-2.5 h-2.5 fill-current text-white" /> Odtwórz
+                            </>
+                          )}
+                        </button>
+
+                        {isReading && (
+                          <button
+                            onClick={handleStopSpeaking}
+                            className="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-[9px] font-bold uppercase tracking-wider rounded-lg transition-all flex items-center gap-1 border border-rose-200"
+                          >
+                            <Square className="w-2 h-2 fill-current" /> Stop
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Speed Control Indicator */}
+                      <div className="flex items-center gap-1 bg-white border border-slate-205 px-2 py-1 rounded-lg text-[9.5px]">
+                        <span className="text-[8px] font-black text-slate-500 uppercase mr-0.5">Tempo:</span>
+                        <div className="flex gap-0.5">
+                          {[0.8, 1.0, 1.25, 1.5].map((rate) => (
+                            <button
+                              key={rate}
+                              onClick={() => handleRateChange(rate)}
+                              className={`px-1 rounded text-[8px] font-black uppercase tracking-widest transition-all ${
+                                speechRate === rate 
+                                  ? 'bg-[#0f1412] text-white' 
+                                  : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                              }`}
+                            >
+                              {rate}x
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-[9px] text-rose-600 font-sans italic">Synthesizer mowy niedostępny w systemie.</p>
+                  )}
+
+                  <button
+                    onClick={() => setReadingModeActive(true)}
+                    className="px-3 py-1.5 bg-[#FAF3E4] hover:bg-[#FAF3E4]/80 text-[#8C6239] border border-[#F1E4CE] text-[9px] font-black uppercase tracking-wider rounded-lg transition-all flex items-center justify-center gap-1 shadow-sm"
+                  >
+                    <BookOpen className="w-3 h-3 text-[#8C6239]" />
+                    Modyfikuj Typografię (Tryb Czytania)
+                  </button>
+                </div>
+              </div>
+
+              {/* Verified Badge Header Line */}
+              <div className="mb-6 flex items-center justify-between pb-4 border-b border-slate-100 text-[11px] text-slate-500 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <HelpCircle className="w-3.5 h-3.5 text-emerald-800" />
+                  Merytoryczność weryfikowana przez zespół MostPomocy
+                </span>
+                <span className="hidden sm:inline italic text-[10px]">Wskazówka: Kliknij dowolny akapit, by odsłuchać lektora</span>
+              </div>
+
+              {/* Tighter Interactive Text flow - reducing vertical scrolling spaces */}
+              <div className="prose prose-slate prose-base max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-[#0f1412] prose-p:text-[#1a211e] prose-p:leading-[1.65] prose-p:font-normal prose-strong:text-[#0f1412] prose-strong:font-black prose-img:rounded-[24px] prose-a:text-emerald-800 prose-a:font-black hover:prose-a:underline space-y-1.5">
+                {paragraphs.map((para, idx) => {
+                  const isActive = idx === currentParagraphIndex;
+                  
+                  // Significantly tighter default paddings to prevent endless scrolling
+                  const activeStyle = isActive
+                    ? 'bg-amber-50 border-l-4 border-amber-600 text-slate-950 px-4 py-4 sm:px-5 sm:py-5 rounded-r-2xl shadow-sm ring-1 ring-amber-200/50 my-3'
+                    : 'border-l-4 border-transparent px-3 py-2 rounded-xl cursor-pointer hover:bg-slate-50 hover:border-slate-300/40 transition-all duration-150';
+
+                  return (
+                    <div
+                      key={idx}
+                      id={`reader-p-${idx}`}
+                      onClick={() => speakParagraph(idx)}
+                      className={`transition-all duration-200 relative ${activeStyle}`}
+                    >
+                      <MarkdownRenderer content={para} isReadingMode={false} />
+                      {isActive && (
+                        <div className="mt-2 text-[8px] font-black uppercase tracking-wider text-[#8C6239] flex items-center gap-1 bg-[#FAF3E4] py-0.5 px-2 rounded-lg w-max select-none">
+                          <Volume2 className="w-3 h-3 text-[#8C6239] animate-bounce shrink-0" />
+                          Głos lektora odtwarza ten akapit
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+            </div>
+          </div>
+
+          {/* Sticky Sidebar - Moves extra widgets horizontally out of the main scrolling path */}
+          <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
+            
+            {/* Author details & Direct FAQ button */}
+            <div className="bg-white p-5 rounded-[24px] border border-slate-200 shadow-sm text-left">
+              <h5 className="text-[9px] font-black uppercase tracking-[0.25em] text-[#6B7280] mb-3">
+                Autor publikacji
+              </h5>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-[#0f1412] rounded-full flex items-center justify-center text-white tracking-widest font-serif italic text-base font-bold select-none">
+                  {author.slice(0, 2).toUpperCase()}
+                </div>
+                <div>
+                  <h4 className="font-serif font-black text-sm text-[#0f1412] leading-tight">
+                    {author}
+                  </h4>
+                  <p className="text-[10px] text-stone-500 mt-0.5">Weryfikowane przez MostPomocy</p>
+                </div>
+              </div>
+              <Link 
+                to="/kontakt" 
+                className="w-full text-center block px-4 py-2.5 bg-[#0f1412] hover:bg-emerald-800 text-white rounded-xl font-black text-[9.5px] uppercase tracking-widest transition-all shadow-sm"
+              >
+                Zadaj pytanie autorowi
+              </Link>
+            </div>
+
+            {/* Quick Share Widget inside Sidebar */}
+            <div className="bg-white p-5 rounded-[24px] border border-slate-200 shadow-sm text-left">
+              <h5 className="text-[9px] font-black uppercase tracking-[0.25em] text-[#6B7280] mb-3">
+                Udostępnij artykuł
+              </h5>
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                {[
+                  {
+                    title: 'Udostępnij na Facebooku',
+                    url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
+                    icon: (
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/>
+                      </svg>
+                    ),
+                  },
+                  {
+                    title: 'Udostępnij na LinkedIn',
+                    url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
+                    icon: (
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                      </svg>
+                    ),
+                  },
+                  {
+                    title: 'Udostępnij na Twitterze (X)',
+                    url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(title || '')}`,
+                    icon: (
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    ),
+                  },
+                  {
+                    title: 'Wyślij e-mailem',
+                    url: `mailto:?subject=${encodeURIComponent(title || '')}&body=${encodeURIComponent(currentUrl)}`,
+                    icon: <Mail className="w-3.5 h-3.5" />,
+                  },
+                ].map((s, i) => (
+                  <a
+                    key={i}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={s.title}
+                    className="w-9 h-9 rounded-xl bg-[#FBF9F4] hover:bg-emerald-50 border border-slate-250 text-slate-700 hover:text-emerald-950 hover:border-emerald-700 flex items-center justify-center transition-all shadow-sm"
+                  >
+                    {s.icon}
                   </a>
                 ))}
+                
+                <button
+                  onClick={copyLink}
+                  className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all shadow-sm ${
+                    copied
+                      ? 'bg-emerald-700 text-white border-emerald-700 font-bold'
+                      : 'bg-[#FBF9F4] hover:bg-emerald-50 border-slate-250 text-slate-700 hover:text-emerald-950'
+                  }`}
+                  title="Skopiuj link do schowka"
+                >
+                  {copied ? <span className="text-[8px] font-black uppercase">OK</span> : <Link2 className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Universal Recommended Tool on Every Subpage */}
+            <div className="bg-emerald-900 p-5 rounded-[24px] border border-emerald-800 shadow-md text-left text-white relative overflow-hidden group">
+              <div className="absolute -right-6 -top-6 w-24 h-24 bg-emerald-800 rounded-full blur-2xl opacity-50 group-hover:bg-amber-500 group-hover:opacity-30 transition-all duration-500"></div>
+              <h5 className="text-[9px] font-black uppercase tracking-[0.25em] text-emerald-400 mb-2 relative z-10">
+                Polecane Narzędzie
+              </h5>
+              <div className="relative z-10">
+                <h4 className="font-serif font-black text-lg text-white leading-tight mb-2">
+                  Potrzebomat
+                </h4>
+                <p className="text-[10px] text-emerald-100 font-sans leading-snug mb-4">
+                  Interaktywny asystent, który w 3 minuty przeanalizuje Twoją sytuację i podpowie ścieżki wsparcia.
+                </p>
+                <Link
+                  to="/potrzebomat"
+                  className="inline-flex w-full items-center justify-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-amber-950 rounded-xl font-black text-[9.5px] uppercase tracking-widest transition-all shadow-sm"
+                >
+                  Uruchom analizę za darmo
+                </Link>
+              </div>
+            </div>
+
+            {/* Resources / External Tools associated with content  */}
+            {resources.length > 0 && (
+              <div className="bg-white p-5 rounded-[24px] border border-slate-200 shadow-sm text-left">
+                <h5 className="text-[9px] font-black uppercase tracking-[0.25em] text-[#6B7280] mb-3.5">
+                  Narzędzia i linki
+                </h5>
+                <div className="space-y-3">
+                  {resources.map((res: any, idx: number) => (
+                    <a 
+                      key={idx}
+                      href={res.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block p-3 bg-stone-50 border border-slate-200/80 rounded-xl hover:border-emerald-700 hover:bg-emerald-50/20 transition-all text-left"
+                    >
+                      <h4 className="text-xs font-serif font-black text-[#0f1412] group-hover:text-emerald-950 transition-colors leading-tight">
+                        {res.title}
+                      </h4>
+                      <p className="text-[10px] text-stone-600 font-sans leading-snug mt-1 line-clamp-2">
+                        {res.desc}
+                      </p>
+                      <div className="mt-2 text-[8px] font-black uppercase tracking-widest text-[#6B7280] group-hover:text-emerald-800 flex items-center justify-between">
+                        <span>Otwórz</span>
+                        <ArrowLeft className="w-3 w-3 rotate-180 transform group-hover:translate-x-1.5 transition-transform" />
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+        </div>
+
+        {/* Previous and Next Navigation Buttons */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200 border border-slate-200 rounded-[20px] bg-white overflow-hidden shadow-sm">
+          {prevPost ? (
+            <Link
+              to={`/blog/${prevPost.id}`}
+              className="p-5 flex items-start gap-3 hover:bg-slate-50 transition-all text-left group"
+            >
+              <ChevronLeft className="w-4 h-4 mt-1 text-emerald-800 group-hover:-translate-x-1 transition-transform shrink-0" />
+              <div className="space-y-0.5">
+                <span className="text-[9px] font-black uppercase tracking-widest text-[#6B7280]">
+                  POPRZEDNI
+                </span>
+                <h4 className="font-serif font-black text-xs sm:text-sm text-[#0f1412] line-clamp-1 leading-snug">
+                  {prevPost.title}
+                </h4>
+              </div>
+            </Link>
+          ) : (
+            <div className="p-5 flex items-start gap-3 opacity-40 bg-slate-50/20 text-left">
+              <ChevronLeft className="w-4 h-4 mt-1 shrink-0" />
+              <div className="space-y-0.5">
+                <span className="text-[9px] font-black uppercase tracking-widest text-[#6B7280]">
+                  POPRZEDNI
+                </span>
+                <h4 className="font-serif font-black text-xs sm:text-sm text-[#0f1412] italic">
+                  To jest najnowszy wpis
+                </h4>
               </div>
             </div>
           )}
 
-          <div className="mt-12 md:mt-24 pt-10 md:pt-16 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-10">
-            <div className="flex items-center gap-3">
-               <div className="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white tracking-widest font-serif italic text-lg font-bold">IP</div>
-               <div>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Autor publikacji</p>
-                  <p className="text-base font-black text-slate-900">{author}</p>
-               </div>
-            </div>
-            <Link to="/kontakt" className="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-amber-600 text-white text-center rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg">
-              Zadaj pytanie autorowi
+          {nextPost ? (
+            <Link
+              to={`/blog/${nextPost.id}`}
+              className="p-5 flex items-start justify-between gap-3 hover:bg-slate-50 transition-all text-left md:text-right group"
+            >
+              <div className="space-y-0.5 order-1 md:order-2">
+                <span className="text-[9px] font-black uppercase tracking-widest text-[#6B7280] block">
+                  NASTĘPNY
+                </span>
+                <h4 className="font-serif font-black text-xs sm:text-sm text-[#0f1412] line-clamp-1 leading-snug">
+                  {nextPost.title}
+                </h4>
+              </div>
+              <ChevronRight className="w-4 h-4 mt-1 text-emerald-800 group-hover:translate-x-1 transition-transform shrink-0 order-2 md:order-1" />
             </Link>
-          </div>
+          ) : (
+            <div className="p-5 flex items-start justify-between gap-3 opacity-40 bg-slate-50/20 text-left md:text-right">
+              <div className="space-y-0.5">
+                <span className="text-[9px] font-black uppercase tracking-widest text-[#6B7280]">
+                  NASTĘPNY
+                </span>
+                <h4 className="font-serif font-black text-xs sm:text-sm text-[#0f1412] italic">
+                  To jest najstarszy wpis
+                </h4>
+              </div>
+              <ChevronRight className="w-4 h-4 mt-1 shrink-0" />
+            </div>
+          )}
         </div>
+
+        {/* Related Posts Section (Magazine-style Editorial Cards, now taking clean visual form) */}
+        {relatedPosts.length > 0 && (
+          <div className="mt-12 text-left">
+            <div className="flex items-center gap-2 mb-6">
+              <Sparkles className="w-4.5 h-4.5 text-emerald-800" />
+              <h3 className="text-xl md:text-2xl font-serif font-black tracking-tight text-[#0f1412]">
+                Inne polecane artykuły
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {relatedPosts.map((relatedPostItem) => {
+                const itemStyles = getCategoryStyles(relatedPostItem.category);
+                return (
+                  <Link
+                    key={relatedPostItem.id}
+                    to={`/blog/${relatedPostItem.id}`}
+                    className="group flex flex-col bg-white border border-slate-200/80 rounded-[24px] overflow-hidden hover:shadow-md hover:border-slate-300 transition-all p-3 text-[#1a211e]"
+                  >
+                    {/* Related Post Image Accent */}
+                    <div className="relative aspect-[16/10] w-full rounded-[18px] overflow-hidden bg-slate-100">
+                      {relatedPostItem.image ? (
+                        <img
+                          src={relatedPostItem.image}
+                          alt={relatedPostItem.title}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-slate-50 flex items-center justify-center p-6 text-slate-300">
+                          <BookOpen className="w-10 h-10" />
+                        </div>
+                      )}
+                      
+                      {/* Category Tag Overlay */}
+                      <span className={`absolute top-3 left-3 px-2 py-0.5 text-[8px] font-black uppercase tracking-widest rounded shadow-sm ${itemStyles.badgeBg}`}>
+                        {relatedPostItem.category}
+                      </span>
+                    </div>
+
+                    <div className="p-3 flex flex-col flex-1">
+                      <h4 className="font-serif font-black text-base text-[#0f1412] tracking-tight leading-snug group-hover:text-black transition-colors mb-2 line-clamp-2 min-h-[40px]">
+                        {relatedPostItem.title}
+                      </h4>
+                      <p className="text-[#374151] font-sans font-medium text-xs leading-relaxed line-clamp-2 mb-3">
+                        {relatedPostItem.excerpt}
+                      </p>
+                      <div className="flex items-center justify-between border-t border-slate-100 pt-3 mt-auto">
+                        <span className="text-[8px] uppercase font-black tracking-widest text-[#6B7280] flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {relatedPostItem.date}
+                        </span>
+                        <span className="text-[9px] font-black uppercase tracking-widest text-emerald-800 group-hover:translate-x-1 transition-transform flex items-center gap-0.5">
+                          Czytaj <ArrowLeft className="w-3 h-3 rotate-180" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </main>
     </article>
   );

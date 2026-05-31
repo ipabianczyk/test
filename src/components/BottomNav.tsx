@@ -10,7 +10,7 @@ export default function BottomNav() {
     { name: 'Start', href: '/', icon: Home },
     { name: 'Mapa', href: '/mapa', icon: Map },
     { name: 'Pomoc', href: '/potrzebomat', icon: Heart },
-    { name: 'Teczka', href: '/teczka-sprawy', icon: FileText },
+    { name: 'Wizyta', href: '/teczka-sprawy', icon: FileText },
     { name: 'Baza', href: '/blog', icon: BookOpen },
     { name: 'Kontakt', href: '/kontakt', icon: MessageCircle },
   ];

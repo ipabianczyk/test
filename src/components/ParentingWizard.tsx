@@ -120,7 +120,7 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
         </div>
         <button 
           onClick={onBack}
-          className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-widest"
+          className="flex items-center gap-1.5 text-xs font-black text-slate-800 hover:text-black transition-colors uppercase tracking-widest"
         >
           <ArrowLeft className="w-4 h-4" /> Powrót
         </button>
@@ -129,8 +129,8 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
       {step === 1 && (
         <div className="space-y-8">
           <div className="space-y-2">
-            <h3 className="text-lg font-serif font-bold text-[#0f1412]">Etap 1: Jaka jest obecnie sytuacja prawna Twoich alimentów?</h3>
-            <p className="text-sm text-slate-500">Wybierz opcję, która najlepiej odpowiada Twojemu obecnemu statusowi formalnemu.</p>
+            <h3 className="text-lg font-serif font-black text-[#0f1412]">Etap 1: Jaka jest obecnie sytuacja prawna Twoich alimentów?</h3>
+            <p className="text-sm text-[#1a211e] font-bold">Wybierz opcję, która najlepiej odpowiada Twojemu obecnemu statusowi formalnemu.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -140,7 +140,7 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
             >
               <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-4 font-black text-[#0f1412]">A</div>
               <h4 className="font-bold text-slate-900 text-sm mb-1.5 leading-tight">Nie mam jeszcze wyroku ani ugody</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">Dopiero dążę do formalnego ustalenia alimentów lub drugie rodzic dobrowolnie przestał płacić bez orzeczenia sądu.</p>
+              <p className="text-xs text-[#1a211e] leading-relaxed font-bold">Dopiero dążę do formalnego ustalenia alimentów lub drugie rodzic dobrowolnie przestał płacić bez orzeczenia sądu.</p>
             </button>
 
             <button
@@ -149,7 +149,7 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
             >
               <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-4 font-black text-[#0f1412]">B</div>
               <h4 className="font-bold text-slate-900 text-sm mb-1.5 leading-tight">Mam wyrok, ale dłużnik nie płaci (Brak komornika)</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">Sąd przyznał mi alimenty, ale drugi rodzic unika płatności, a ja nie skierowałem/am sprawy jeszcze do komornika sądowego.</p>
+              <p className="text-xs text-[#1a211e] leading-relaxed font-bold">Sąd przyznał mi alimenty, ale drugi rodzic unika płatności, a ja nie skierowałem/am sprawy jeszcze do komornika sądowego.</p>
             </button>
 
             <button
@@ -158,7 +158,7 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
             >
               <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-4 font-black text-[#0f1412]">C</div>
               <h4 className="font-bold text-slate-900 text-sm mb-1.5 leading-tight">Mam wyrok i nieskutecznego komornika</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">Sprawa jest u komornika, egzekucja bezskuteczna. Chciałbym/am starać się o Fundusz Alimentacyjny lub świadczenia socjalne.</p>
+              <p className="text-xs text-[#1a211e] leading-relaxed font-bold">Sprawa is u komornika, egzekucja bezskuteczna. Chciałbym/am starać się o Fundusz Alimentacyjny lub świadczenia socjalne.</p>
             </button>
           </div>
         </div>
@@ -169,24 +169,24 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setStep(1)}
-              className="text-xs font-bold text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-widest flex items-center gap-1"
+              className="text-xs font-black text-slate-800 hover:text-black transition-colors uppercase tracking-widest flex items-center gap-1"
             >
               ← Cofnij
             </button>
-            <span className="text-slate-300">|</span>
-            <span className="text-xs font-black uppercase text-slate-500 tracking-wider">Krok 2 z 3: Informacje lokalne i socjalne</span>
+            <span className="text-slate-400">|</span>
+            <span className="text-xs font-black uppercase text-slate-800 tracking-wider">Krok 2 z 3: Informacje lokalne i socjalne</span>
           </div>
 
           <div className="space-y-6 max-w-xl">
             <div className="space-y-2">
-              <label className="block text-xs font-black uppercase text-[#6B7280] tracking-wider">1. Wybierz miejscowość w województwie śląskim</label>
+              <label className="block text-xs font-black uppercase text-[#1a211e] tracking-wider">1. Wybierz miejscowość w województwie śląskim</label>
               <div className="grid grid-cols-3 gap-3">
                 {['Sosnowiec', 'Katowice', 'Dąbrowa Górnicza'].map((c) => (
                   <button
                     key={c}
                     type="button"
                     onClick={() => setCity(c)}
-                    className={`py-3 rounded-xl border font-bold text-xs uppercase tracking-wider transition-all ${city === c ? 'bg-slate-900 border-slate-900 text-white' : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'}`}
+                    className={`py-3 rounded-xl border font-black text-xs uppercase tracking-wider transition-all ${city === c ? 'bg-slate-900 border-slate-900 text-white' : 'bg-slate-50 border-slate-350 text-slate-900 hover:bg-slate-100'}`}
                   >
                     {c}
                   </button>
@@ -194,22 +194,22 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
               </div>
               <button 
                 onClick={() => setCity('Inna')}
-                className={`text-[10px] underline font-bold transition-all block text-right w-full ${city === 'Inna' ? 'text-slate-900 font-extrabold' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`text-[10px] underline font-black transition-all block text-right w-full ${city === 'Inna' ? 'text-slate-900 font-extrabold' : 'text-slate-800 hover:text-slate-950'}`}
               >
                 Mieszkam poza tymi miastami
               </button>
             </div>
 
             {alimonyStatus === 'has-ruling' && hasExec === true && (
-              <div className="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+              <div className="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200">
                 <label className="block text-xs font-black uppercase text-[#0f1412] tracking-wider">
                   2. Średni miesięczny dochód netto na członka rodziny (zł)
                 </label>
-                <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                <p className="text-xs text-[#1a211e] leading-relaxed mb-4 font-bold">
                   Wymagane do oszacowania uprawnienia do Funduszu Alimentacyjnego (Próg wynosi 1209 zł na osobę netto).
                 </p>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-black text-sm">PLN</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-800 font-black text-sm">PLN</span>
                   <input
                     type="number"
                     placeholder="Wpisz kwotę netto (np. 1100)"
@@ -239,7 +239,7 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
           <div className="flex items-center justify-between">
             <button 
               onClick={() => setStep(2)}
-              className="text-xs font-bold text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-widest flex items-center gap-1"
+              className="text-xs font-black text-slate-800 hover:text-black transition-colors uppercase tracking-widest flex items-center gap-1"
             >
               ← Popraw dane
             </button>
@@ -250,21 +250,21 @@ rekomendacja: "Dedykowana ścieżka wsparcia dla samotnego rodzica"
 
           {/* Dedykowany plan działania */}
           <div className="space-y-6">
-            <div className="border-b border-slate-100 pb-2">
+            <div className="border-b border-rose-250 pb-2">
               <h3 className="text-lg font-serif font-black text-[#0f1412]">Twój Spersonalizowany Plan Krok po Kroku</h3>
-              <p className="text-xs text-slate-500 mt-1">Dostosowany dla: <span className="font-bold text-slate-700">{city}</span> • Status alimentacyjny: <span className="font-bold text-slate-700">{alimonyStatus === 'no-ruling' ? 'Brak wyroku' : 'Posiadam wyrok'}</span></p>
+              <p className="text-xs text-[#1a211e] mt-1 font-bold">Dostosowany dla: <span className="font-bold text-slate-800">{city}</span> • Status alimentacyjny: <span className="font-bold text-slate-800">{alimonyStatus === 'no-ruling' ? 'Brak wyroku' : 'Posiadam wyrok'}</span></p>
             </div>
 
             <div className="space-y-6">
               {generateActionPlan().map((p, i) => (
-                <div key={i} className="flex gap-6 items-start p-6 bg-slate-50/50 border border-slate-100 rounded-2xl hover:border-slate-200 transition-all">
+                <div key={i} className="flex gap-6 items-start p-6 bg-slate-50/50 border border-slate-350 rounded-2xl hover:border-slate-500 transition-all">
                   <div className="w-8 h-8 rounded-full bg-slate-900 text-white font-sans text-xs font-black flex items-center justify-center shrink-0">
                     {i + 1}
                   </div>
                   <div className="space-y-2">
                     <h4 className="font-bold text-[#0f1412] text-sm leading-none">{p.title}</h4>
-                    <p className="text-xs text-[#1a211e] leading-relaxed">{p.desc}</p>
-                    <div className="bg-[#FAF9F4] border-l-2 border-slate-400 p-2 text-[11px] text-slate-600 font-medium italic rounded-r-lg">
+                    <p className="text-xs text-[#0f1412] leading-relaxed font-semibold">{p.desc}</p>
+                    <div className="bg-[#FAF9F4] border-l-2 border-slate-400 p-2 text-[11px] text-[#1a211e] font-bold italic rounded-r-lg">
                       {p.tip}
                     </div>
                   </div>

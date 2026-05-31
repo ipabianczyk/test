@@ -9,7 +9,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { A11yProvider } from './components/A11yProvider';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -32,27 +32,31 @@ import ZenZone from './pages/ZenZone';
 import QuickHelp from './pages/QuickHelp';
 import ArticleCreator from './pages/ArticleCreator';
 import TeczkaSprawy from './pages/TeczkaSprawy';
-import CookieBanner from './components/CookieBanner';
+import SosnowiecBezStygmy from './pages/SosnowiecBezStygmy';
+import SEOManager from './components/SEOManager';
 import { SITE_CONFIG } from './data/siteConfig';
+import NewsletterPage from './pages/NewsletterPage';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (hash) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById(hash.replace('#', ''));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
   return null;
 }
 
 export default function App() {
   useEffect(() => {
-    document.title = `${SITE_CONFIG.name} - ${SITE_CONFIG.tagline}`;
-    
-    // Dynamiczne SEO (Uproszczone)
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", SITE_CONFIG.description);
-    }
-
     // Globalny ESC key listener dla natychmiastowego przekierowania (Szybkie Wyjście)
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -74,7 +78,8 @@ export default function App() {
 
   return (
     <A11yProvider>
-      <HashRouter>
+      <BrowserRouter>
+        <SEOManager />
         <ScrollToTop />
         <div className="min-h-screen flex flex-col selection:bg-amber-100 selection:text-amber-900 pb-20 lg:pb-0 bg-[#FBF9F4]">
           <Header />
@@ -82,7 +87,8 @@ export default function App() {
           <main id="main-content" className="flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/dash" element={<QuickHelp />} />
+              <Route path="/dash" element={<ArticleCreator />} />
+              <Route path="/newsletter" element={<NewsletterPage />} />
               <Route path="/mapa" element={<MapPage />} />
               <Route path="/mapa/:id" element={<CategoryPage />} />
               <Route path="/blog" element={<BlogPage />} />
@@ -99,27 +105,28 @@ export default function App() {
               <Route path="/kreator-artykulow" element={<ArticleCreator />} />
               <Route path="/admin" element={<ArticleCreator />} />
               <Route path="/teczka-sprawy" element={<TeczkaSprawy />} />
+              <Route path="/sosnowiec-bez-stygmy" element={<SosnowiecBezStygmy />} />
+              <Route path="*" element={<HomePage />} />
             </Routes>
           </main>
 
           <Footer />
           <ChatWidget />
           <BottomNav />
-          <CookieBanner />
 
           {/* Stały, ukryty/dyskretny przycisk "Szybkie Wyjście (ESC)" */}
-          <div className="fixed bottom-6 right-6 z-[9999] pointer-events-none sm:block">
+          <div className="fixed bottom-22 left-4 lg:bottom-6 lg:right-6 lg:left-auto z-[9999] pointer-events-none">
             <button
               onClick={triggerEmergencyRedirect}
-              className="pointer-events-auto bg-slate-900 hover:bg-[#0f1412] text-white px-5 py-3 rounded-full font-sans text-[10px] font-black uppercase tracking-widest border border-slate-700 shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+              className="pointer-events-auto bg-rose-600 hover:bg-rose-700 text-white px-4 py-3 rounded-full font-sans text-[10px] font-black uppercase tracking-widest border border-rose-500 shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
               title="Szybkie Wyjście ze strony (Skrót: ESC) - natychmiastowe przekierowanie na Google"
             >
-              <span className="w-2 h-2 bg-rose-500 rounded-full animate-ping" />
+              <span className="w-2 h-2 bg-white rounded-full animate-ping" />
               Szybkie wyjście (ESC)
             </button>
           </div>
         </div>
-      </HashRouter>
+      </BrowserRouter>
     </A11yProvider>
   );
 }

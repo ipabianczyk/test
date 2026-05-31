@@ -4,15 +4,15 @@
  */
 export const SITE_CONFIG = {
   name: "MostPomocy.pl",
-  tagline: "Twój dynamiczny most do wsparcia społecznego",
-  description: "Ogólnopolski system interwencji kryzysowej i wsparcia. Pomoc w depresji, przemocy, uzależnieniach i trudnych sytuacjach życiowych.",
+  tagline: "Mapa Pomocy – kompas szukania wsparcia | Igor Pabiańczyk",
+  description: "MostPomocy – Igor Pabiańczyk. Bezpłatny przewodnik po systemie wsparcia społecznego w Polsce: seniorzy, onkologia, rodzina, dzieci, przemoc i więcej. Znajdź pomoc – krok po kroku.",
   url: "https://mostpomocy.pl",
-  author: "Projekt Dyplomowy UŚ",
+  author: "Igor Pabiańczyk",
   analytics: {
-    ga4_id: "G-XXXXXXXXXX" // Wpisz swój identyfikator GA4 tutaj
+    ga4_id: "G-YD2QTX4YNR" // Wdrożony identyfikator Google Analytics z załączonego pliku
   },
   seo: {
-    keywords: "pomoc społeczna, kryzys emocjonalny, wsparcie prawne, mops pomoc, pomoc psychologiczna sosnowiec, 116 111, potrzebomat",
+    keywords: "pomoc społeczna, kryzys emocjonalny, wsparcie prawne, mops pomoc, pomoc psychologiczna sosnowiec, katowice, dąbrowa górnicza, 116 111, potrzebomat, onkologia, seniorzy, przemoc, rodzina, bezpiecznik",
     og_image: "/og-image.jpg"
   },
   contact: {
