@@ -9,7 +9,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { A11yProvider } from './components/A11yProvider';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -78,7 +78,7 @@ export default function App() {
 
   return (
     <A11yProvider>
-      <HashRouter>
+      <BrowserRouter>
         <SEOManager />
         <ScrollToTop />
         <div className="min-h-screen flex flex-col selection:bg-amber-100 selection:text-amber-900 pb-20 lg:pb-0 bg-[#FBF9F4]">
@@ -126,7 +126,7 @@ export default function App() {
             </button>
           </div>
         </div>
-      </HashRouter>
+      </BrowserRouter>
     </A11yProvider>
   );
 }
